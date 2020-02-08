@@ -1,6 +1,19 @@
 const express = require ('express');
 const router = express.Router();
 const Todo = require('../models/todo');
+const User = require('../models/User');
+
+router.get('/users', (req, res, next) => {
+  User.find({email: req.body.email, password: req.body.password})
+  .then(data => res.json(data))
+  .catch(next)
+})
+
+router.post('/users', (req, res, next) => {
+  User.create(req.body) 
+    .then (data => res.json(data))
+    .catch(next)
+});
 
 router.get('/todos', (req, res, next) => {
 
