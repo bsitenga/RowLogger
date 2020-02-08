@@ -9,28 +9,22 @@ function Register() {
 	const [ errorMessage, setErrorMessage ] = useState('');
 
 	const handleRegisterSubmit = (e) => {
-        e.preventDefault();
-        if (firstName.length === 0) {
+		e.preventDefault();
+		if (firstName.length === 0) {
 			setErrorMessage('Please enter your first name');
 		} else if (lastName.length == 0) {
-            setErrorMessage('Please enter your last name');
-        } else if (!(/\S+@\S+\.\S+/.test(email))) {
-            setErrorMessage('Please enter a valid email');
-        } else if (password.length < 8 || password.length > 16) {
-            setErrorMessage('Please enter a password between 8 and 16 characters')
-        } else {
-            setErrorMessage("");
-        }
+			setErrorMessage('Please enter your last name');
+		} else if (!/\S+@\S+\.\S+/.test(email)) {
+			setErrorMessage('Please enter a valid email');
+		} else if (password.length < 8 || password.length > 16) {
+			setErrorMessage('Please enter a password between 8 and 16 characters');
+		} else {
+			setErrorMessage('');
+		}
 	};
 
 	return (
-		<div>
-            <div className = "register-form">
-
-            </div>
-            <div className = "login-form">
-
-            </div>
+		<div className="register-form">
 			<form onSubmit={handleRegisterSubmit}>
 				{errorMessage}
 				<FormGroup controlId="firstName" bsSize="large">
