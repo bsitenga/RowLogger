@@ -9,6 +9,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import Trends from './components/Trends';
 import Home from './components/Home';
+import Register from './components/Register';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
           <Trends />
         </Route>
         <Route path = "/">
+          <Register />
           <Home />
         </Route>
       </Switch>
