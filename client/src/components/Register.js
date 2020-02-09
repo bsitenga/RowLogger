@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import axios from 'axios';
 
 function Register() {
 	const [ firstName, setFirstName ] = useState('');
@@ -20,6 +21,18 @@ function Register() {
 			setErrorMessage('Please enter a password between 8 and 16 characters');
 		} else {
 			setErrorMessage('');
+			const user = {
+				firstName: firstName,
+				lastName: lastName,
+				email: email,
+				password: password,
+
+			  };
+			  axios.post(`http://localhost:5000/api/users`, user)
+				.then(res => {
+				  console.log(res);
+				  console.log(res.data);
+				})
 		}
 	};
 
