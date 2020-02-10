@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import axios from 'axios';
 
-function Register() {
+function Register(props) {
 	const [ firstName, setFirstName ] = useState('');
 	const [ lastName, setLastName ] = useState('');
 	const [ email, setEmail ] = useState('');
@@ -25,14 +25,13 @@ function Register() {
 				firstName: firstName,
 				lastName: lastName,
 				email: email,
-				password: password,
-
-			  };
-			  axios.post(`http://localhost:5000/api/users`, user)
-				.then(res => {
-				  console.log(res);
-				  console.log(res.data);
-				})
+				password: password
+			};
+			axios.post(`http://localhost:5000/api/users`, user).then((res) => {
+				window.location.href = '/';
+				console.log(res);
+				console.log(res.data);
+			});
 		}
 	};
 

@@ -1,20 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
 
-function LoginSmall() {
+function LoginSmall(props) {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ errorMessage, setErrorMessage ] = useState('');
 
-	const handleLoginSubmit = (e) => {
+	useEffect(() => {
+		
+	})
+
+	const handleLoginSubmit = async (e) => {
 		e.preventDefault();
-		if (!/\S+@\S+\.\S+/.test(email)) {
-			setErrorMessage('Please enter a valid email');
-		} else if (password.length < 8 || password.length > 16) {
-			setErrorMessage('Please enter a password between 8 and 16 characters');
+		let allUsers = []
+		await axios.get('http://localhost:5000/api/users')
+		.then(res => {
+			allUsers = res.data;
+		})
+		let ind = -1;
+		for (let i = 0; i < allUsers.length; i++) {
+			if (allUsers[i].email === email) {
+				ind = i;
+			}
+		}
+		if (ind !== -1 && allUsers[ind].password === password) {
+			window.location.href = '/';
 		} else {
-			setErrorMessage('');
+			setErrorMessage('That email and password combination is incorrect');
 		}
 	};
 

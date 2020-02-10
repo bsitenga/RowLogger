@@ -4,6 +4,12 @@ const Todo = require('../models/todo');
 const User = require('../models/User');
 
 router.get('/users', (req, res, next) => {
+  User.find({})
+  .then(data => res.json(data))
+  .catch(next)
+})
+
+router.get('/users/specific', (req, res, next) => {
   User.find({email: req.body.email, password: req.body.password})
   .then(data => res.json(data))
   .catch(next)
