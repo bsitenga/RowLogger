@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
+require('dotenv').config()
 
 function LoginSmall(props) {
 	const [ email, setEmail ] = useState('');
@@ -9,7 +11,7 @@ function LoginSmall(props) {
 	const [ errorMessage, setErrorMessage ] = useState('');
 
 	useEffect(() => {
-		
+
 	})
 
 	const handleLoginSubmit = async (e) => {
@@ -26,6 +28,8 @@ function LoginSmall(props) {
 			}
 		}
 		if (ind !== -1 && allUsers[ind].password === password) {
+			let token = jwt.sign(allUsers[ind].email, process.env.REACT_APP_SECRET_KEY);
+			localStorage.setItem('sectoken', token);
 			window.location.href = '/';
 		} else {
 			setErrorMessage('That email and password combination is incorrect');

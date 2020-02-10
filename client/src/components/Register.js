@@ -29,8 +29,6 @@ function Register(props) {
 			};
 			axios.post(`http://localhost:5000/api/users`, user).then((res) => {
 				window.location.href = '/';
-				console.log(res);
-				console.log(res.data);
 			});
 		}
 	};
