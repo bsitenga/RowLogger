@@ -16,14 +16,32 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 function App() {
 
-	const loggedIn = () => {
-		if (localStorage.getItem('sectoken')) {
+  const loggedIn = () => {
+    return localStorage.getItem('sectoken');
+  }
+
+	const loginSwitch = () => {
+		if (loggedIn()) {
      return <Nav.Link href="/logout">
 								<Link to="/logout">Logout</Link>
 							</Nav.Link>
     }
 		return <LoginSmall />;
 	};
+
+	const homeSwitch = () => {
+		if (loggedIn()) {
+			return <Home />;
+		}
+		return <Register />
+	}
+
+	const trendSwitch = () => {
+		if (loggedIn()) {
+			return <Trends />;
+		}
+		return <Register />
+	}
 
 	return (
 		<Router>
@@ -44,7 +62,7 @@ function App() {
 								<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
 							</NavDropdown>
 						</Nav>
-						{loggedIn()}
+						{loginSwitch()}
 					</Navbar.Collapse>
 				</Navbar>
 
@@ -53,13 +71,13 @@ function App() {
 						<Register />
 					</Route>
 					<Route path="/trends">
-						<Trends />
+						{trendSwitch()}
 					</Route>
 					<Route path="/logout">
 						<Logout />
 					</Route>
 					<Route path="/">
-						<Home />
+						{homeSwitch()}
 					</Route>
 				</Switch>
 			</div>
