@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
@@ -16,6 +16,11 @@ function Home() {
   const [ rowMinutes, setRowMinutes ] = useState('');
   const [ rowSeconds, setRowSeconds ] = useState('');
   const [ rowTenths, setRowTenths ] = useState('');
+  const [ errorMessage, setErrorMessage ] = useState('');
+
+  useEffect(() => {
+    //grab last 10
+  }, [] );
 
   const changeDate = date => {
     setRowDate(date);
@@ -55,6 +60,39 @@ function Home() {
     }
   }
 
+  const submitRow = async (e) => {
+    e.preventDefault();
+    let rowTime = 0;
+    if (rowHours !== '') {
+      rowTime += rowHours * 60 * 60;
+    }
+    if (rowMinutes !== '') {
+      rowTime += rowMinutes * 60;
+    }
+    if (rowSeconds !== '') {
+      rowTime += rowSeconds * 1;
+    }
+    if (rowTenths !== '') {
+      rowTime += rowTenths * .1;
+    }
+    if (rowType === 'Single Distance' || rowType === 'Single Time') {
+      if (rowDistance === '') {
+        setErrorMessage('Please enter a valid distance')
+      } else if (rowTime === 0) {
+        setErrorMessage('Please enter a valid time');
+      } else {
+        //postdata
+        //clearState
+      }
+    } else if (rowType === 'Intervals: Distance') {
+
+    } else if (rowType === 'Intervals: Time') {
+
+    } else if (rowType === 'Intervals: Variable') {
+
+    }
+  }
+
   const formSwitch = () => {
     if (rowType === 'Single Distance' || rowType === 'Single Time') {
       return (<>
@@ -62,10 +100,11 @@ function Home() {
       {TimeForm()}
       </>);
     } else if (rowType === 'Intervals: Distance') {
-      return (<>
-      {TimeForm()}
-        {DistanceForm()}
-        </>);
+      return <p>idis</p>
+    } else if (rowType === 'Intervals: Time') {
+      return <p>iTim</p>
+    } else if (rowType === 'Intervals: Variable') {
+      return <p>iVar</p>
     }
   }
 
@@ -91,7 +130,8 @@ function Home() {
 
 	return (
 		<div>
-			<Form>
+      {errorMessage}
+			<Form onSubmit={e => submitRow(e)}>
 				<Form.Group controlId="rowType">
 					<Form.Label>Type</Form.Label>
 					<Form.Control as="select" onChange={(e) => changeType(e)}>
@@ -110,6 +150,9 @@ function Home() {
           />
         </Form.Group>
         {formSwitch()}
+        <Button block bsSize="large" type="submit">
+					Register
+				</Button>
 			</Form>
 		</div>
 	);

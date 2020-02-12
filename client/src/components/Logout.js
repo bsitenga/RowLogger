@@ -7,7 +7,6 @@ function Logout() {
 	return (
 		<div>
 			Logging out...
-            {window.location.href = '/'}
 		</div>
 	);
 }
