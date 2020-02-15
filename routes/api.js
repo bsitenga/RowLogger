@@ -5,7 +5,7 @@ const User = require('../models/User');
 const UserRows = require('../models/UserRows');
 
 router.get('/userrows', (req, res, next) => {
-  UserRows.find({email: req.body.email})
+  UserRows.find({})
   .then(data => res.json(data))
   .catch(next)
 })

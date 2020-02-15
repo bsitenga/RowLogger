@@ -21,17 +21,16 @@ function Home(props) {
   const [ rowData, setRowData ] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/userrows', {
-      params: {
-        email: props.userEmail
-      }
-    })
+    axios.get('http://localhost:5000/api/userrows')
     .then(res => {
-      console.log("1", res.data);
-      setRowData(res.data);
+      for (let i = 0; i < res.data.length; i++) {
+        if (res.data[i].email === props.userEmail) {
+          setRowData(res.data[i].rows);
+        }
+      }
       console.log("2", rowData);
     })
-  }, [] );
+  }, [rowData] );
 
   const changeDate = date => {
     setRowDate(date);
@@ -177,7 +176,7 @@ function Home(props) {
 				</Button>
 			</Form>
       {rowData.map((item) => {
-      return <p>asdf</p>
+      return <p>{item.rowType} {item.rowDistance}</p>
       })}
 		</div>
 	);
