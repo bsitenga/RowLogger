@@ -13,8 +13,13 @@ import Home from './components/Home';
 import Register from './components/Register';
 import LoginSmall from './components/LoginSmall';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
 
 function App() {
+
+	const getUserEmail = () => {
+		return jwt.verify(localStorage.getItem('sectoken'), process.env.REACT_APP_SECRET_KEY)
+	}
 
   const loggedIn = () => {
     return localStorage.getItem('sectoken');
@@ -31,7 +36,7 @@ function App() {
 
 	const homeSwitch = () => {
 		if (loggedIn()) {
-			return <Home />;
+			return <Home userEmail={getUserEmail()}/>;
 		}
 		return <Register />
 	}

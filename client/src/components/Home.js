@@ -7,8 +7,9 @@ import FormLabel from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import DatePicker from "react-datepicker";
  import "react-datepicker/dist/react-datepicker.css";
+import axios from 'axios';
 
-function Home() {
+function Home(props) {
   const [ rowType, setRowType ] = useState('Single Distance');
   const [ rowDate, setRowDate ] = useState(new Date());
   const [ rowDistance, setRowDistance ] = useState('');
@@ -17,9 +18,19 @@ function Home() {
   const [ rowSeconds, setRowSeconds ] = useState('');
   const [ rowTenths, setRowTenths ] = useState('');
   const [ errorMessage, setErrorMessage ] = useState('');
+  const [ rowData, setRowData ] = useState([]);
 
   useEffect(() => {
-    //grab last 10
+    axios.get('http://localhost:5000/api/userrows', {
+      params: {
+        email: props.userEmail
+      }
+    })
+    .then(res => {
+      console.log("1", res.data);
+      setRowData(res.data);
+      console.log("2", rowData);
+    })
   }, [] );
 
   const changeDate = date => {
@@ -81,8 +92,19 @@ function Home() {
       } else if (rowTime === 0) {
         setErrorMessage('Please enter a valid time');
       } else {
-        //postdata
-        //clearState
+        const userRow = {
+          email: props.userEmail,
+          row: {
+            rowDate: rowDate,
+            rowType: rowType,
+            rowDistance: rowDistance,
+            rowTime: rowTime
+          }
+        }
+        axios.post('http://localhost:5000/api/userrows', userRow)
+    .then(res => {
+    })
+        console.log("test");
       }
     } else if (rowType === 'Intervals: Distance') {
 
@@ -151,9 +173,12 @@ function Home() {
         </Form.Group>
         {formSwitch()}
         <Button block bsSize="large" type="submit">
-					Register
+					Submit
 				</Button>
 			</Form>
+      {rowData.map((item) => {
+      return <p>asdf</p>
+      })}
 		</div>
 	);
 }

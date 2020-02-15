@@ -32,7 +32,7 @@ function Register(props) {
 				email: email,
 				rows: []
 			};
-			await axios.post('http://localhost:5000/api/userrows', userrows).then((res) => {
+			await axios.post('http://localhost:5000/api/userrowsnew', userrows).then((res) => {
 				console.log('successfully created user rows');
 			});
 			await axios.post(`http://localhost:5000/api/users`, user).then((res) => {

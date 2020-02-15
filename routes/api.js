@@ -10,10 +10,17 @@ router.get('/userrows', (req, res, next) => {
   .catch(next)
 })
 
-router.post('/userrows', (req, res, next) => {
+router.post('/userrowsnew', (req, res, next) => {
   UserRows.create(req.body)
   .then (data => res.json(data))
   .catch(next)
+})
+
+router.post('/userrows', (req, res, next) => {
+  UserRows.update({ email: req.body.email},
+    { $push: {rows: req.body.row}})
+    .then(data => res.json(data))
+    .catch(next)
 })
 
 router.get('/users', (req, res, next) => {
