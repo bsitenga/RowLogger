@@ -1,6 +1,6 @@
 .rowForm {
   height: 100%;
-  width: 350px;
+  width: 400px;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -9,5 +9,74 @@
 }
 
 .rowLog {
-  margin-left: 350px;
+  margin-left: 400px;
+}
+
+.rowDateGroup {
+  display: inline-block;
+}
+
+.rowDistanceGroup {
+  display: inline-block;
+  margin-left: 25px;
+  width: 235px;
+}
+
+.rowTimeGroupAA {
+  display: inline-block;
+  width: 167px;
+}
+
+.rowTimeGroupAB {
+  display: inline-block;
+  margin-left: 25px;
+  width: 167px;
+}
+
+.rowTimeGroupB {
+  display: inline-block;
+}
+
+.rowTimeGroupBA {
+  display: inline-block;
+  width: 115px;
+}
+
+.rowTimeGroupBB {
+  display: inline-block;
+  margin-left: 25px;
+  width: 95px;
+}
+
+.rowDateLabel {
+  display: block;
+}
+
+.react-datepicker-wrapper {
+  width: 100px;
+}
+
+.react-datepicker-wrapper input {
+  width: 100px;
+}
+
+form .rowButton {
+  width: 100px;
+  display: inline-block;
+  margin-left: 25px;
+  margin-bottom: 5px;
+}
+
+hr.versionTag {
+  width: 275px;
+  border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.bottomTag p {
+  font-size: 10px;
+  text-align: center;
+  color: #888;
 }

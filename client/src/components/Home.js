@@ -103,7 +103,7 @@ function Home(props) {
         axios.post('http://localhost:5000/api/userrows', userRow)
     .then(res => {
     })
-        console.log("test");
+        console.log("submitted row");
       }
     } else if (rowType === 'Intervals: Distance') {
 
@@ -130,23 +130,35 @@ function Home(props) {
   }
 
   const DistanceForm = () => {
-    return <Form.Group>
+    return <Form.Group className = "rowDistanceGroup">
     <Form.Label>Distance (m)</Form.Label>
     <Form.Control value={rowDistance} onChange={(e) => changeDistance(e)} />
   </Form.Group>
   }
 
   const TimeForm = () => {
-    return <Form.Group>
-    <Form.Label>Hours</Form.Label>
+    return <><Form.Group className = "rowTimeGroupA">
+      <Form.Group className = "rowTimeGroupAA">
+      <Form.Label>Hours</Form.Label>
     <Form.Control value={rowHours} onChange={(e) => changeHours(e)} />
-    <Form.Label>Minutes</Form.Label>
+      </Form.Group>
+      <Form.Group className = "rowTimeGroupAB">
+      <Form.Label>Minutes</Form.Label>
     <Form.Control value={rowMinutes} onChange={(e) => changeMinutes(e)} />
-    <Form.Label>Seconds</Form.Label>
+      </Form.Group>   
+    </Form.Group>
+    <Form.Group className = "rowTimeGroupB">
+      <Form.Group className = "rowTimeGroupBA">
+      <Form.Label>Seconds</Form.Label>
     <Form.Control value={rowSeconds} onChange={(e) => changeSeconds(e)} />
-    <Form.Label>Tenths</Form.Label>
+      </Form.Group>
+      <Form.Group className = "rowTimeGroupBB">
+      <Form.Label>Tenths</Form.Label>
     <Form.Control value={rowTenths} onChange={(e) => changeTenths(e)} />
-  </Form.Group>
+      </Form.Group>
+    
+    
+  </Form.Group></>
   }
 
 	return (
@@ -154,7 +166,7 @@ function Home(props) {
       <div className="rowForm">
       {errorMessage}
 			<Form onSubmit={e => submitRow(e)}>
-				<Form.Group controlId="rowType">
+				<Form.Group controlId="rowType" className="rowTypeGroup">
 					<Form.Label>Type</Form.Label>
 					<Form.Control as="select" onChange={(e) => changeType(e)}>
 						<option>Single Distance</option>
@@ -164,26 +176,28 @@ function Home(props) {
 						<option>Intervals: Variable</option>
 					</Form.Control>
 				</Form.Group>
-        <Form.Group controlId="rowDate">
-          <Form.Label>Date</Form.Label>
+        <Form.Group controlId="rowDate" className = "rowDateGroup">
+          <Form.Label className="rowDateLabel">Date</Form.Label>
           <DatePicker 
           selected={rowDate}
           onChange={changeDate}
           />
         </Form.Group>
         {formSwitch()}
-        <Button block bsSize="large" type="submit">
+        <Button block bsSize="large" type="submit" className="rowButton">
 					Submit
 				</Button>
 			</Form>
-      
+      <div className = "bottomTag">
+        <hr className="versionTag"></hr>
+        <p>RowLogger v1.0.0</p>
+      </div>
 		</div>
     <div className = "rowLog">
     {rowData.map((item) => {
       return <p>{item.rowType} {item.rowDistance}</p>
       })}
     </div>
-    
     </div>
 		
 	);
