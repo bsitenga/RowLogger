@@ -150,7 +150,8 @@ function Home(props) {
   }
 
 	return (
-		<div>
+    <div>
+      <div className="rowForm">
       {errorMessage}
 			<Form onSubmit={e => submitRow(e)}>
 				<Form.Group controlId="rowType">
@@ -175,10 +176,16 @@ function Home(props) {
 					Submit
 				</Button>
 			</Form>
-      {rowData.map((item) => {
+      
+		</div>
+    <div className = "rowLog">
+    {rowData.map((item) => {
       return <p>{item.rowType} {item.rowDistance}</p>
       })}
-		</div>
+    </div>
+    
+    </div>
+		
 	);
 }
 
