@@ -70,6 +70,12 @@ function Home(props) {
     }
   }
 
+  const addTotalWord = () => {
+    if (rowType === "Intervals: Distance") 
+      return "Total "
+    return "";
+  }
+
   const submitRow = async (e) => {
     e.preventDefault();
     let rowTime = 0;
@@ -121,7 +127,10 @@ function Home(props) {
       {TimeForm()}
       </>);
     } else if (rowType === 'Intervals: Distance') {
-      return <p>idis</p>
+      return <>
+      {DistanceForm()}
+      {TimeForm()}
+      </>
     } else if (rowType === 'Intervals: Time') {
       return <p>iTim</p>
     } else if (rowType === 'Intervals: Variable') {
@@ -131,7 +140,7 @@ function Home(props) {
 
   const DistanceForm = () => {
     return <Form.Group className = "rowDistanceGroup">
-    <Form.Label>Distance (m)</Form.Label>
+  <Form.Label>{addTotalWord()}Distance (m)</Form.Label>
     <Form.Control value={rowDistance} onChange={(e) => changeDistance(e)} />
   </Form.Group>
   }
@@ -139,21 +148,21 @@ function Home(props) {
   const TimeForm = () => {
     return <><Form.Group className = "rowTimeGroupA">
       <Form.Group className = "rowTimeGroupAA">
-      <Form.Label>Hours</Form.Label>
+      <Form.Label>{addTotalWord()}Hours</Form.Label>
     <Form.Control value={rowHours} onChange={(e) => changeHours(e)} />
       </Form.Group>
       <Form.Group className = "rowTimeGroupAB">
-      <Form.Label>Minutes</Form.Label>
+      <Form.Label>{addTotalWord()}Minutes</Form.Label>
     <Form.Control value={rowMinutes} onChange={(e) => changeMinutes(e)} />
       </Form.Group>   
     </Form.Group>
     <Form.Group className = "rowTimeGroupB">
       <Form.Group className = "rowTimeGroupBA">
-      <Form.Label>Seconds</Form.Label>
+      <Form.Label>{addTotalWord()}Seconds</Form.Label>
     <Form.Control value={rowSeconds} onChange={(e) => changeSeconds(e)} />
       </Form.Group>
       <Form.Group className = "rowTimeGroupBB">
-      <Form.Label>Tenths</Form.Label>
+      <Form.Label>{addTotalWord()}Tenths</Form.Label>
     <Form.Control value={rowTenths} onChange={(e) => changeTenths(e)} />
       </Form.Group>
     
