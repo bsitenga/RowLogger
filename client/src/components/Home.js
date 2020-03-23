@@ -19,16 +19,28 @@ function Home(props) {
   const [ rowTenths, setRowTenths ] = useState('');
   const [ errorMessage, setErrorMessage ] = useState('');
   const [ rowData, setRowData ] = useState([]);
+  const [ singleTimeData, setSingleTimeData ] = useState([]);
+  const [ singleDistanceData, setSingleDistanceData] = useState([]);
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/userrows')
     .then(res => {
+      let tempData = [];
+      let tempSingleDistanceData = [];
       for (let i = 0; i < res.data.length; i++) {
         if (res.data[i].email === props.userEmail) {
+          tempData = res.data[i].rows;
           setRowData(res.data[i].rows);
         }
       }
-      console.log("2", rowData);
+      for (let i = 0; i < tempData.length; i++) {
+        if (tempData[i].rowType === "Single Distance") {
+          tempSingleDistanceData.push(tempData[i]);
+        }
+      }
+      setSingleDistanceData(tempSingleDistanceData);
+      console.log("rowData", rowData);
+      console.log("single Distance", tempSingleDistanceData);
     })
   }, [rowData] );
 
@@ -109,6 +121,13 @@ function Home(props) {
         axios.post('http://localhost:5000/api/userrows', userRow)
     .then(res => {
     })
+        setRowHours('');
+        setRowMinutes('');
+        setRowSeconds('');
+        setRowTenths('');
+        setRowDate(new Date());
+        setRowDistance('');
+        setErrorMessage('');
         console.log("submitted row");
       }
     } else if (rowType === 'Intervals: Distance') {
@@ -203,9 +222,14 @@ function Home(props) {
       </div>
 		</div>
     <div className = "rowLog">
-    {rowData.map((item) => {
-      return <p>{item.rowType} {item.rowDistance}</p>
-      })}
+      <div className = "singleDistances">
+          {singleDistanceData.map((item) => {
+            return <p>{item.rowDistance} {item.rowTime}</p>
+          })}
+      </div>
+      <div className = "singleTimes">
+          
+      </div>
     </div>
     </div>
 		
