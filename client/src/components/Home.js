@@ -10,6 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 
 function Home(props) {
+	//State
 	const [ rowType, setRowType ] = useState('Single Distance');
 	const [ rowDate, setRowDate ] = useState(new Date());
 	const [ rowDistance, setRowDistance ] = useState('');
@@ -24,18 +25,24 @@ function Home(props) {
 	const [ singleTimeData, setSingleTimeData ] = useState([]);
 	const [ singleDistanceData, setSingleDistanceData ] = useState([]);
 
+	//On Mount
 	useEffect(
 		() => {
 			axios.get('http://localhost:5000/api/userrows').then((res) => {
+				//temporary arrays for row data
 				let tempData = [];
 				let tempSingleDistanceData = [];
 				let tempSingleTimeData = [];
+
+				//grabs all row data
 				for (let i = 0; i < res.data.length; i++) {
 					if (res.data[i].email === props.userEmail) {
 						tempData = res.data[i].rows;
 						setRowData(res.data[i].rows);
 					}
 				}
+
+				//separates all row data into arrays by type
 				for (let i = 0; i < tempData.length; i++) {
 					if (tempData[i].rowType === 'Single Distance') {
 						tempSingleDistanceData.push(tempData[i]);
@@ -43,6 +50,8 @@ function Home(props) {
 						tempSingleTimeData.push(tempData[i]);
 					}
 				}
+
+				//sets state for each row type
 				setSingleDistanceData(tempSingleDistanceData);
 				setSingleTimeData(tempSingleTimeData);
 				console.log('rowData', rowData);
@@ -51,6 +60,7 @@ function Home(props) {
 		[ rowData ]
 	);
 
+	//All form state change functions
 	const changeDate = (date) => {
 		setRowDate(date);
 	};
@@ -89,11 +99,6 @@ function Home(props) {
 		}
 	};
 
-	const addTotalWord = () => {
-		if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time') return 'Total ';
-		return '';
-	};
-
 	const changeSPM = (e) => {
 		if (!isNaN(e.target.value)) {
 			setRowSPM(e.target.value);
@@ -106,6 +111,13 @@ function Home(props) {
 		}
 	};
 
+	//adds the word total in front of form labels
+	const addTotalWord = () => {
+		if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time') return 'Total ';
+		return '';
+	};
+
+	//clears the form
 	const clearForm = () => {
 		setRowHours('');
 		setRowMinutes('');
@@ -118,8 +130,11 @@ function Home(props) {
 		setAverageSplit('');
 	};
 
+	//Submits the row form
 	const submitRow = async (e) => {
 		e.preventDefault();
+
+		//gets the row time in number of seconds
 		let rowTime = 0;
 		if (rowHours !== '') {
 			rowTime += rowHours * 60 * 60;
@@ -133,6 +148,8 @@ function Home(props) {
 		if (rowTenths !== '') {
 			rowTime += rowTenths * 0.1;
 		}
+
+		//Post req for rows
 		if (rowType === 'Single Distance' || rowType === 'Single Time') {
 			if (rowDistance === '') {
 				setErrorMessage('Please enter a valid distance');
@@ -158,6 +175,7 @@ function Home(props) {
 		}
 	};
 
+  //Creates the form from components
 	const formSwitch = () => {
 		if (rowType === 'Single Distance' || rowType === 'Single Time') {
 			return (
@@ -185,6 +203,7 @@ function Home(props) {
 		}
 	};
 
+	//Form components
 	const DistanceForm = () => {
 		return (
 			<Form.Group className="rowDistanceGroup">
@@ -234,6 +253,7 @@ function Home(props) {
 		);
 	};
 
+	//Full Page
 	return (
 		<div>
 			<div className="rowForm">
