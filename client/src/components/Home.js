@@ -27,6 +27,7 @@ function Home(props) {
     .then(res => {
       let tempData = [];
       let tempSingleDistanceData = [];
+      let tempSingleTimeData = [];
       for (let i = 0; i < res.data.length; i++) {
         if (res.data[i].email === props.userEmail) {
           tempData = res.data[i].rows;
@@ -36,9 +37,12 @@ function Home(props) {
       for (let i = 0; i < tempData.length; i++) {
         if (tempData[i].rowType === "Single Distance") {
           tempSingleDistanceData.push(tempData[i]);
+        } else if (tempData[i].rowType === "Single Time") {
+          tempSingleTimeData.push(tempData[i]);
         }
       }
       setSingleDistanceData(tempSingleDistanceData);
+      setSingleTimeData(tempSingleTimeData);
       console.log("rowData", rowData);
       console.log("single Distance", tempSingleDistanceData);
     })
@@ -223,12 +227,16 @@ function Home(props) {
 		</div>
     <div className = "rowLog">
       <div className = "singleDistances">
+        Single Distances
           {singleDistanceData.map((item) => {
             return <p>{item.rowDistance} {item.rowTime}</p>
           })}
       </div>
       <div className = "singleTimes">
-          
+        Single Times
+          {singleTimeData.map((item) => {
+          return <p>{item.rowTime} {item.rowDistance}</p>
+          })}
       </div>
     </div>
     </div>
