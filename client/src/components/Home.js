@@ -46,7 +46,6 @@ function Home(props) {
       setSingleDistanceData(tempSingleDistanceData);
       setSingleTimeData(tempSingleTimeData);
       console.log("rowData", rowData);
-      console.log("single Distance", tempSingleDistanceData);
     })
   }, [rowData] );
 
@@ -106,6 +105,18 @@ function Home(props) {
     }
   }
 
+  const clearForm = () => {
+    setRowHours('');
+      setRowMinutes('');
+      setRowSeconds('');
+      setRowTenths('');
+      setRowDate(new Date());
+      setRowDistance('');
+      setErrorMessage('');
+      setRowSPM('');
+      setAverageSplit('');
+  }
+
   const submitRow = async (e) => {
     e.preventDefault();
     let rowTime = 0;
@@ -139,13 +150,7 @@ function Home(props) {
         axios.post('http://localhost:5000/api/userrows', userRow)
     .then(res => {
     })
-        setRowHours('');
-        setRowMinutes('');
-        setRowSeconds('');
-        setRowTenths('');
-        setRowDate(new Date());
-        setRowDistance('');
-        setErrorMessage('');
+        clearForm();
         console.log("submitted row");
       }
     } else if (rowType === 'Intervals: Distance') {
