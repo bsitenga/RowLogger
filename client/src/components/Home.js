@@ -17,6 +17,8 @@ function Home(props) {
   const [ rowMinutes, setRowMinutes ] = useState('');
   const [ rowSeconds, setRowSeconds ] = useState('');
   const [ rowTenths, setRowTenths ] = useState('');
+  const [ rowSPM, setRowSPM ] = useState('');
+  const [ averageSplit, setAverageSplit ] = useState('');
   const [ errorMessage, setErrorMessage ] = useState('');
   const [ rowData, setRowData ] = useState([]);
   const [ singleTimeData, setSingleTimeData ] = useState([]);
@@ -87,9 +89,21 @@ function Home(props) {
   }
 
   const addTotalWord = () => {
-    if (rowType === "Intervals: Distance") 
+    if (rowType === "Intervals: Distance" || rowType === "Intervals: Time") 
       return "Total "
     return "";
+  }
+
+  const changeSPM = (e) => {
+    if (!isNaN(e.target.value)) {
+      setRowSPM(e.target.value);
+    }
+  }
+
+  const changeSplit = (e) => {
+    if (!isNaN(e.target.value)) {
+      setAverageSplit(e.target.value);
+    }
   }
 
   const submitRow = async (e) => {
@@ -153,11 +167,20 @@ function Home(props) {
       return <>
       {DistanceForm()}
       {TimeForm()}
+      {averageSplitForm()}
       </>
     } else if (rowType === 'Intervals: Time') {
-      return <p>iTim</p>
+      return <>
+      {DistanceForm()}
+      {TimeForm()}
+      {averageSplitForm()}
+      </>
     } else if (rowType === 'Intervals: Variable') {
-      return <p>iVar</p>
+      return <>
+      {DistanceForm()}
+      {TimeForm()}
+      {averageSplitForm()}
+      </>
     }
   }
 
@@ -188,9 +211,19 @@ function Home(props) {
       <Form.Label>{addTotalWord()}Tenths</Form.Label>
     <Form.Control value={rowTenths} onChange={(e) => changeTenths(e)} />
       </Form.Group>
-    
-    
-  </Form.Group></>
+  </Form.Group>
+  <Form.Group className = "rowSPM">
+    <Form.Label>SPM</Form.Label>
+    <Form.Control value={rowSPM} onChange={(e) => changeSPM(e)} />
+  </Form.Group>
+  </>
+  }
+
+  const averageSplitForm = () => {
+    return <Form.Group className = "rowAverageSplit">
+      <Form.Label>Average Split</Form.Label>
+      <Form.Control value = {averageSplit} onChange={(e) => changeSplit(e)} />
+    </Form.Group>
   }
 
 	return (
@@ -237,6 +270,12 @@ function Home(props) {
           {singleTimeData.map((item) => {
           return <p>{item.rowTime} {item.rowDistance}</p>
           })}
+      </div>
+      <div className = "distanceIntervals">
+          Distance Intervals
+      </div>
+      <div className = "timeIntervals">
+          time Intervals
       </div>
     </div>
     </div>
