@@ -25,7 +25,8 @@ function Home(props) {
 	const [ singleTimeData, setSingleTimeData ] = useState([]);
 	const [ singleDistanceData, setSingleDistanceData ] = useState([]);
 	const [ distanceIntervalData, setDistanceIntervalData ] = useState([]);
-	const [ timeIntervalData, setTimeIntervalData ] = useState([]);
+  const [ timeIntervalData, setTimeIntervalData ] = useState([]);
+  const [ variableIntervalData, setVariableIntervalData ] = useState([]);
 
 	//On Mount
 	useEffect(
@@ -36,7 +37,8 @@ function Home(props) {
 				let tempSingleDistanceData = [];
 				let tempSingleTimeData = [];
 				let tempDistanceIntervalData = [];
-				let tempTimeIntervalData = [];
+        let tempTimeIntervalData = [];
+        let tempVariableIntervalData = [];
 
 				//grabs all row data
 				for (let i = 0; i < res.data.length; i++) {
@@ -56,14 +58,17 @@ function Home(props) {
 						tempDistanceIntervalData.push(tempData[i]);
 					} else if (tempData[i].rowType === 'Intervals: Time') {
 						tempTimeIntervalData.push(tempData[i]);
-					}
+					} else if (tempData[i].rowType === 'Intervals: Variable') {
+            tempVariableIntervalData.push(tempData[i]);
+          }
 				}
 
 				//sets state for each row type
 				setSingleDistanceData(tempSingleDistanceData);
 				setSingleTimeData(tempSingleTimeData);
 				setDistanceIntervalData(tempDistanceIntervalData);
-				setTimeIntervalData(tempTimeIntervalData);
+        setTimeIntervalData(tempTimeIntervalData);
+        setVariableIntervalData(tempVariableIntervalData);
 				console.log('rowData', rowData);
 			});
 		},
@@ -141,7 +146,7 @@ function Home(props) {
 
 	//adds the word total in front of form labels
 	const addTotalWord = () => {
-		if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time') return 'Total ';
+		if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time' || rowType === 'Intervals: Variable') return 'Total ';
 		return '';
 	};
 
@@ -203,7 +208,7 @@ function Home(props) {
 				clearForm();
 				console.log('submitted row');
 			}
-		} else if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time') {
+		} else if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time' || rowType === 'Intervals: Variable') {
 			if (rowDistance === '') {
 				setErrorMessage('Please enter a valid distance');
 			} else if (rowTime === 0) {
@@ -429,6 +434,20 @@ function Home(props) {
 						return (
 							<p>
 								{item.rowTime} {item.rowDistance} {min}:{sec}.{tenths} {item.averageSplit}
+							</p>
+						);
+					})}
+        </div>
+        {/* Variable Interval Log */}
+        <div className="variableIntervals">
+          Variable Intervals
+          {variableIntervalData.map((item) => {
+						let min = findSplitMins(item.averageSplit);
+						let sec = findSplitSecs(item.averageSplit);
+						let tenths = findSplitTenths(item.averageSplit);
+						return (
+							<p>
+								{item.rowDistance} {item.rowTime} {min}:{sec}.{tenths} {item.averageSplit}
 							</p>
 						);
 					})}
