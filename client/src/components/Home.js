@@ -431,7 +431,6 @@ function Home(props) {
 				{/* Single Distance Log */}
 				<div className="singleDistances">
 					<h5>Single Distance Rows</h5>
-
 					<table>
 						<thead>
 							<tr>
@@ -463,62 +462,126 @@ function Home(props) {
 				{/* Single Time Log */}
 				<div className="singleTimes">
 					<h5>Single Time Rows</h5>
-					{singleTimeData.map((item) => {
-						let min = findSplitMins(item.averageSplit);
-						let sec = findSplitSecs(item.averageSplit);
-						let tenths = findSplitTenths(item.averageSplit);
-						return (
-							<p>
-								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
-								{item.rowSPM}
-							</p>
-						);
-					})}
+          <table>
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Distance</th>
+								<th>Time</th>
+								<th>Split</th>
+								<th>SPM</th>
+							</tr>
+						</thead>
+						<tbody>
+							{singleTimeData.map((item) => {
+								let min = findSplitMins(item.averageSplit);
+								let sec = findSplitSecs(item.averageSplit);
+								let tenths = findSplitTenths(item.averageSplit);
+								return (
+									<tr>
+										<td>{getDate(item.rowDate)}</td>
+                    <td>{item.rowDistance}</td>
+                    <td>{getTime(item.rowTime)}</td>
+                    <td>{min}:{sec}.{tenths}</td>
+                    <td>{item.rowSPM}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
 				</div>
 				{/* Distance Interval Log */}
 				<div className="distanceIntervals">
 					<h5>Distance Intervals</h5>
-					{distanceIntervalData.map((item) => {
-						let min = findSplitMins(item.averageSplit);
-						let sec = findSplitSecs(item.averageSplit);
-						let tenths = findSplitTenths(item.averageSplit);
-						return (
-							<p>
-								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
-								{item.rowSPM}
-							</p>
-						);
-					})}
+					<table>
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Distance</th>
+								<th>Time</th>
+								<th>Split</th>
+								<th>SPM</th>
+							</tr>
+						</thead>
+						<tbody>
+							{distanceIntervalData.map((item) => {
+								let min = findSplitMins(item.averageSplit);
+								let sec = findSplitSecs(item.averageSplit);
+								let tenths = findSplitTenths(item.averageSplit);
+								return (
+									<tr>
+										<td>{getDate(item.rowDate)}</td>
+                    <td>{item.rowDistance}</td>
+                    <td>{getTime(item.rowTime)}</td>
+                    <td>{min}:{sec}.{tenths}</td>
+                    <td>{item.rowSPM}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
 				</div>
 				{/* Time Interval Log */}
 				<div className="timeIntervals">
 					<h5>Time Intervals</h5>
-					{timeIntervalData.map((item) => {
-						let min = findSplitMins(item.averageSplit);
-						let sec = findSplitSecs(item.averageSplit);
-						let tenths = findSplitTenths(item.averageSplit);
-						return (
-							<p>
-								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
-								{item.rowSPM}
-							</p>
-						);
-					})}
+					<table>
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Distance</th>
+								<th>Time</th>
+								<th>Split</th>
+								<th>SPM</th>
+							</tr>
+						</thead>
+						<tbody>
+							{timeIntervalData.map((item) => {
+								let min = findSplitMins(item.averageSplit);
+								let sec = findSplitSecs(item.averageSplit);
+								let tenths = findSplitTenths(item.averageSplit);
+								return (
+									<tr>
+										<td>{getDate(item.rowDate)}</td>
+                    <td>{item.rowDistance}</td>
+                    <td>{getTime(item.rowTime)}</td>
+                    <td>{min}:{sec}.{tenths}</td>
+                    <td>{item.rowSPM}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
 				</div>
 				{/* Variable Interval Log */}
 				<div className="variableIntervals">
 					<h5>Variable Intervals</h5>
-					{variableIntervalData.map((item) => {
-						let min = findSplitMins(item.averageSplit);
-						let sec = findSplitSecs(item.averageSplit);
-						let tenths = findSplitTenths(item.averageSplit);
-						return (
-							<p>
-								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
-								{item.rowSPM}
-							</p>
-						);
-					})}
+					<table>
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Distance</th>
+								<th>Time</th>
+								<th>Split</th>
+								<th>SPM</th>
+							</tr>
+						</thead>
+						<tbody>
+							{variableIntervalData.map((item) => {
+								let min = findSplitMins(item.averageSplit);
+								let sec = findSplitSecs(item.averageSplit);
+								let tenths = findSplitTenths(item.averageSplit);
+								return (
+									<tr>
+										<td>{getDate(item.rowDate)}</td>
+                    <td>{item.rowDistance}</td>
+                    <td>{getTime(item.rowTime)}</td>
+                    <td>{min}:{sec}.{tenths}</td>
+                    <td>{item.rowSPM}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

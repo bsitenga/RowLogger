@@ -119,6 +119,7 @@ form .rowButton {
   margin-right: 40px;
   margin-top: 50px;
   width: 30vw;
+  min-width: 400px;
   height: 75vh;
   background-color: white;
   vertical-align: top;
@@ -146,6 +147,7 @@ hr.versionTag {
 table {
   table-layout: fixed;
   width: 30vw;
+  min-width: 400px;
 }
 
 th {
