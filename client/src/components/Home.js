@@ -24,6 +24,8 @@ function Home(props) {
 	const [ rowData, setRowData ] = useState([]);
 	const [ singleTimeData, setSingleTimeData ] = useState([]);
 	const [ singleDistanceData, setSingleDistanceData ] = useState([]);
+	const [ distanceIntervalData, setDistanceIntervalData ] = useState([]);
+	const [ timeIntervalData, setTimeIntervalData ] = useState([]);
 
 	//On Mount
 	useEffect(
@@ -33,6 +35,8 @@ function Home(props) {
 				let tempData = [];
 				let tempSingleDistanceData = [];
 				let tempSingleTimeData = [];
+				let tempDistanceIntervalData = [];
+				let tempTimeIntervalData = [];
 
 				//grabs all row data
 				for (let i = 0; i < res.data.length; i++) {
@@ -48,12 +52,18 @@ function Home(props) {
 						tempSingleDistanceData.push(tempData[i]);
 					} else if (tempData[i].rowType === 'Single Time') {
 						tempSingleTimeData.push(tempData[i]);
+					} else if (tempData[i].rowType === 'Intervals: Distance') {
+						tempDistanceIntervalData.push(tempData[i]);
+					} else if (tempData[i].rowType === 'Intervals: Time') {
+						tempTimeIntervalData.push(tempData[i]);
 					}
 				}
 
 				//sets state for each row type
 				setSingleDistanceData(tempSingleDistanceData);
 				setSingleTimeData(tempSingleTimeData);
+				setDistanceIntervalData(tempDistanceIntervalData);
+				setTimeIntervalData(tempTimeIntervalData);
 				console.log('rowData', rowData);
 			});
 		},
@@ -146,6 +156,9 @@ function Home(props) {
 		setErrorMessage('');
 		setRowSPM('');
 		setAverageSplit('');
+		setSplitMinutes('');
+		setSplitSeconds('');
+		setSplitTenths('');
 	};
 
 	//Submits the row form
@@ -190,8 +203,37 @@ function Home(props) {
 				clearForm();
 				console.log('submitted row');
 			}
-		} else if (rowType === 'Intervals: Distance') {
-		} else if (rowType === 'Intervals: Time') {
+		} else if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time') {
+			if (rowDistance === '') {
+				setErrorMessage('Please enter a valid distance');
+			} else if (rowTime === 0) {
+				setErrorMessage('Please enter a valid time');
+			} else {
+				if (splitMinutes === '') {
+					setSplitMinutes(0);
+				}
+				if (splitSeconds === '') {
+					setSplitSeconds(0);
+				}
+				if (splitTenths === '') {
+					setSplitTenths(0);
+        }
+				let tempAverageSplit = Number(splitMinutes) * 60 + Number(splitSeconds) + Number(splitTenths) * 0.1;
+				const userRow = {
+					email: props.userEmail,
+					row: {
+						rowDate: rowDate,
+						rowType: rowType,
+						rowDistance: rowDistance,
+						rowTime: rowTime,
+						rowSPM: rowSPM,
+						averageSplit: tempAverageSplit
+					}
+				};
+				axios.post('http://localhost:5000/api/userrows', userRow).then((res) => {});
+				clearForm();
+				console.log('submitted row');
+			}
 		} else if (rowType === 'Intervals: Variable') {
 		}
 	};
@@ -298,8 +340,8 @@ function Home(props) {
 					tenths = tenthString[i + 1];
 				}
 			}
-    }
-    return tenths;
+		}
+		return tenths;
 	};
 
 	//Full Page
@@ -364,9 +406,33 @@ function Home(props) {
 					})}
 				</div>
 				{/* Distance Interval Log */}
-				<div className="distanceIntervals">Distance Intervals</div>
+				<div className="distanceIntervals">
+					Distance Intervals
+					{distanceIntervalData.map((item) => {
+						let min = findSplitMins(item.averageSplit);
+						let sec = findSplitSecs(item.averageSplit);
+						let tenths = findSplitTenths(item.averageSplit);
+						return (
+							<p>
+								{item.rowDistance} {item.rowTime} {min}:{sec}.{tenths} {item.averageSplit}
+							</p>
+						);
+					})}
+				</div>
 				{/* Time Interval Log */}
-				<div className="timeIntervals">time Intervals</div>
+				<div className="timeIntervals">
+          Time Intervals
+          {timeIntervalData.map((item) => {
+						let min = findSplitMins(item.averageSplit);
+						let sec = findSplitSecs(item.averageSplit);
+						let tenths = findSplitTenths(item.averageSplit);
+						return (
+							<p>
+								{item.rowTime} {item.rowDistance} {min}:{sec}.{tenths} {item.averageSplit}
+							</p>
+						);
+					})}
+        </div>
 			</div>
 		</div>
 	);
