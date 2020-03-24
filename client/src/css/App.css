@@ -142,3 +142,12 @@ hr.versionTag {
   text-align: center;
   color: #888;
 }
+
+table {
+  table-layout: fixed;
+  width: 30vw;
+}
+
+th {
+  font-weight: 500;
+}

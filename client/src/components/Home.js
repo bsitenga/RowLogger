@@ -369,30 +369,30 @@ function Home(props) {
 
 	//Finds full time
 	const getTime = (time) => {
-    let hours = (Math.floor(time / 60 / 60)).toString();
-    let minutes = (Math.floor(time / 60) - hours * 60).toString();
-    if (minutes.length === 1) {
-      minutes = '0' + minutes;
-    }
-    let seconds = (Math.floor(time % 60)).toString();
-    if (seconds.length === 1) {
-      seconds = '0' + seconds;
-    }
-    let tenths = 0;
-    if (time) {
-      let tenthString = time.toString();
-      for (let i = 0; i < tenthString.length; i++) {
+		let hours = Math.floor(time / 60 / 60).toString();
+		let minutes = (Math.floor(time / 60) - hours * 60).toString();
+		if (minutes.length === 1) {
+			minutes = '0' + minutes;
+		}
+		let seconds = Math.floor(time % 60).toString();
+		if (seconds.length === 1) {
+			seconds = '0' + seconds;
+		}
+		let tenths = 0;
+		if (time) {
+			let tenthString = time.toString();
+			for (let i = 0; i < tenthString.length; i++) {
 				if (tenthString[i] === '.') {
 					tenths = tenthString[i + 1];
 				}
 			}
-    }
-    if (hours === "0") {
-      hours = "";
-    } else {
-      hours = hours + ":"
-    }
-    return hours + minutes + ":" + seconds + "." + tenths;
+		}
+		if (hours === '0') {
+			hours = '';
+		} else {
+			hours = hours + ':';
+		}
+		return hours + minutes + ':' + seconds + '.' + tenths;
 	};
 
 	//Full Page
@@ -431,17 +431,34 @@ function Home(props) {
 				{/* Single Distance Log */}
 				<div className="singleDistances">
 					<h5>Single Distance Rows</h5>
-					{singleDistanceData.map((item) => {
-						let min = findSplitMins(item.averageSplit);
-						let sec = findSplitSecs(item.averageSplit);
-						let tenths = findSplitTenths(item.averageSplit);
-						return (
-							<p>
-								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
-								{item.rowSPM}
-							</p>
-						);
-					})}
+
+					<table>
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Distance</th>
+								<th>Time</th>
+								<th>Split</th>
+								<th>SPM</th>
+							</tr>
+						</thead>
+						<tbody>
+							{singleDistanceData.map((item) => {
+								let min = findSplitMins(item.averageSplit);
+								let sec = findSplitSecs(item.averageSplit);
+								let tenths = findSplitTenths(item.averageSplit);
+								return (
+									<tr>
+										<td>{getDate(item.rowDate)}</td>
+                    <td>{item.rowDistance}</td>
+                    <td>{getTime(item.rowTime)}</td>
+                    <td>{min}:{sec}.{tenths}</td>
+                    <td>{item.rowSPM}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
 				</div>
 				{/* Single Time Log */}
 				<div className="singleTimes">
