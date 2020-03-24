@@ -51,7 +51,7 @@ function App() {
 	return (
 		<Router>
 			<div className="App">
-				<Navbar bg="light" expand="lg">
+				<Navbar bg="light" expand="lg" id="rowloggernav">
 					<Navbar.Brand href="/">RowLogger</Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
