@@ -25,8 +25,8 @@ function Home(props) {
 	const [ singleTimeData, setSingleTimeData ] = useState([]);
 	const [ singleDistanceData, setSingleDistanceData ] = useState([]);
 	const [ distanceIntervalData, setDistanceIntervalData ] = useState([]);
-  const [ timeIntervalData, setTimeIntervalData ] = useState([]);
-  const [ variableIntervalData, setVariableIntervalData ] = useState([]);
+	const [ timeIntervalData, setTimeIntervalData ] = useState([]);
+	const [ variableIntervalData, setVariableIntervalData ] = useState([]);
 
 	//On Mount
 	useEffect(
@@ -37,8 +37,8 @@ function Home(props) {
 				let tempSingleDistanceData = [];
 				let tempSingleTimeData = [];
 				let tempDistanceIntervalData = [];
-        let tempTimeIntervalData = [];
-        let tempVariableIntervalData = [];
+				let tempTimeIntervalData = [];
+				let tempVariableIntervalData = [];
 
 				//grabs all row data
 				for (let i = 0; i < res.data.length; i++) {
@@ -59,16 +59,16 @@ function Home(props) {
 					} else if (tempData[i].rowType === 'Intervals: Time') {
 						tempTimeIntervalData.push(tempData[i]);
 					} else if (tempData[i].rowType === 'Intervals: Variable') {
-            tempVariableIntervalData.push(tempData[i]);
-          }
+						tempVariableIntervalData.push(tempData[i]);
+					}
 				}
 
 				//sets state for each row type
 				setSingleDistanceData(tempSingleDistanceData);
 				setSingleTimeData(tempSingleTimeData);
 				setDistanceIntervalData(tempDistanceIntervalData);
-        setTimeIntervalData(tempTimeIntervalData);
-        setVariableIntervalData(tempVariableIntervalData);
+				setTimeIntervalData(tempTimeIntervalData);
+				setVariableIntervalData(tempVariableIntervalData);
 				console.log('rowData', rowData);
 			});
 		},
@@ -146,7 +146,8 @@ function Home(props) {
 
 	//adds the word total in front of form labels
 	const addTotalWord = () => {
-		if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time' || rowType === 'Intervals: Variable') return 'Total ';
+		if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time' || rowType === 'Intervals: Variable')
+			return 'Total ';
 		return '';
 	};
 
@@ -208,7 +209,11 @@ function Home(props) {
 				clearForm();
 				console.log('submitted row');
 			}
-		} else if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time' || rowType === 'Intervals: Variable') {
+		} else if (
+			rowType === 'Intervals: Distance' ||
+			rowType === 'Intervals: Time' ||
+			rowType === 'Intervals: Variable'
+		) {
 			if (rowDistance === '') {
 				setErrorMessage('Please enter a valid distance');
 			} else if (rowTime === 0) {
@@ -222,7 +227,7 @@ function Home(props) {
 				}
 				if (splitTenths === '') {
 					setSplitTenths(0);
-        }
+				}
 				let tempAverageSplit = Number(splitMinutes) * 60 + Number(splitSeconds) + Number(splitTenths) * 0.1;
 				const userRow = {
 					email: props.userEmail,
@@ -289,19 +294,19 @@ function Home(props) {
 						<Form.Label>h</Form.Label>
 						<Form.Control value={rowHours} onChange={(e) => changeHours(e)} />
 					</Form.Group>
-          :
+					:
 					<Form.Group className="rowTimeGroupAB">
 						<Form.Label>mm</Form.Label>
 						<Form.Control value={rowMinutes} onChange={(e) => changeMinutes(e)} />
 					</Form.Group>
 				</Form.Group>
-        :
+				:
 				<Form.Group className="rowTimeGroupB">
 					<Form.Group className="rowTimeGroupBA">
 						<Form.Label>ss</Form.Label>
 						<Form.Control value={rowSeconds} onChange={(e) => changeSeconds(e)} />
 					</Form.Group>
-          .
+					.
 					<Form.Group className="rowTimeGroupBB">
 						<Form.Label>t</Form.Label>
 						<Form.Control value={rowTenths} onChange={(e) => changeTenths(e)} />
@@ -320,9 +325,9 @@ function Home(props) {
 			<Form.Group className="rowAverageSplit">
 				<Form.Label>Average Split (mm:ss.t)</Form.Label>
 				<Form.Control value={splitMinutes} onChange={(e) => changeSplitMinutes(e)} />
-        :
+				:
 				<Form.Control value={splitSeconds} onChange={(e) => changeSplitSeconds(e)} />
-        .
+				.
 				<Form.Control value={splitTenths} onChange={(e) => changeSplitTenths(e)} />
 			</Form.Group>
 		);
@@ -352,6 +357,42 @@ function Home(props) {
 			}
 		}
 		return tenths;
+	};
+
+	//Finds date
+	const getDate = (date) => {
+		let year = date[2] + date[3];
+		let month = date[5] + date[6];
+		let day = date[8] + date[9];
+		return month + '/' + day + '/' + year;
+	};
+
+	//Finds full time
+	const getTime = (time) => {
+    let hours = (Math.floor(time / 60 / 60)).toString();
+    let minutes = (Math.floor(time / 60) - hours * 60).toString();
+    if (minutes.length === 1) {
+      minutes = '0' + minutes;
+    }
+    let seconds = (Math.floor(time % 60)).toString();
+    if (seconds.length === 1) {
+      seconds = '0' + seconds;
+    }
+    let tenths = 0;
+    if (time) {
+      let tenthString = time.toString();
+      for (let i = 0; i < tenthString.length; i++) {
+				if (tenthString[i] === '.') {
+					tenths = tenthString[i + 1];
+				}
+			}
+    }
+    if (hours === "0") {
+      hours = "";
+    } else {
+      hours = hours + ":"
+    }
+    return hours + minutes + ":" + seconds + "." + tenths;
 	};
 
 	//Full Page
@@ -389,74 +430,79 @@ function Home(props) {
 			<div className="rowLog">
 				{/* Single Distance Log */}
 				<div className="singleDistances">
-					Single Distances
+					<h5>Single Distance Rows</h5>
 					{singleDistanceData.map((item) => {
 						let min = findSplitMins(item.averageSplit);
 						let sec = findSplitSecs(item.averageSplit);
 						let tenths = findSplitTenths(item.averageSplit);
 						return (
 							<p>
-								{item.rowDistance} {item.rowTime} {min}:{sec}.{tenths} {item.averageSplit}
+								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
+								{item.rowSPM}
 							</p>
 						);
 					})}
 				</div>
 				{/* Single Time Log */}
 				<div className="singleTimes">
-					Single Times
+					<h5>Single Time Rows</h5>
 					{singleTimeData.map((item) => {
 						let min = findSplitMins(item.averageSplit);
 						let sec = findSplitSecs(item.averageSplit);
 						let tenths = findSplitTenths(item.averageSplit);
 						return (
 							<p>
-								{item.rowTime} {item.rowDistance} {min}:{sec}.{tenths} {item.averageSplit}
+								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
+								{item.rowSPM}
 							</p>
 						);
 					})}
 				</div>
 				{/* Distance Interval Log */}
 				<div className="distanceIntervals">
-					Distance Intervals
+					<h5>Distance Intervals</h5>
 					{distanceIntervalData.map((item) => {
 						let min = findSplitMins(item.averageSplit);
 						let sec = findSplitSecs(item.averageSplit);
 						let tenths = findSplitTenths(item.averageSplit);
 						return (
 							<p>
-								{item.rowDistance} {item.rowTime} {min}:{sec}.{tenths} {item.averageSplit}
+								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
+								{item.rowSPM}
 							</p>
 						);
 					})}
 				</div>
 				{/* Time Interval Log */}
 				<div className="timeIntervals">
-          Time Intervals
-          {timeIntervalData.map((item) => {
+					<h5>Time Intervals</h5>
+					{timeIntervalData.map((item) => {
 						let min = findSplitMins(item.averageSplit);
 						let sec = findSplitSecs(item.averageSplit);
 						let tenths = findSplitTenths(item.averageSplit);
 						return (
 							<p>
-								{item.rowTime} {item.rowDistance} {min}:{sec}.{tenths} {item.averageSplit}
+								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
+								{item.rowSPM}
 							</p>
 						);
 					})}
-        </div>
-        {/* Variable Interval Log */}
-        <div className="variableIntervals">
-          Variable Intervals
-          {variableIntervalData.map((item) => {
+				</div>
+				{/* Variable Interval Log */}
+				<div className="variableIntervals">
+					<h5>Variable Intervals</h5>
+					{variableIntervalData.map((item) => {
 						let min = findSplitMins(item.averageSplit);
 						let sec = findSplitSecs(item.averageSplit);
 						let tenths = findSplitTenths(item.averageSplit);
 						return (
 							<p>
-								{item.rowDistance} {item.rowTime} {min}:{sec}.{tenths} {item.averageSplit}
+								{getDate(item.rowDate)} {item.rowDistance} {getTime(item.rowTime)} {min}:{sec}.{tenths}{' '}
+								{item.rowSPM}
 							</p>
 						);
 					})}
-        </div>
+				</div>
 			</div>
 		</div>
 	);

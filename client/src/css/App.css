@@ -24,7 +24,11 @@ body, html {
 }
 
 .rowLog {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
   margin-left: 300px;
+  padding-left: 40px;
   height: 100vh;
   background-color: #f6f6f6;
 }
@@ -109,6 +113,20 @@ form .rowButton {
 .rowAverageSplit input {
   display: inline-block;
   width: 56px;
+}
+
+.rowLog div {
+  margin-right: 40px;
+  margin-top: 50px;
+  width: 30vw;
+  height: 75vh;
+  background-color: white;
+  vertical-align: top;
+  display: inline-block; 
+  border-radius: 8px;
+  box-shadow: 5px 5px 4px 2px #eee;
+  padding-left: 20px;
+  padding-top: 20px;
 }
 
 hr.versionTag {
