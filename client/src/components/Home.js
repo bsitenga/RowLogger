@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import FormGroup from 'react-bootstrap/FormControl';
-import FormLabel from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -20,6 +17,9 @@ function Home(props) {
 	const [ rowTenths, setRowTenths ] = useState('');
 	const [ rowSPM, setRowSPM ] = useState('');
 	const [ averageSplit, setAverageSplit ] = useState('');
+	const [ splitMinutes, setSplitMinutes ] = useState('');
+	const [ splitSeconds, setSplitSeconds ] = useState('');
+	const [ splitTenths, setSplitTenths ] = useState('');
 	const [ errorMessage, setErrorMessage ] = useState('');
 	const [ rowData, setRowData ] = useState([]);
 	const [ singleTimeData, setSingleTimeData ] = useState([]);
@@ -111,6 +111,24 @@ function Home(props) {
 		}
 	};
 
+	const changeSplitMinutes = (e) => {
+		if (!isNaN(e.target.value)) {
+			setSplitMinutes(e.target.value);
+		}
+	};
+
+	const changeSplitSeconds = (e) => {
+		if (!isNaN(e.target.value)) {
+			setSplitSeconds(e.target.value);
+		}
+	};
+
+	const changeSplitTenths = (e) => {
+		if (!isNaN(e.target.value)) {
+			setSplitTenths(e.target.value);
+		}
+	};
+
 	//adds the word total in front of form labels
 	const addTotalWord = () => {
 		if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time') return 'Total ';
@@ -156,13 +174,16 @@ function Home(props) {
 			} else if (rowTime === 0) {
 				setErrorMessage('Please enter a valid time');
 			} else {
+				let tempAverageSplit = rowTime / (rowDistance / 500);
 				const userRow = {
 					email: props.userEmail,
 					row: {
 						rowDate: rowDate,
 						rowType: rowType,
 						rowDistance: rowDistance,
-						rowTime: rowTime
+						rowTime: rowTime,
+						rowSPM: rowSPM,
+						averageSplit: tempAverageSplit
 					}
 				};
 				axios.post('http://localhost:5000/api/userrows', userRow).then((res) => {});
@@ -175,7 +196,7 @@ function Home(props) {
 		}
 	};
 
-  //Creates the form from components
+	//Creates the form from components
 	const formSwitch = () => {
 		if (rowType === 'Single Distance' || rowType === 'Single Time') {
 			return (
@@ -248,14 +269,43 @@ function Home(props) {
 		return (
 			<Form.Group className="rowAverageSplit">
 				<Form.Label>Average Split</Form.Label>
-				<Form.Control value={averageSplit} onChange={(e) => changeSplit(e)} />
+				<Form.Control value={splitMinutes} onChange={(e) => changeSplitMinutes(e)} />
+				<Form.Control value={splitSeconds} onChange={(e) => changeSplitSeconds(e)} />
+				<Form.Control value={splitTenths} onChange={(e) => changeSplitTenths(e)} />
 			</Form.Group>
 		);
+	};
+
+	//Average split parsing functions
+	const findSplitMins = (fullSplit) => {
+		return Math.floor(fullSplit / 60);
+	};
+
+	const findSplitSecs = (fullSplit) => {
+		let sec = Math.floor(fullSplit - findSplitMins(fullSplit) * 60).toString();
+		if (sec.length === 1) {
+			sec = '0' + sec;
+		}
+		return sec;
+	};
+
+	const findSplitTenths = (fullSplit) => {
+		let tenths = 0;
+		if (fullSplit) {
+			let tenthString = fullSplit.toString();
+			for (let i = 0; i < tenthString.length; i++) {
+				if (tenthString[i] === '.') {
+					tenths = tenthString[i + 1];
+				}
+			}
+    }
+    return tenths;
 	};
 
 	//Full Page
 	return (
 		<div>
+			{/* Rowing Form */}
 			<div className="rowForm">
 				{errorMessage}
 				<Form onSubmit={(e) => submitRow(e)}>
@@ -283,28 +333,39 @@ function Home(props) {
 					<p>RowLogger v1.0.0</p>
 				</div>
 			</div>
+			{/* Full Rowing Log */}
 			<div className="rowLog">
+				{/* Single Distance Log */}
 				<div className="singleDistances">
 					Single Distances
 					{singleDistanceData.map((item) => {
+						let min = findSplitMins(item.averageSplit);
+						let sec = findSplitSecs(item.averageSplit);
+						let tenths = findSplitTenths(item.averageSplit);
 						return (
 							<p>
-								{item.rowDistance} {item.rowTime}
+								{item.rowDistance} {item.rowTime} {min}:{sec}.{tenths} {item.averageSplit}
 							</p>
 						);
 					})}
 				</div>
+				{/* Single Time Log */}
 				<div className="singleTimes">
 					Single Times
 					{singleTimeData.map((item) => {
+						let min = findSplitMins(item.averageSplit);
+						let sec = findSplitSecs(item.averageSplit);
+						let tenths = findSplitTenths(item.averageSplit);
 						return (
 							<p>
-								{item.rowTime} {item.rowDistance}
+								{item.rowTime} {item.rowDistance} {min}:{sec}.{tenths} {item.averageSplit}
 							</p>
 						);
 					})}
 				</div>
+				{/* Distance Interval Log */}
 				<div className="distanceIntervals">Distance Intervals</div>
+				{/* Time Interval Log */}
 				<div className="timeIntervals">time Intervals</div>
 			</div>
 		</div>
