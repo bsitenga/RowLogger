@@ -1,6 +1,6 @@
 .rowForm {
   height: 100%;
-  width: 400px;
+  width: 300px;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -19,18 +19,22 @@
 .rowDistanceGroup {
   display: inline-block;
   margin-left: 25px;
-  width: 235px;
+  width: 110px;
+}
+
+.rowTimeGroupA {
+  display: inline-block;
 }
 
 .rowTimeGroupAA {
   display: inline-block;
-  width: 167px;
+  width: 56px;
 }
 
 .rowTimeGroupAB {
   display: inline-block;
-  margin-left: 25px;
-  width: 167px;
+  margin-left: 0px;
+  width: 56px;
 }
 
 .rowTimeGroupB {
@@ -39,13 +43,13 @@
 
 .rowTimeGroupBA {
   display: inline-block;
-  width: 115px;
+  width: 56px;
 }
 
 .rowTimeGroupBB {
   display: inline-block;
-  margin-left: 25px;
-  width: 95px;
+  margin-left: 0px;
+  width: 56px;
 }
 
 .rowDateLabel {
@@ -61,10 +65,33 @@
 }
 
 form .rowButton {
-  width: 100px;
+  width: 100%;
+  display: block;
+}
+
+.rowSPM {
+  width: 45px;
   display: inline-block;
-  margin-left: 25px;
-  margin-bottom: 5px;
+}
+
+.bottomTag {
+  position: fixed;
+  bottom: 0px;
+}
+
+.rowAverageSplit {
+  margin-left: 15px;
+  width: 180px;
+  display: inline-block;
+}
+
+.rowAverageSplit label {
+  display: block;
+}
+
+.rowAverageSplit input {
+  display: inline-block;
+  width: 56px;
 }
 
 hr.versionTag {
