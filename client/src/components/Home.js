@@ -26,7 +26,8 @@ function Home(props) {
 	const [ singleDistanceData, setSingleDistanceData ] = useState([]);
 	const [ distanceIntervalData, setDistanceIntervalData ] = useState([]);
 	const [ timeIntervalData, setTimeIntervalData ] = useState([]);
-	const [ variableIntervalData, setVariableIntervalData ] = useState([]);
+  const [ variableIntervalData, setVariableIntervalData ] = useState([]);
+  const [ rowNotes, setRowNotes ] = useState('');
 
 	//On Mount
 	useEffect(
@@ -156,7 +157,11 @@ function Home(props) {
 		if (!isNaN(e.target.value)) {
 			setSplitTenths(e.target.value);
 		}
-	};
+  };
+  
+  const changeNotes = (e) => {
+    setRowNotes(e.target.value);
+  }
 
 	//adds the word total in front of form labels
 	const addTotalWord = () => {
@@ -178,7 +183,8 @@ function Home(props) {
 		setAverageSplit('');
 		setSplitMinutes('');
 		setSplitSeconds('');
-		setSplitTenths('');
+    setSplitTenths('');
+    setRowNotes('');
 	};
 
 	//Submits the row form
@@ -216,7 +222,8 @@ function Home(props) {
 						rowDistance: rowDistance,
 						rowTime: rowTime,
 						rowSPM: rowSPM,
-						averageSplit: tempAverageSplit
+            averageSplit: tempAverageSplit,
+            rowNotes: rowNotes
 					}
 				};
 				axios.post('http://localhost:5000/api/userrows', userRow).then((res) => {});
@@ -269,6 +276,7 @@ function Home(props) {
 				<span>
 					{DistanceForm()}
 					{TimeForm()}
+          {noteForm()}
 				</span>
 			);
 		} else if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time') {
@@ -277,6 +285,7 @@ function Home(props) {
 					{DistanceForm()}
 					{TimeForm()}
 					{averageSplitForm()}
+          {noteForm()}
 				</span>
 			);
 		} else if (rowType === 'Intervals: Variable') {
@@ -285,6 +294,7 @@ function Home(props) {
 					{DistanceForm()}
 					{TimeForm()}
 					{averageSplitForm()}
+          {noteForm()}
 				</span>
 			);
 		}
@@ -345,7 +355,14 @@ function Home(props) {
 				<Form.Control value={splitTenths} onChange={(e) => changeSplitTenths(e)} />
 			</Form.Group>
 		);
-	};
+  };
+  
+  const noteForm = () => {
+    return <Form.Group className = "rowNotes">
+      <Form.Label>Notes</Form.Label>
+      <Form.Control value={rowNotes} onChange={(e) => changeNotes(e)} />
+    </Form.Group>
+  }
 
 	//Average split parsing functions
 	const findSplitMins = (fullSplit) => {
