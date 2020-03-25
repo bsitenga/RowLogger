@@ -26,8 +26,8 @@ function Home(props) {
 	const [ singleDistanceData, setSingleDistanceData ] = useState([]);
 	const [ distanceIntervalData, setDistanceIntervalData ] = useState([]);
 	const [ timeIntervalData, setTimeIntervalData ] = useState([]);
-  const [ variableIntervalData, setVariableIntervalData ] = useState([]);
-  const [ rowNotes, setRowNotes ] = useState('');
+	const [ variableIntervalData, setVariableIntervalData ] = useState([]);
+	const [ rowNotes, setRowNotes ] = useState('');
 
 	//On Mount
 	useEffect(
@@ -64,11 +64,12 @@ function Home(props) {
 					}
 				}
 
-        sortByDate(tempSingleDistanceData);
-        sortByDate(tempSingleTimeData);
-        sortByDate(tempDistanceIntervalData);
-        sortByDate(tempTimeIntervalData);
-        sortByDate(tempVariableIntervalData);
+        //sorts rows by date in each category
+				sortByDate(tempSingleDistanceData);
+				sortByDate(tempSingleTimeData);
+				sortByDate(tempDistanceIntervalData);
+				sortByDate(tempTimeIntervalData);
+				sortByDate(tempVariableIntervalData);
 
 				//sets state for each row type
 				setSingleDistanceData(tempSingleDistanceData);
@@ -82,13 +83,14 @@ function Home(props) {
 		[ rowData ]
 	);
 
-  const sortByDate = (arry) => {
-    arry.sort(function(a, b) {
-      a = a.rowDate.slice(0, 10).split('-').join('');
-      b = b.rowDate.slice(0, 10).split('-').join('');
-      return b.localeCompare(a);
-    });
-  }
+  //sorts by date in reverse chronological order
+	const sortByDate = (arry) => {
+		arry.sort(function(a, b) {
+			a = a.rowDate.slice(0, 10).split('-').join('');
+			b = b.rowDate.slice(0, 10).split('-').join('');
+			return b.localeCompare(a);
+		});
+	};
 
 	//All form state change functions
 	const changeDate = (date) => {
@@ -157,11 +159,11 @@ function Home(props) {
 		if (!isNaN(e.target.value)) {
 			setSplitTenths(e.target.value);
 		}
-  };
-  
-  const changeNotes = (e) => {
-    setRowNotes(e.target.value);
-  }
+	};
+
+	const changeNotes = (e) => {
+		setRowNotes(e.target.value);
+	};
 
 	//adds the word total in front of form labels
 	const addTotalWord = () => {
@@ -183,8 +185,8 @@ function Home(props) {
 		setAverageSplit('');
 		setSplitMinutes('');
 		setSplitSeconds('');
-    setSplitTenths('');
-    setRowNotes('');
+		setSplitTenths('');
+		setRowNotes('');
 	};
 
 	//Submits the row form
@@ -222,8 +224,8 @@ function Home(props) {
 						rowDistance: rowDistance,
 						rowTime: rowTime,
 						rowSPM: rowSPM,
-            averageSplit: tempAverageSplit,
-            rowNotes: rowNotes
+						averageSplit: tempAverageSplit,
+						rowNotes: rowNotes
 					}
 				};
 				axios.post('http://localhost:5000/api/userrows', userRow).then((res) => {});
@@ -239,6 +241,8 @@ function Home(props) {
 				setErrorMessage('Please enter a valid distance');
 			} else if (rowTime === 0) {
 				setErrorMessage('Please enter a valid time');
+			} else if (splitMinutes === '' && splitSeconds === '' && splitTenths === '') {
+				setErrorMessage('Please enter a valid average split');
 			} else {
 				if (splitMinutes === '') {
 					setSplitMinutes(0);
@@ -265,7 +269,6 @@ function Home(props) {
 				clearForm();
 				console.log('submitted row');
 			}
-		} else if (rowType === 'Intervals: Variable') {
 		}
 	};
 
@@ -276,7 +279,7 @@ function Home(props) {
 				<span>
 					{DistanceForm()}
 					{TimeForm()}
-          {noteForm()}
+					{noteForm()}
 				</span>
 			);
 		} else if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time') {
@@ -285,7 +288,7 @@ function Home(props) {
 					{DistanceForm()}
 					{TimeForm()}
 					{averageSplitForm()}
-          {noteForm()}
+					{noteForm()}
 				</span>
 			);
 		} else if (rowType === 'Intervals: Variable') {
@@ -294,7 +297,7 @@ function Home(props) {
 					{DistanceForm()}
 					{TimeForm()}
 					{averageSplitForm()}
-          {noteForm()}
+					{noteForm()}
 				</span>
 			);
 		}
@@ -355,14 +358,16 @@ function Home(props) {
 				<Form.Control value={splitTenths} onChange={(e) => changeSplitTenths(e)} />
 			</Form.Group>
 		);
-  };
-  
-  const noteForm = () => {
-    return <Form.Group className = "rowNotes">
-      <Form.Label>Notes</Form.Label>
-      <Form.Control value={rowNotes} onChange={(e) => changeNotes(e)} />
-    </Form.Group>
-  }
+	};
+
+	const noteForm = () => {
+		return (
+			<Form.Group className="rowNotes">
+				<Form.Label>Notes</Form.Label>
+				<Form.Control value={rowNotes} onChange={(e) => changeNotes(e)} />
+			</Form.Group>
+		);
+	};
 
 	//Average split parsing functions
 	const findSplitMins = (fullSplit) => {
@@ -431,7 +436,6 @@ function Home(props) {
 		<div>
 			{/* Rowing Form */}
 			<div className="rowForm">
-				{errorMessage}
 				<Form onSubmit={(e) => submitRow(e)}>
 					<Form.Group controlId="rowType" className="rowTypeGroup">
 						<Form.Label>Type</Form.Label>
@@ -448,6 +452,7 @@ function Home(props) {
 						<DatePicker selected={rowDate} onChange={changeDate} />
 					</Form.Group>
 					{formSwitch()}
+					<span className="errorMessage">{errorMessage}</span>
 					<Button block bsSize="large" type="submit" className="rowButton">
 						Submit
 					</Button>

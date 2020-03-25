@@ -90,6 +90,7 @@ body, html {
 form .rowButton {
   width: 100%;
   display: block;
+  margin-top: 15px;
 }
 
 .rowSPM {
@@ -167,4 +168,8 @@ td {
 .react-datepicker-wrapper input {
   width: 100px;
   padding-left: 7px;
+}
+
+.errorMessage {
+  margin-bottom: 10px;
 }
