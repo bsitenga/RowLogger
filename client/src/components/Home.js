@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -63,6 +63,12 @@ function Home(props) {
 					}
 				}
 
+        sortByDate(tempSingleDistanceData);
+        sortByDate(tempSingleTimeData);
+        sortByDate(tempDistanceIntervalData);
+        sortByDate(tempTimeIntervalData);
+        sortByDate(tempVariableIntervalData);
+
 				//sets state for each row type
 				setSingleDistanceData(tempSingleDistanceData);
 				setSingleTimeData(tempSingleTimeData);
@@ -74,6 +80,14 @@ function Home(props) {
 		},
 		[ rowData ]
 	);
+
+  const sortByDate = (arry) => {
+    arry.sort(function(a, b) {
+      a = a.rowDate.slice(0, 10).split('-').join('');
+      b = b.rowDate.slice(0, 10).split('-').join('');
+      return b.localeCompare(a);
+    });
+  }
 
 	//All form state change functions
 	const changeDate = (date) => {
@@ -427,7 +441,7 @@ function Home(props) {
 				</div>
 			</div>
 			{/* Full Rowing Log */}
-			<div className="rowLog">
+			<div className="rowLog" id="rowLogger">
 				{/* Single Distance Log */}
 				<div className="singleDistances">
 					<h5>Single Distance Rows</h5>
@@ -449,10 +463,12 @@ function Home(props) {
 								return (
 									<tr>
 										<td>{getDate(item.rowDate)}</td>
-                    <td>{item.rowDistance}</td>
-                    <td>{getTime(item.rowTime)}</td>
-                    <td>{min}:{sec}.{tenths}</td>
-                    <td>{item.rowSPM}</td>
+										<td>{item.rowDistance}</td>
+										<td>{getTime(item.rowTime)}</td>
+										<td>
+											{min}:{sec}.{tenths}
+										</td>
+										<td>{item.rowSPM}</td>
 									</tr>
 								);
 							})}
@@ -462,7 +478,7 @@ function Home(props) {
 				{/* Single Time Log */}
 				<div className="singleTimes">
 					<h5>Single Time Rows</h5>
-          <table>
+					<table>
 						<thead>
 							<tr>
 								<th>Date</th>
@@ -480,10 +496,12 @@ function Home(props) {
 								return (
 									<tr>
 										<td>{getDate(item.rowDate)}</td>
-                    <td>{item.rowDistance}</td>
-                    <td>{getTime(item.rowTime)}</td>
-                    <td>{min}:{sec}.{tenths}</td>
-                    <td>{item.rowSPM}</td>
+										<td>{item.rowDistance}</td>
+										<td>{getTime(item.rowTime)}</td>
+										<td>
+											{min}:{sec}.{tenths}
+										</td>
+										<td>{item.rowSPM}</td>
 									</tr>
 								);
 							})}
@@ -511,10 +529,12 @@ function Home(props) {
 								return (
 									<tr>
 										<td>{getDate(item.rowDate)}</td>
-                    <td>{item.rowDistance}</td>
-                    <td>{getTime(item.rowTime)}</td>
-                    <td>{min}:{sec}.{tenths}</td>
-                    <td>{item.rowSPM}</td>
+										<td>{item.rowDistance}</td>
+										<td>{getTime(item.rowTime)}</td>
+										<td>
+											{min}:{sec}.{tenths}
+										</td>
+										<td>{item.rowSPM}</td>
 									</tr>
 								);
 							})}
@@ -542,10 +562,12 @@ function Home(props) {
 								return (
 									<tr>
 										<td>{getDate(item.rowDate)}</td>
-                    <td>{item.rowDistance}</td>
-                    <td>{getTime(item.rowTime)}</td>
-                    <td>{min}:{sec}.{tenths}</td>
-                    <td>{item.rowSPM}</td>
+										<td>{item.rowDistance}</td>
+										<td>{getTime(item.rowTime)}</td>
+										<td>
+											{min}:{sec}.{tenths}
+										</td>
+										<td>{item.rowSPM}</td>
 									</tr>
 								);
 							})}
@@ -573,10 +595,12 @@ function Home(props) {
 								return (
 									<tr>
 										<td>{getDate(item.rowDate)}</td>
-                    <td>{item.rowDistance}</td>
-                    <td>{getTime(item.rowTime)}</td>
-                    <td>{min}:{sec}.{tenths}</td>
-                    <td>{item.rowSPM}</td>
+										<td>{item.rowDistance}</td>
+										<td>{getTime(item.rowTime)}</td>
+										<td>
+											{min}:{sec}.{tenths}
+										</td>
+										<td>{item.rowSPM}</td>
 									</tr>
 								);
 							})}
