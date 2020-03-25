@@ -6,6 +6,7 @@ body, html {
 #rowloggernav {
   background-color: white!important;
   box-shadow: 0 10px 4px -4px #eee;
+  height: 56px!important;
 }
 
 .bg-light {
@@ -21,6 +22,7 @@ body, html {
   overflow-x: hidden;
   padding: 20px;
   box-shadow: 7px 0 4px -4px #eee;
+  overflow-y: hidden;
 }
 
 .rowLog {
@@ -29,7 +31,7 @@ body, html {
   white-space: nowrap;
   margin-left: 300px;
   padding-left: 40px;
-  height: 100vh;
+  height: calc(100vh - 56px);
   background-color: #f6f6f6;
 }
 
@@ -40,7 +42,7 @@ body, html {
 .rowDistanceGroup {
   display: inline-block;
   margin-left: 25px;
-  width: 110px;
+  width: 125px;
 }
 
 .rowTimeGroupA {
@@ -49,13 +51,13 @@ body, html {
 
 .rowTimeGroupAA {
   display: inline-block;
-  width: 56px;
+  width: 60px;
 }
 
 .rowTimeGroupAB {
   display: inline-block;
   margin-left: 0px;
-  width: 56px;
+  width: 60px;
 }
 
 .rowTimeGroupB {
@@ -64,13 +66,13 @@ body, html {
 
 .rowTimeGroupBA {
   display: inline-block;
-  width: 56px;
+  width: 60px;
 }
 
 .rowTimeGroupBB {
   display: inline-block;
   margin-left: 0px;
-  width: 56px;
+  width: 60px;
 }
 
 .rowDateLabel {
@@ -91,7 +93,7 @@ form .rowButton {
 }
 
 .rowSPM {
-  width: 45px;
+  width: 60px;
   display: inline-block;
 }
 
@@ -118,8 +120,8 @@ form .rowButton {
 .rowLog div {
   margin-right: 40px;
   margin-top: 50px;
-  width: 30vw;
-  min-width: 400px;
+  width: 33vw;
+  min-width: 430px;
   height: 75vh;
   background-color: white;
   vertical-align: top;
@@ -128,6 +130,8 @@ form .rowButton {
   box-shadow: 5px 5px 4px 2px #eee;
   padding-left: 20px;
   padding-top: 20px;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 hr.versionTag {
@@ -152,17 +156,15 @@ table {
 
 th {
   font-weight: 500;
+  border-bottom: 2px solid #aaa;
 }
 
-.scrollButton {
-  position: absolute;
-  margin-top: 10px;
+td {
+  border-bottom: 1px solid #ddd;
+  height: 35px;
 }
 
-.scrollButton.prev {
-  right: 150px;
-}
-
-.scrollButton.next {
-  right: 100px;
+.react-datepicker-wrapper input {
+  width: 100px;
+  padding-left: 7px;
 }

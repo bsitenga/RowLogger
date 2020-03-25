@@ -295,7 +295,7 @@ function Home(props) {
 		return (
 			<Form.Group className="rowDistanceGroup">
 				<Form.Label>Distance (m)</Form.Label>
-				<Form.Control value={rowDistance} onChange={(e) => changeDistance(e)} />
+				<Form.Control placeholder="meters" value={rowDistance} onChange={(e) => changeDistance(e)} />
 			</Form.Group>
 		);
 	};
@@ -306,24 +306,24 @@ function Home(props) {
 				<Form.Group className="rowTimeGroupA">
 					<Form.Group className="rowTimeGroupAA">
 						<Form.Label>h</Form.Label>
-						<Form.Control value={rowHours} onChange={(e) => changeHours(e)} />
+						<Form.Control placeholder="hour" value={rowHours} onChange={(e) => changeHours(e)} />
 					</Form.Group>
 					:
 					<Form.Group className="rowTimeGroupAB">
 						<Form.Label>mm</Form.Label>
-						<Form.Control value={rowMinutes} onChange={(e) => changeMinutes(e)} />
+						<Form.Control placeholder="mins" value={rowMinutes} onChange={(e) => changeMinutes(e)} />
 					</Form.Group>
 				</Form.Group>
 				:
 				<Form.Group className="rowTimeGroupB">
 					<Form.Group className="rowTimeGroupBA">
 						<Form.Label>ss</Form.Label>
-						<Form.Control value={rowSeconds} onChange={(e) => changeSeconds(e)} />
+						<Form.Control placeholder="secs" value={rowSeconds} onChange={(e) => changeSeconds(e)} />
 					</Form.Group>
 					.
 					<Form.Group className="rowTimeGroupBB">
 						<Form.Label>t</Form.Label>
-						<Form.Control value={rowTenths} onChange={(e) => changeTenths(e)} />
+						<Form.Control placeholder="tens" value={rowTenths} onChange={(e) => changeTenths(e)} />
 					</Form.Group>
 				</Form.Group>
 				<Form.Group className="rowSPM">
