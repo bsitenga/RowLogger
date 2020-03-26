@@ -43,7 +43,7 @@ function App() {
 
 	const trendSwitch = () => {
 		if (loggedIn()) {
-			return <FullHistory />;
+			return <FullHistory userEmail={getUserEmail()}/>;
 		}
 		return <Register />
 	}
