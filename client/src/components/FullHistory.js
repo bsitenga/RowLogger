@@ -10,11 +10,10 @@ function FullHistory(props) {
 	const [ singleDistanceData, setSingleDistanceData ] = useState([]);
 	const [ distanceIntervalData, setDistanceIntervalData ] = useState([]);
 	const [ timeIntervalData, setTimeIntervalData ] = useState([]);
-	const [ variableIntervalData, setVariableIntervalData ] = useState([]);
+  const [ variableIntervalData, setVariableIntervalData ] = useState([]);
+  const [ rowTypes, setRowTypes ] = useState('all rows');
 	const [ sortBy, setSortBy ] = useState('date');
-	const [ order, setOrder ] = useState('descending');
-	const [ dateSorter, setDateSorter ] = useState('↓');
-
+  const [ order, setOrder ] = useState('descending');
 
 	//On Mount
 	useEffect(
@@ -64,13 +63,21 @@ function FullHistory(props) {
           } else if (order === 'ascending') {
             sortByDistance(tempData, 'ascending');
           }
+        } else if (sortBy === 'time') {
+          if (!order || order === 'descending') {
+            sortByTime(tempData, 'descending');
+          } else if (order === 'ascending') {
+            sortByTime(tempData, 'ascending');
+          }
         }
-				setRowData(tempData);
-				sortByDate(tempSingleDistanceData);
-				sortByDate(tempSingleTimeData);
-				sortByDate(tempDistanceIntervalData);
-				sortByDate(tempTimeIntervalData);
-				sortByDate(tempVariableIntervalData);
+        setRowData(tempData);
+        
+        //sorts types by date
+				sortByDate(tempSingleDistanceData, 'descending');
+				sortByDate(tempSingleTimeData, 'descending');
+				sortByDate(tempDistanceIntervalData, 'descending');
+				sortByDate(tempTimeIntervalData, 'descending');
+				sortByDate(tempVariableIntervalData, 'descending');
 
 				//sets state for each row type
 				setSingleDistanceData(tempSingleDistanceData);
@@ -110,6 +117,20 @@ function FullHistory(props) {
       }
 			return .5 - Math.random();
 		});
+  };
+  
+  //sorts by time
+	const sortByTime = (arry, direction) => {
+		arry.sort(function(a, b) {
+			a = Number(a.rowTime);
+			b = Number(b.rowTime);
+			if (direction === 'ascending') {
+				return a - b;
+			} else if (direction === 'descending') {
+        return b - a;
+      }
+			return .5 - Math.random();
+		});
 	};
 
 	//gets date from date string
@@ -122,21 +143,32 @@ function FullHistory(props) {
 
 	return (
 		<div>
-			Full History
+      Show me
+      <DropdownButton id="dropdown-basic-button" title={rowTypes}>
+				<Dropdown.Item onClick={() => setRowTypes('all rows')}>all rows</Dropdown.Item>
+				<Dropdown.Item onClick={() => setRowTypes('single distances')}>single distances</Dropdown.Item>
+				<Dropdown.Item onClick={() => setRowTypes('single times')}>single times</Dropdown.Item>
+        <Dropdown.Item onClick={() => setRowTypes('distance intervals')}>distance intervals</Dropdown.Item>
+				<Dropdown.Item onClick={() => setRowTypes('time intervals')}>time intervals</Dropdown.Item>
+        <Dropdown.Item onClick={() => setRowTypes('variable intervals')}>variable intervals</Dropdown.Item>
+			</DropdownButton>
+      sorted by
 			<DropdownButton id="dropdown-basic-button" title={sortBy}>
 				<Dropdown.Item onClick={() => setSortBy('date')}>date</Dropdown.Item>
 				<Dropdown.Item onClick={() => setSortBy('distance')}>distance</Dropdown.Item>
 				<Dropdown.Item onClick={() => setSortBy('time')}>time</Dropdown.Item>
+        <Dropdown.Item onClick={() => setSortBy('average split')}>average split</Dropdown.Item>
 			</DropdownButton>
+      in
 			<DropdownButton id="dropdown-basic-button" title={order}>
 				<Dropdown.Item onClick={() => setOrder('ascending')}>ascending</Dropdown.Item>
 				<Dropdown.Item onClick={() => setOrder('descending')}>descending</Dropdown.Item>
-				<Dropdown.Item onClick={() => setOrder('random')}>random</Dropdown.Item>
 			</DropdownButton>
+      order
 			{rowData.map((row) => {
 				return (
 					<p>
-						{getDate(row.rowDate)} {row.rowDistance}
+						{getDate(row.rowDate)} {row.rowDistance} {row.rowTime} {row.averageSplit}
 					</p>
 				);
 			})}
