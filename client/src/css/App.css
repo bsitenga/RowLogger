@@ -173,3 +173,17 @@ td {
 .errorMessage {
 	margin-bottom: 10px;
 }
+
+.sortingLine {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.sortingLine span {
+  display: inline-block;
+}
+
+.orderButton {
+  margin-left: 5px;
+  margin-right: 5px;
+}
