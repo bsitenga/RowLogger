@@ -162,7 +162,61 @@ function FullHistory(props) {
 		return month + '/' + day + '/' + year;
 	};
 
-	return (
+	//Average split parsing functions
+	const findSplitMins = (fullSplit) => {
+		return Math.floor(fullSplit / 60);
+	};
+
+	const findSplitSecs = (fullSplit) => {
+		let sec = Math.floor(fullSplit - findSplitMins(fullSplit) * 60).toString();
+		if (sec.length === 1) {
+			sec = '0' + sec;
+		}
+		return sec;
+	};
+
+	const findSplitTenths = (fullSplit) => {
+		let tenths = 0;
+		if (fullSplit) {
+			let tenthString = fullSplit.toString();
+			for (let i = 0; i < tenthString.length; i++) {
+				if (tenthString[i] === '.') {
+					tenths = tenthString[i + 1];
+				}
+			}
+		}
+		return tenths;
+	};
+
+	//Finds full time
+	const getTime = (time) => {
+		let hours = Math.floor(time / 60 / 60).toString();
+		let minutes = (Math.floor(time / 60) - hours * 60).toString();
+		if (minutes.length === 1) {
+			minutes = '0' + minutes;
+		}
+		let seconds = Math.floor(time % 60).toString();
+		if (seconds.length === 1) {
+			seconds = '0' + seconds;
+		}
+		let tenths = 0;
+		if (time) {
+			let tenthString = time.toString();
+			for (let i = 0; i < tenthString.length; i++) {
+				if (tenthString[i] === '.') {
+					tenths = tenthString[i + 1];
+				}
+			}
+		}
+		if (hours === '0') {
+			hours = '';
+		} else {
+			hours = hours + ':';
+		}
+		return hours + minutes + ':' + seconds + '.' + tenths;
+	};
+
+	return rowData ? (
 		<div>
 			<div className="sortingLine">
 				<span>Show me</span>
@@ -212,16 +266,42 @@ function FullHistory(props) {
 				</span>
 				<span>order</span>
 			</div>
-			{rowData.map((row) => {
-				return rowData ? (
-					<p>
-						{getDate(row.rowDate)} {row.rowDistance} {row.rowTime} {row.averageSplit} {row.rowNotes}
-					</p>
-				) : (
-					<div>Loading...</div>
-				);
-			})}
+			<div className="fullHistory">
+				<table>
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Distance</th>
+							<th>Time</th>
+							<th>Split</th>
+							<th>SPM</th>
+              <th>Notes</th>
+						</tr>
+					</thead>
+					<tbody>
+						{rowData.map((item) => {
+							let min = findSplitMins(item.averageSplit);
+							let sec = findSplitSecs(item.averageSplit);
+							let tenths = findSplitTenths(item.averageSplit);
+							return (
+								<tr>
+									<td>{getDate(item.rowDate)}</td>
+									<td>{item.rowDistance}</td>
+									<td>{getTime(item.rowTime)}</td>
+									<td>
+										{min}:{sec}.{tenths}
+									</td>
+									<td>{item.rowSPM}</td>
+              <td>{item.rowNotes}</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+			</div>
 		</div>
+	) : (
+		<div>loading...</div>
 	);
 }
 

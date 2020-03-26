@@ -175,6 +175,7 @@ td {
 }
 
 .sortingLine {
+  font-size: 2em;
   text-align: center;
   margin-top: 20px;
 }
@@ -184,6 +185,22 @@ td {
 }
 
 .orderButton {
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.fullHistory {
+  margin-top: 30px;
+  text-align: center;
+  width: 90vw;
+}
+
+.fullHistory table {
+  margin-left: 5vw;
+  table-layout: fixed;
+  width: 90vw;
+}
+
+.fullHistory td {
+  height: 40px;
 }

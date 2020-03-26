@@ -65,7 +65,7 @@ function App() {
 								<Link to="/">Log</Link>
 							</Nav.Link>
 							<Nav.Link href="/records">
-								<Link to="/records">Records</Link>
+								<Link to="/records">History</Link>
 							</Nav.Link>
 							<NavDropdown title="Analytics" id="basic-nav-dropdown">
 								<NavDropdown.Item href="/analyticsone">
