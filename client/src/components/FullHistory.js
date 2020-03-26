@@ -4,7 +4,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 function FullHistory(props) {
-	//State
+  //State
+  const [ allData, setAllData ] = useState([]);
 	const [ rowData, setRowData ] = useState([]);
 	const [ singleTimeData, setSingleTimeData ] = useState([]);
 	const [ singleDistanceData, setSingleDistanceData ] = useState([]);
@@ -31,7 +32,8 @@ function FullHistory(props) {
 				for (let i = 0; i < res.data.length; i++) {
 					if (res.data[i].email === props.userEmail) {
 						tempData = res.data[i].rows;
-						setRowData(res.data[i].rows);
+            setRowData(res.data[i].rows);
+            setAllData(res.data[i].rows);
 					}
 				}
 
@@ -48,7 +50,7 @@ function FullHistory(props) {
 					} else if (tempData[i].rowType === 'Intervals: Variable') {
 						tempVariableIntervalData.push(tempData[i]);
 					}
-				}
+        }
 
 				//sorts rows by date in each category
 				if (!sortBy || sortBy === 'date') {
@@ -94,8 +96,66 @@ function FullHistory(props) {
 				console.log('rowData', rowData);
 			});
 		},
-		[ rowData ]
-	);
+		[]
+  );
+
+  const sortFunction = (sortType, sortOrder, rowType) => {
+    setSortBy(sortType);
+    setOrder(sortOrder);
+    setRowTypes(rowType);
+    let tempData = [];
+    for (let i = 0; i < allData.length; i++) {
+      if (rowType === 'all rows') {
+        tempData.push(allData[i]);
+      } else if (rowType === 'single distances') {
+        if (allData[i].rowType === 'Single Distance') {
+          tempData.push(allData[i]);
+        }
+      } else if (rowType === 'single times') {
+        if (allData[i].rowType === 'Single Time') {
+          tempData.push(allData[i]);
+        }
+      } else if (rowType === 'distance intervals') {
+        if (allData[i].rowType === 'Intervals: Distance') {
+          tempData.push(allData[i]);
+        }
+      } else if (rowType === 'time intervals') {
+        if (allData[i].rowType === 'Intervals: Time') {
+          tempData.push(allData[i]);
+        }
+      } else if (rowType === 'variable intervals') {
+        if (allData[i].rowType === 'Intervals: Variable') {
+          tempData.push(allData[i]);
+        }
+      }
+    }
+    if (!sortType || sortType === 'date') {
+      if (!sortOrder || sortOrder === 'descending') {
+        sortByDate(tempData, 'descending');
+      } else if (sortOrder === 'ascending') {
+        sortByDate(tempData, 'ascending');
+      } 
+    } else if (sortType === 'distance') {
+      if (!sortOrder || sortOrder === 'descending') {
+        sortByDistance(tempData, 'descending');
+      } else if (sortOrder === 'ascending') {
+        sortByDistance(tempData, 'ascending');
+      }
+    } else if (sortType === 'time') {
+      if (!sortOrder || sortOrder === 'descending') {
+        sortByTime(tempData, 'descending');
+      } else if (sortOrder === 'ascending') {
+        sortByTime(tempData, 'ascending');
+      }
+    } else if (sortType === 'average split') {
+      if (!sortOrder || sortOrder === 'descending') {
+        sortBySplit(tempData, 'descending');
+      } else if (sortOrder === 'ascending') {
+        sortBySplit(tempData, 'ascending');
+      }
+    }
+    setRowData(tempData);
+  }
 
 	//sorts by date
 	const sortByDate = (arry, direction) => {
@@ -109,7 +169,7 @@ function FullHistory(props) {
       }
 			return .5 - Math.random();
 		});
-	};
+  };
 
   //sorts by distance
 	const sortByDistance = (arry, direction) => {
@@ -159,38 +219,38 @@ function FullHistory(props) {
 		let month = date[5] + date[6];
 		let day = date[8] + date[9];
 		return month + '/' + day + '/' + year;
-	};
+  };
 
 	return (
 		<div>
       Show me
       <DropdownButton id="dropdown-basic-button" title={rowTypes}>
-				<Dropdown.Item onClick={() => setRowTypes('all rows')}>all rows</Dropdown.Item>
-				<Dropdown.Item onClick={() => setRowTypes('single distances')}>single distances</Dropdown.Item>
-				<Dropdown.Item onClick={() => setRowTypes('single times')}>single times</Dropdown.Item>
-        <Dropdown.Item onClick={() => setRowTypes('distance intervals')}>distance intervals</Dropdown.Item>
-				<Dropdown.Item onClick={() => setRowTypes('time intervals')}>time intervals</Dropdown.Item>
-        <Dropdown.Item onClick={() => setRowTypes('variable intervals')}>variable intervals</Dropdown.Item>
+				<Dropdown.Item onClick={() => sortFunction(sortBy, order, 'all rows')}>all rows</Dropdown.Item>
+				<Dropdown.Item onClick={() => sortFunction(sortBy, order, 'single distances')}>single distances</Dropdown.Item>
+				<Dropdown.Item onClick={() => sortFunction(sortBy, order, 'single times')}>single times</Dropdown.Item>
+        <Dropdown.Item onClick={() => sortFunction(sortBy, order, 'distance intervals')}>distance intervals</Dropdown.Item>
+				<Dropdown.Item onClick={() => sortFunction(sortBy, order, 'time intervals')}>time intervals</Dropdown.Item>
+        <Dropdown.Item onClick={() => sortFunction(sortBy, order, 'variable intervals')}>variable intervals</Dropdown.Item>
 			</DropdownButton>
       sorted by
 			<DropdownButton id="dropdown-basic-button" title={sortBy}>
-				<Dropdown.Item onClick={() => setSortBy('date')}>date</Dropdown.Item>
-				<Dropdown.Item onClick={() => setSortBy('distance')}>distance</Dropdown.Item>
-				<Dropdown.Item onClick={() => setSortBy('time')}>time</Dropdown.Item>
-        <Dropdown.Item onClick={() => setSortBy('average split')}>average split</Dropdown.Item>
+				<Dropdown.Item onClick={() => sortFunction('date', order, rowTypes)}>date</Dropdown.Item>
+				<Dropdown.Item onClick={() => sortFunction('distance', order, rowTypes)}>distance</Dropdown.Item>
+				<Dropdown.Item onClick={() => sortFunction('time', order, rowTypes)}>time</Dropdown.Item>
+        <Dropdown.Item onClick={() => sortFunction('average split', order, rowTypes)}>average split</Dropdown.Item>
 			</DropdownButton>
       in
 			<DropdownButton id="dropdown-basic-button" title={order}>
-				<Dropdown.Item onClick={() => setOrder('ascending')}>ascending</Dropdown.Item>
-				<Dropdown.Item onClick={() => setOrder('descending')}>descending</Dropdown.Item>
+				<Dropdown.Item onClick={() => sortFunction(sortBy, 'ascending', rowTypes)}>ascending</Dropdown.Item>
+				<Dropdown.Item onClick={() => sortFunction(sortBy, 'descending', rowTypes)}>descending</Dropdown.Item>
 			</DropdownButton>
       order
 			{rowData.map((row) => {
-				return (
+				return rowData ? (
 					<p>
-						{getDate(row.rowDate)} {row.rowDistance} {row.rowTime} {row.averageSplit}
+						{getDate(row.rowDate)} {row.rowDistance} {row.rowTime} {row.averageSplit} {row.rowNotes}
 					</p>
-				);
+				) : <div>Loading...</div>
 			})}
 		</div>
 	);
