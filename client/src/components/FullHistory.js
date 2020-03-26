@@ -7,11 +7,6 @@ function FullHistory(props) {
   //State
   const [ allData, setAllData ] = useState([]);
 	const [ rowData, setRowData ] = useState([]);
-	const [ singleTimeData, setSingleTimeData ] = useState([]);
-	const [ singleDistanceData, setSingleDistanceData ] = useState([]);
-	const [ distanceIntervalData, setDistanceIntervalData ] = useState([]);
-	const [ timeIntervalData, setTimeIntervalData ] = useState([]);
-  const [ variableIntervalData, setVariableIntervalData ] = useState([]);
   const [ rowTypes, setRowTypes ] = useState('all rows');
 	const [ sortBy, setSortBy ] = useState('date');
   const [ order, setOrder ] = useState('descending');
@@ -22,11 +17,6 @@ function FullHistory(props) {
 			axios.get('http://localhost:5000/api/userrows').then((res) => {
 				//temporary arrays for row data
 				let tempData = [];
-				let tempSingleDistanceData = [];
-				let tempSingleTimeData = [];
-				let tempDistanceIntervalData = [];
-				let tempTimeIntervalData = [];
-				let tempVariableIntervalData = [];
 
 				//grabs all row data
 				for (let i = 0; i < res.data.length; i++) {
@@ -37,62 +27,8 @@ function FullHistory(props) {
 					}
 				}
 
-				//separates all row data into arrays by type
-				for (let i = 0; i < tempData.length; i++) {
-					if (tempData[i].rowType === 'Single Distance') {
-						tempSingleDistanceData.push(tempData[i]);
-					} else if (tempData[i].rowType === 'Single Time') {
-						tempSingleTimeData.push(tempData[i]);
-					} else if (tempData[i].rowType === 'Intervals: Distance') {
-						tempDistanceIntervalData.push(tempData[i]);
-					} else if (tempData[i].rowType === 'Intervals: Time') {
-						tempTimeIntervalData.push(tempData[i]);
-					} else if (tempData[i].rowType === 'Intervals: Variable') {
-						tempVariableIntervalData.push(tempData[i]);
-					}
-        }
-
-				//sorts rows by date in each category
-				if (!sortBy || sortBy === 'date') {
-					if (!order || order === 'descending') {
-						sortByDate(tempData, 'descending');
-					} else if (order === 'ascending') {
-						sortByDate(tempData, 'ascending');
-					} 
-				} else if (sortBy === 'distance') {
-          if (!order || order === 'descending') {
-            sortByDistance(tempData, 'descending');
-          } else if (order === 'ascending') {
-            sortByDistance(tempData, 'ascending');
-          }
-        } else if (sortBy === 'time') {
-          if (!order || order === 'descending') {
-            sortByTime(tempData, 'descending');
-          } else if (order === 'ascending') {
-            sortByTime(tempData, 'ascending');
-          }
-        } else if (sortBy === 'average split') {
-          if (!order || order === 'descending') {
-            sortBySplit(tempData, 'descending');
-          } else if (order === 'ascending') {
-            sortBySplit(tempData, 'ascending');
-          }
-        }
+        sortByDate(tempData, 'descending');
         setRowData(tempData);
-        
-        //sorts types by date
-				sortByDate(tempSingleDistanceData, 'descending');
-				sortByDate(tempSingleTimeData, 'descending');
-				sortByDate(tempDistanceIntervalData, 'descending');
-				sortByDate(tempTimeIntervalData, 'descending');
-				sortByDate(tempVariableIntervalData, 'descending');
-
-				//sets state for each row type
-				setSingleDistanceData(tempSingleDistanceData);
-				setSingleTimeData(tempSingleTimeData);
-				setDistanceIntervalData(tempDistanceIntervalData);
-				setTimeIntervalData(tempTimeIntervalData);
-				setVariableIntervalData(tempVariableIntervalData);
 				console.log('rowData', rowData);
 			});
 		},
