@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import Logout from './components/Logout';
-import Trends from './components/Trends';
+import FullHistory from './components/FullHistory';
 import Home from './components/Home';
 import Register from './components/Register';
 import LoginSmall from './components/LoginSmall';
@@ -43,7 +43,14 @@ function App() {
 
 	const trendSwitch = () => {
 		if (loggedIn()) {
-			return <Trends />;
+			return <FullHistory />;
+		}
+		return <Register />
+	}
+
+	const analyticSwitch = () => {
+		if (loggedIn()) {
+			return <p>todo</p>
 		}
 		return <Register />
 	}
@@ -59,12 +66,12 @@ function App() {
 							<Nav.Link href="/">
 								<Link to="/">Log</Link>
 							</Nav.Link>
-							<Nav.Link href="/trends">
-								<Link to="/trends">Trends</Link>
+							<Nav.Link href="/records">
+								<Link to="/records">Records</Link>
 							</Nav.Link>
-							<NavDropdown title="Dropdown" id="basic-nav-dropdown">
-								<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-								<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+							<NavDropdown title="Analytics" id="basic-nav-dropdown">
+								<NavDropdown.Item href="/analyticsone"><Link to="/analyticsone"></Link>Analytics One</NavDropdown.Item>
+								<NavDropdown.Item href="/analyticstwo"><Link to="/analyticstwo">Analytics Two</Link></NavDropdown.Item>
 							</NavDropdown>
 						</Nav>
 						{loginSwitch()}
@@ -75,11 +82,17 @@ function App() {
 					<Route path="/register">
 						<Register />
 					</Route>
-					<Route path="/trends">
+					<Route path="/records">
 						{trendSwitch()}
 					</Route>
 					<Route path="/logout">
 						<Logout />
+					</Route>
+					<Route path="/analyticsone">
+						{analyticSwitch()}
+					</Route>
+					<Route path="/analyticstwo">
+						{analyticSwitch()}
 					</Route>
 					<Route path="/">
 						{homeSwitch()}
