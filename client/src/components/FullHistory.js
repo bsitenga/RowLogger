@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 function FullHistory(props) {
 	//State
@@ -9,8 +11,10 @@ function FullHistory(props) {
 	const [ distanceIntervalData, setDistanceIntervalData ] = useState([]);
 	const [ timeIntervalData, setTimeIntervalData ] = useState([]);
 	const [ variableIntervalData, setVariableIntervalData ] = useState([]);
+	const [ sortBy, setSortBy ] = useState('date');
+	const [ order, setOrder ] = useState('descending');
 	const [ dateSorter, setDateSorter ] = useState('↓');
-	const [ distanceSorter, setDistanceSorter ] = useState('●');
+
 
 	//On Mount
 	useEffect(
@@ -48,12 +52,20 @@ function FullHistory(props) {
 				}
 
 				//sorts rows by date in each category
-				if (!dateSorter || dateSorter === '↓') {
-					sortByDate(tempData, 'descending');
-					setRowData(tempData);
-				} else if (dateSorter === '↑') {
-					sortByDate(tempData, 'ascending');
-				}
+				if (!sortBy || sortBy === 'date') {
+					if (!order || order === 'descending') {
+						sortByDate(tempData, 'descending');
+					} else if (order === 'ascending') {
+						sortByDate(tempData, 'ascending');
+					} 
+				} else if (sortBy === 'distance') {
+          if (!order || order === 'descending') {
+            sortByDistance(tempData, 'descending');
+          } else if (order === 'ascending') {
+            sortByDistance(tempData, 'ascending');
+          }
+        }
+				setRowData(tempData);
 				sortByDate(tempSingleDistanceData);
 				sortByDate(tempSingleTimeData);
 				sortByDate(tempDistanceIntervalData);
@@ -72,27 +84,32 @@ function FullHistory(props) {
 		[ rowData ]
 	);
 
-	//sorts by date in reverse chronological order
+	//sorts by date
 	const sortByDate = (arry, direction) => {
 		arry.sort(function(a, b) {
 			a = a.rowDate.slice(0, 10).split('-').join('');
 			b = b.rowDate.slice(0, 10).split('-').join('');
 			if (direction === 'ascending') {
 				return a.localeCompare(b);
-			}
-			return b.localeCompare(a);
+			} else if (direction === 'descending') {
+        return b.localeCompare(a);
+      }
+			return .5 - Math.random();
 		});
 	};
 
-	const sortByDistance = (arry) => {};
-
-	//changes sorting order
-	const changeDate = () => {
-		if (dateSorter === '↑' || dateSorter === '●') {
-			setDateSorter('↓');
-		} else {
-			setDateSorter('↑');
-		}
+  //sorts by distance
+	const sortByDistance = (arry, direction) => {
+		arry.sort(function(a, b) {
+			a = Number(a.rowDistance);
+			b = Number(b.rowDistance);
+			if (direction === 'ascending') {
+				return a - b;
+			} else if (direction === 'descending') {
+        return b - a;
+      }
+			return .5 - Math.random();
+		});
 	};
 
 	//gets date from date string
@@ -106,9 +123,16 @@ function FullHistory(props) {
 	return (
 		<div>
 			Full History
-			<div>
-				Date <button onClick={changeDate}>{dateSorter}</button>
-			</div>
+			<DropdownButton id="dropdown-basic-button" title={sortBy}>
+				<Dropdown.Item onClick={() => setSortBy('date')}>date</Dropdown.Item>
+				<Dropdown.Item onClick={() => setSortBy('distance')}>distance</Dropdown.Item>
+				<Dropdown.Item onClick={() => setSortBy('time')}>time</Dropdown.Item>
+			</DropdownButton>
+			<DropdownButton id="dropdown-basic-button" title={order}>
+				<Dropdown.Item onClick={() => setOrder('ascending')}>ascending</Dropdown.Item>
+				<Dropdown.Item onClick={() => setOrder('descending')}>descending</Dropdown.Item>
+				<Dropdown.Item onClick={() => setOrder('random')}>random</Dropdown.Item>
+			</DropdownButton>
 			{rowData.map((row) => {
 				return (
 					<p>
