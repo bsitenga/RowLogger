@@ -74,6 +74,7 @@ function FullHistory(props) {
 		});
 	};
 
+  //gets date from date string
 	const getDate = (date) => {
 		let year = date[2] + date[3];
 		let month = date[5] + date[6];

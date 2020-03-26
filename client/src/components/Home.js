@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
@@ -16,7 +15,6 @@ function Home(props) {
 	const [ rowSeconds, setRowSeconds ] = useState('');
 	const [ rowTenths, setRowTenths ] = useState('');
 	const [ rowSPM, setRowSPM ] = useState('');
-	const [ averageSplit, setAverageSplit ] = useState('');
 	const [ splitMinutes, setSplitMinutes ] = useState('');
 	const [ splitSeconds, setSplitSeconds ] = useState('');
 	const [ splitTenths, setSplitTenths ] = useState('');
@@ -64,7 +62,7 @@ function Home(props) {
 					}
 				}
 
-        //sorts rows by date in each category
+				//sorts rows by date in each category
 				sortByDate(tempSingleDistanceData);
 				sortByDate(tempSingleTimeData);
 				sortByDate(tempDistanceIntervalData);
@@ -77,13 +75,12 @@ function Home(props) {
 				setDistanceIntervalData(tempDistanceIntervalData);
 				setTimeIntervalData(tempTimeIntervalData);
 				setVariableIntervalData(tempVariableIntervalData);
-				console.log('rowData', rowData);
 			});
 		},
 		[ rowData ]
 	);
 
-  //sorts by date in reverse chronological order
+	//sorts by date in reverse chronological order
 	const sortByDate = (arry) => {
 		arry.sort(function(a, b) {
 			a = a.rowDate.slice(0, 10).split('-').join('');
@@ -137,12 +134,6 @@ function Home(props) {
 		}
 	};
 
-	const changeSplit = (e) => {
-		if (!isNaN(e.target.value)) {
-			setAverageSplit(e.target.value);
-		}
-	};
-
 	const changeSplitMinutes = (e) => {
 		if (!isNaN(e.target.value)) {
 			setSplitMinutes(e.target.value);
@@ -165,13 +156,6 @@ function Home(props) {
 		setRowNotes(e.target.value);
 	};
 
-	//adds the word total in front of form labels
-	const addTotalWord = () => {
-		if (rowType === 'Intervals: Distance' || rowType === 'Intervals: Time' || rowType === 'Intervals: Variable')
-			return 'Total ';
-		return '';
-	};
-
 	//clears the form
 	const clearForm = () => {
 		setRowHours('');
@@ -182,7 +166,6 @@ function Home(props) {
 		setRowDistance('');
 		setErrorMessage('');
 		setRowSPM('');
-		setAverageSplit('');
 		setSplitMinutes('');
 		setSplitSeconds('');
 		setSplitTenths('');
@@ -230,7 +213,7 @@ function Home(props) {
 				};
 				axios.post('http://localhost:5000/api/userrows', userRow).then((res) => {});
 				clearForm();
-				console.log('submitted row');
+				console.log('Submitted Row!', userRow);
 			}
 		} else if (
 			rowType === 'Intervals: Distance' ||
@@ -267,7 +250,7 @@ function Home(props) {
 				};
 				axios.post('http://localhost:5000/api/userrows', userRow).then((res) => {});
 				clearForm();
-				console.log('submitted row');
+				console.log('Submitted Row!', userRow);
 			}
 		}
 	};
