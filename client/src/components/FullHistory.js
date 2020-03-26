@@ -9,6 +9,8 @@ function FullHistory(props) {
 	const [ distanceIntervalData, setDistanceIntervalData ] = useState([]);
 	const [ timeIntervalData, setTimeIntervalData ] = useState([]);
 	const [ variableIntervalData, setVariableIntervalData ] = useState([]);
+	const [ dateSorter, setDateSorter ] = useState('↓');
+	const [ distanceSorter, setDistanceSorter ] = useState('●');
 
 	//On Mount
 	useEffect(
@@ -46,7 +48,12 @@ function FullHistory(props) {
 				}
 
 				//sorts rows by date in each category
-				sortByDate(tempData);
+				if (!dateSorter || dateSorter === '↓') {
+					sortByDate(tempData, 'descending');
+					setRowData(tempData);
+				} else if (dateSorter === '↑') {
+					sortByDate(tempData, 'ascending');
+				}
 				sortByDate(tempSingleDistanceData);
 				sortByDate(tempSingleTimeData);
 				sortByDate(tempDistanceIntervalData);
@@ -66,15 +73,29 @@ function FullHistory(props) {
 	);
 
 	//sorts by date in reverse chronological order
-	const sortByDate = (arry) => {
+	const sortByDate = (arry, direction) => {
 		arry.sort(function(a, b) {
 			a = a.rowDate.slice(0, 10).split('-').join('');
 			b = b.rowDate.slice(0, 10).split('-').join('');
+			if (direction === 'ascending') {
+				return a.localeCompare(b);
+			}
 			return b.localeCompare(a);
 		});
 	};
 
-  //gets date from date string
+	const sortByDistance = (arry) => {};
+
+	//changes sorting order
+	const changeDate = () => {
+		if (dateSorter === '↑' || dateSorter === '●') {
+			setDateSorter('↓');
+		} else {
+			setDateSorter('↑');
+		}
+	};
+
+	//gets date from date string
 	const getDate = (date) => {
 		let year = date[2] + date[3];
 		let month = date[5] + date[6];
@@ -85,6 +106,9 @@ function FullHistory(props) {
 	return (
 		<div>
 			Full History
+			<div>
+				Date <button onClick={changeDate}>{dateSorter}</button>
+			</div>
 			{rowData.map((row) => {
 				return (
 					<p>
