@@ -69,6 +69,12 @@ function FullHistory(props) {
           } else if (order === 'ascending') {
             sortByTime(tempData, 'ascending');
           }
+        } else if (sortBy === 'average split') {
+          if (!order || order === 'descending') {
+            sortBySplit(tempData, 'descending');
+          } else if (order === 'ascending') {
+            sortBySplit(tempData, 'ascending');
+          }
         }
         setRowData(tempData);
         
@@ -131,7 +137,21 @@ function FullHistory(props) {
       }
 			return .5 - Math.random();
 		});
-	};
+  };
+  
+  //sorts by split
+  const sortBySplit = (arry, direction) => {
+		arry.sort(function(a, b) {
+			a = Number(a.averageSplit);
+			b = Number(b.averageSplit);
+			if (direction === 'ascending') {
+				return a - b;
+			} else if (direction === 'descending') {
+        return b - a;
+      }
+			return .5 - Math.random();
+		});
+  };
 
 	//gets date from date string
 	const getDate = (date) => {
