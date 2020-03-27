@@ -415,7 +415,7 @@ function Home(props) {
 	};
 
 	//Full Page
-	return (
+	return rowData ? (
 		<div>
 			{/* Rowing Form */}
 			<div className="rowForm">
@@ -614,6 +614,8 @@ function Home(props) {
 				</div>
 			</div>
 		</div>
+	) : (
+		<div>loading...</div>
 	);
 }
 
