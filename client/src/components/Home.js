@@ -30,7 +30,7 @@ function Home(props) {
 	//On Mount
 	useEffect(
 		() => {
-			axios.get('http://rowlogger.herokuapp.com/api/userrows').then((res) => {
+			axios.get('https://rowlogger.herokuapp.com/api/userrows').then((res) => {
 				//temporary arrays for row data
 				let tempData = [];
 				let tempSingleDistanceData = [];
@@ -210,7 +210,7 @@ function Home(props) {
 						rowNotes: rowNotes
 					}
 				};
-				axios.post('http://rowlogger.herokuapp.com/api/userrows', userRow).then((res) => {});
+				axios.post('https://rowlogger.herokuapp.com/api/userrows', userRow).then((res) => {});
 				clearForm();
 				console.log('Submitted Row!', userRow);
 			}
@@ -248,7 +248,7 @@ function Home(props) {
 						averageSplit: tempAverageSplit
 					}
 				};
-				axios.post('http://rowlogger.herokuapp.com/api/userrows', userRow).then((res) => {});
+				axios.post('https://rowlogger.herokuapp.com/api/userrows', userRow).then((res) => {});
 				clearForm();
 				console.log('Submitted Row!', userRow);
 			}
