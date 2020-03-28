@@ -13,9 +13,10 @@ function FullHistory(props) {
 
 	//On Mount
 	useEffect(() => {
-		axios.get('http://localhost:5000/api/userrows').then((res) => {
+		axios.get('http://rowlogger.herokuapp.com/api/userrows').then((res) => {
 			//temporary array for row data
 			let tempData = [];
+			console.log(res);
 
 			//grabs all row data
 			for (let i = 0; i < res.data.length; i++) {
