@@ -3,12 +3,12 @@ import './css/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Logout from './components/Logout';
 import FullHistory from './components/FullHistory';
 import Home from './components/Home';
 import Register from './components/Register';
 import LoginSmall from './components/LoginSmall';
+import Analytics from './components/Analytics';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 
@@ -48,7 +48,7 @@ function App() {
 
 	const analyticSwitch = () => {
 		if (loggedIn()) {
-			return <p>todo</p>;
+			return <Analytics userEmail={getUserEmail()} />;
 		}
 		return <Register />;
 	};
@@ -67,14 +67,9 @@ function App() {
 							<Nav.Link href="/records">
 								<Link to="/records">History</Link>
 							</Nav.Link>
-							<NavDropdown title="Analytics" id="basic-nav-dropdown">
-								<NavDropdown.Item href="/analyticsone">
-									<Link to="/analyticsone" />Analytics One
-								</NavDropdown.Item>
-								<NavDropdown.Item href="/analyticstwo">
-									<Link to="/analyticstwo">Analytics Two</Link>
-								</NavDropdown.Item>
-							</NavDropdown>
+							<Nav.Link href="/analytics">
+								<Link to="/analytics">Analytics</Link>
+							</Nav.Link>
 						</Nav>
 						{loginSwitch()}
 					</Navbar.Collapse>
@@ -85,11 +80,10 @@ function App() {
 						<Register />
 					</Route>
 					<Route path="/records">{trendSwitch()}</Route>
+					<Route path="/analytics">{analyticSwitch()}</Route>
 					<Route path="/logout">
 						<Logout />
 					</Route>
-					<Route path="/analyticsone">{analyticSwitch()}</Route>
-					<Route path="/analyticstwo">{analyticSwitch()}</Route>
 					<Route path="/">{homeSwitch()}</Route>
 				</Switch>
 			</div>

@@ -204,3 +204,8 @@ td {
 .fullHistory td {
   height: 40px;
 }
+
+.analyticsPage {
+  text-align: center;
+  margin-top: 40vh;
+}
