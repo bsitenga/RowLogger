@@ -15,7 +15,7 @@ function LoginSmall(props) {
 	const handleLoginSubmit = async (e) => {
 		e.preventDefault();
 		let allUsers = [];
-		await axios.get('http://localhost:5000/api/users').then((res) => {
+		await axios.get('http://rowlogger.herokuapp.com/api/users').then((res) => {
 			allUsers = res.data;
 		});
 		let ind = -1;

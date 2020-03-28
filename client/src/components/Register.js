@@ -32,10 +32,10 @@ function Register(props) {
 				email: email,
 				rows: []
 			};
-			await axios.post('http://localhost:5000/api/userrowsnew', userrows).then((res) => {
+			await axios.post('http://rowlogger.herokuapp.com/api/userrowsnew', userrows).then((res) => {
 				console.log('successfully created user rows');
 			});
-			await axios.post(`http://localhost:5000/api/users`, user).then((res) => {
+			await axios.post(`http://rowlogger.herokuapp.com/api/users`, user).then((res) => {
 				console.log('successfully created user');
 				let token = jwt.sign(email, process.env.REACT_APP_SECRET_KEY);
 				localStorage.setItem('sectoken', token);
