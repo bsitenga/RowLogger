@@ -10,10 +10,10 @@ const app = express();
 app.use(cors());
 const port = process.env.PORT || 5000;
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'))
-})
+// app.use(express.static(path.join(__dirname, 'client/build')));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname + '/client/build/index.html'))
+// })
 
 //connect to the database
 mongoose.connect(process.env.DB, { useNewUrlParser: true })
