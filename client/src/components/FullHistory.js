@@ -20,15 +20,12 @@ function FullHistory(props) {
 			//grabs all row data
 			for (let i = 0; i < res.data.length; i++) {
 				if (res.data[i].email === props.userEmail) {
-					tempData = res.data[i].rows;
-					setRowData(res.data[i].rows);
-					setAllData(res.data[i].rows);
+          tempData = res.data[i].rows;
+          sortByDate(tempData, 'descending');
+					setRowData(tempData);
+					setAllData(tempData);
 				}
 			}
-
-			//sorts by date in descending order
-			sortByDate(tempData, 'descending');
-			setRowData(tempData);
 		});
 	}, []);
 
@@ -101,12 +98,10 @@ function FullHistory(props) {
 	//sorts by date
 	const sortByDate = (arry, direction) => {
 		arry.sort(function(a, b) {
-			a = a.rowDate.slice(0, 10).split('-').join('');
-			b = b.rowDate.slice(0, 10).split('-').join('');
 			if (direction === 'ascending') {
-				return a.localeCompare(b);
+				return new Date(a.rowDate) - new Date(b.rowDate);
 			} else if (direction === 'descending') {
-				return b.localeCompare(a);
+				return new Date(b.rowDate) - new Date(a.rowDate);
 			}
 			return 0.5 - Math.random();
 		});
@@ -285,7 +280,7 @@ function FullHistory(props) {
 							let tenths = findSplitTenths(item.averageSplit);
 							return (
 								<tr>
-									<td>{getDate(item.rowDate)}</td>
+									<td>{item.rowDate}</td>
 									<td>{item.rowDistance}</td>
 									<td>{getTime(item.rowTime)}</td>
 									<td>

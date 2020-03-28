@@ -43,7 +43,7 @@ function Home(props) {
 				for (let i = 0; i < res.data.length; i++) {
 					if (res.data[i].email === props.userEmail) {
 						tempData = res.data[i].rows;
-						setRowData(res.data[i].rows);
+						setRowData(tempData);
 					}
 				}
 
@@ -83,9 +83,7 @@ function Home(props) {
 	//sorts by date in reverse chronological order
 	const sortByDate = (arry) => {
 		arry.sort(function(a, b) {
-			a = a.rowDate.slice(0, 10).split('-').join('');
-			b = b.rowDate.slice(0, 10).split('-').join('');
-			return b.localeCompare(a);
+			return new Date(b.rowDate) - new Date(a.rowDate);
 		});
 	};
 
@@ -199,10 +197,11 @@ function Home(props) {
 				setErrorMessage('Please enter a valid time');
 			} else {
 				let tempAverageSplit = rowTime / (rowDistance / 500);
+				let tempDate = '' + (rowDate.getMonth() + 1) + '/' + rowDate.getDate() + '/' + rowDate.getFullYear().toString()[2] + rowDate.getFullYear().toString()[3];
 				const userRow = {
 					email: props.userEmail,
 					row: {
-						rowDate: rowDate,
+						rowDate: tempDate,
 						rowType: rowType,
 						rowDistance: rowDistance,
 						rowTime: rowTime,
@@ -237,10 +236,11 @@ function Home(props) {
 					setSplitTenths(0);
 				}
 				let tempAverageSplit = Number(splitMinutes) * 60 + Number(splitSeconds) + Number(splitTenths) * 0.1;
+				let tempDate = '' + (rowDate.getMonth() + 1) + '/' + rowDate.getDate() + '/' + rowDate.getFullYear().toString()[2] + rowDate.getFullYear().toString()[3];
 				const userRow = {
 					email: props.userEmail,
 					row: {
-						rowDate: rowDate,
+						rowDate: tempDate,
 						rowType: rowType,
 						rowDistance: rowDistance,
 						rowTime: rowTime,
@@ -467,7 +467,7 @@ function Home(props) {
 								let tenths = findSplitTenths(item.averageSplit);
 								return (
 									<tr>
-										<td>{getDate(item.rowDate)}</td>
+										<td>{item.rowDate}</td>
 										<td>{item.rowDistance}</td>
 										<td>{getTime(item.rowTime)}</td>
 										<td>
@@ -500,7 +500,7 @@ function Home(props) {
 								let tenths = findSplitTenths(item.averageSplit);
 								return (
 									<tr>
-										<td>{getDate(item.rowDate)}</td>
+										<td>{item.rowDate}</td>
 										<td>{item.rowDistance}</td>
 										<td>{getTime(item.rowTime)}</td>
 										<td>
@@ -533,7 +533,7 @@ function Home(props) {
 								let tenths = findSplitTenths(item.averageSplit);
 								return (
 									<tr>
-										<td>{getDate(item.rowDate)}</td>
+										<td>{item.rowDate}</td>
 										<td>{item.rowDistance}</td>
 										<td>{getTime(item.rowTime)}</td>
 										<td>
@@ -566,7 +566,7 @@ function Home(props) {
 								let tenths = findSplitTenths(item.averageSplit);
 								return (
 									<tr>
-										<td>{getDate(item.rowDate)}</td>
+										<td>{item.rowDate}</td>
 										<td>{item.rowDistance}</td>
 										<td>{getTime(item.rowTime)}</td>
 										<td>
@@ -599,7 +599,7 @@ function Home(props) {
 								let tenths = findSplitTenths(item.averageSplit);
 								return (
 									<tr>
-										<td>{getDate(item.rowDate)}</td>
+										<td>{item.rowDate}</td>
 										<td>{item.rowDistance}</td>
 										<td>{getTime(item.rowTime)}</td>
 										<td>
