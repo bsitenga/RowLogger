@@ -16,7 +16,6 @@ function FullHistory(props) {
 		axios.get('https://rowlogger.herokuapp.com/api/userrows').then((res) => {
 			//temporary array for row data
 			let tempData = [];
-			console.log(res);
 
 			//grabs all row data
 			for (let i = 0; i < res.data.length; i++) {
