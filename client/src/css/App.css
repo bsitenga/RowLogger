@@ -209,3 +209,11 @@ td {
   text-align: center;
   margin-top: 40vh;
 }
+
+.frontPage div {
+	height: calc(100vh - 56px);
+}
+
+.firstPageFront {
+	/* background-color: #efefef; */
+}

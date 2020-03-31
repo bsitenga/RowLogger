@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Register from './components/Register';
 import LoginSmall from './components/LoginSmall';
 import Analytics from './components/Analytics';
+import FrontPage from './components/FrontPage';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 
@@ -36,21 +37,21 @@ function App() {
 		if (loggedIn()) {
 			return <Home userEmail={getUserEmail()} />;
 		}
-		return <Register />;
+		return <FrontPage />;
 	};
 
 	const trendSwitch = () => {
 		if (loggedIn()) {
 			return <FullHistory userEmail={getUserEmail()} />;
 		}
-		return <Register />;
+		return <FrontPage />;
 	};
 
 	const analyticSwitch = () => {
 		if (loggedIn()) {
 			return <Analytics userEmail={getUserEmail()} />;
 		}
-		return <Register />;
+		return <FrontPage />;
 	};
 
 	return (
