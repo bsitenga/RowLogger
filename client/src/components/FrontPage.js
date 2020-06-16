@@ -30,8 +30,8 @@ function FrontPage(props) {
               or <span className="appLink">get the app</span>
             </p>
           </section>
-          <img src="rowerLogv2.png" className="homeXLImg homeImg"></img>
-          <img src="rowerLogv2.png" className="homeLargeImg homeImg"></img>
+          <img src="RowerLogv2.png" className="homeXLImg homeImg"></img>
+          <img src="RowerLogv2.png" className="homeLargeImg homeImg"></img>
         </div>
       </div>
       <div className="secondary">
@@ -61,7 +61,7 @@ function FrontPage(props) {
             </p>
             <p style={{color: "#999"}}>Coming Soon!</p>
           </div>
-          <img src="rowerBlockImage.png"></img>
+          <img src="RowerBlockImage.png"></img>
         </div>
       </div>
       <div className="footer">
