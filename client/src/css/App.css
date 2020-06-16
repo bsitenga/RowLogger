@@ -127,6 +127,12 @@ html {
   }
 }
 
+@media only screen and (min-width: 1401px) {
+	.homeLargeImg {
+	  display: none;
+	}
+  }
+
 @media only screen and (max-width: 1200px) {
   .homeLargeImg {
     display: none;
@@ -161,12 +167,6 @@ html {
 
   .frontPage .home {
 	  height: 750px;
-  }
-}
-
-@media only screen and (min-width: 1401px) {
-  .homeLargeImg {
-    display: none;
   }
 }
 
@@ -294,4 +294,112 @@ html {
 .footerContent p:hover {
 	cursor:pointer;
 	text-decoration: underline;
+}
+
+.registerPage {
+	font-family: "Raleway", sans-serif;
+	background-color: #f1f1f1;
+	min-height: calc(100vh - 80px);
+}
+
+.registerPage h1 {
+	text-align: center;
+	font-size: 28px;
+	font-weight: 600;
+	padding-top: 50px;
+	margin-bottom: 25px;
+}
+
+.registerPage .registerForm {
+	margin: 0 auto;
+	width: 500px;
+}
+
+.registerPage .form-group {
+	margin-bottom: 25px;
+}
+
+.registerPage .firstName {
+	width: 230px;
+	display: inline-block;
+	margin-right: 40px;
+}
+
+.registerPage .lastName {
+	width: 230px;
+	display: inline-block;
+}
+
+.registerPage .signupButton {
+	background-color: #e85a4f;
+	border-color: #e85a4f;
+}
+
+.registerPage .signupButton:hover {
+	background-color: #d6382d;
+}
+
+.registerPage .orLine {
+	width: 300px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	margin-top: 25px;
+}
+
+.registerPage .orLine::before, .registerPage .orLine::after {
+	content: '';
+	flex: 1;
+	border-bottom: 2px solid #d8c3a5;
+}
+
+.registerPage .orLine::before {
+	margin-right: .25em;
+}
+
+.registerPage .orLine::after {
+	margin-left: .25em;
+}
+
+.loginPageRedirection {
+	width: 300px;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 25px;
+	color: #333;
+	border-bottom: 2px solid #d8c3a5;
+	padding-bottom: 15px;
+}
+
+.loginPageRedirection span {
+	text-decoration: underline;
+	color: #555;
+}
+
+.loginPageRedirection span:hover {
+	cursor: pointer;
+}
+
+.registerPage .ToSLine {
+	width: 300px;
+	margin: 0 auto;
+}
+
+.registerPage .ToSLine p {
+	padding-top: 10px;
+	margin: 0 auto;
+	width: 250px;
+	text-align: center;
+	font-size: 14px;
+	color: #333;
+}
+
+.registerPage .ToSLine p span {
+	text-decoration: underline;
+	color: #555;
+}
+
+.registerPage .ToSLine p span:hover {
+	cursor: pointer;
 }
