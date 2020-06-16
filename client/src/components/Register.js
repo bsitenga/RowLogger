@@ -19,10 +19,14 @@ function Register(props) {
       setErrorMessage("Please enter your last name");
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       setErrorMessage("Please enter a valid email");
-    } else if (password.length < 8 || password.length > 16) {
-      setErrorMessage("Please enter a password between 8 and 16 characters");
-    } else {
-      setErrorMessage("");
+    } else if (password.length < 6) {
+      setErrorMessage("Passwords must be 6 characters or more");
+    } else if (password.length > 30) {
+      setErrorMessage("Passwords cannot be more than 30 characters");
+    } else if (password != passwordConfirmation) {
+		setErrorMessage("Passwords do not match");
+	} else {
+	  setErrorMessage("");
       const user = {
         firstName: firstName,
         lastName: lastName,
@@ -32,7 +36,11 @@ function Register(props) {
       const userrows = {
         email: email,
         rows: [],
-      };
+	  };
+	  setFirstName("");
+	  setLastName("");
+	  setPassword("");
+	  setPasswordConfirmation("");
       await axios
         .post("https://rowlogger.herokuapp.com/api/userrowsnew", userrows)
         .then((res) => {
@@ -42,7 +50,8 @@ function Register(props) {
         .post(`https://rowlogger.herokuapp.com/api/users`, user)
         .then((res) => {
           console.log("successfully created user");
-          let token = jwt.sign(email, process.env.REACT_APP_SECRET_KEY);
+		  let token = jwt.sign(email, process.env.REACT_APP_SECRET_KEY);
+		  setEmail("");
           localStorage.setItem("sectoken", token);
           window.location.href = "/";
         });
@@ -52,9 +61,9 @@ function Register(props) {
   return (
     <div className="registerPage">
       <h1>Create your Account</h1>
+      <div className="registerError">{errorMessage}</div>
       <div className="registerForm">
         <form onSubmit={handleRegisterSubmit}>
-          {errorMessage}
           <FormGroup controlId="firstName" bsSize="large" className="firstName">
             <FormControl
               autoFocus
@@ -96,20 +105,23 @@ function Register(props) {
               type="password"
             />
           </FormGroup>
-          <Button block bsSize="large" type="submit" className="signupButton">
+          <button type="submit" className="signupButton">
             Sign Up
-          </Button>
+          </button>
         </form>
-        <div className="orLine">
-          or
+        <div className="orLine">or</div>
+        {/* TODO: implement Google Sign Up */}
+        <div className="loginPageRedirection">
+          <p>
+            Already a member? <span>Login.</span>
+          </p>
         </div>
-		{/* TODO: implement Google Sign Up */}
-		<div className="loginPageRedirection">
-			<p>Already a member? <span>Login.</span></p>
-		</div>
-		<div className="ToSLine">
-			<p>By signing up you agree to RowLogger's <span>Terms of Service</span> and <span>Privacy Policy</span></p>
-		</div>
+        <div className="ToSLine">
+          <p>
+            By signing up you agree to RowLogger's <span>Terms of Service</span>{" "}
+            and <span>Privacy Policy</span>
+          </p>
+        </div>
       </div>
     </div>
   );
