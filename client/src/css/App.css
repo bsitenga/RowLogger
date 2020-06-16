@@ -1,219 +1,297 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap");
+
 body,
 html {
-	height: 100%;
+  height: 100%;
+  font-family: "Raleway", sans-serif;
 }
 
 #rowloggernav {
-	background-color: white !important;
-	box-shadow: 0 10px 4px -4px #eee;
-	height: 56px !important;
+  background-color: white !important;
+  box-shadow: 0 7px 4px -4px #eee;
+  height: 80px !important;
+  font-family: "Raleway", sans-serif;
+}
+
+#rowloggernav .navbar-brand {
+  margin-left: 20px;
+  font-size: 30px;
 }
 
 .bg-light {
-	background-color: white;
+  background-color: white;
 }
 
-.rowForm {
-	height: 100%;
-	width: 300px;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	overflow-x: hidden;
-	padding: 20px;
-	box-shadow: 7px 0 4px -4px #eee;
-	overflow-y: hidden;
+.frontPage {
+  font-family: "Raleway", sans-serif;
 }
 
-.rowLog {
-	overflow-x: scroll;
-	overflow-y: hidden;
-	white-space: nowrap;
-	margin-left: 300px;
-	padding-left: 40px;
-	height: calc(100vh - 56px);
-	background-color: #f6f6f6;
+.frontPage .home {
+  height: 650px;
+  width: 100%;
+  background-color: #f1f1f1;
 }
 
-.rowDateGroup {
-	display: inline-block;
+.frontPage h1 {
+  max-width: 1400px;
+  margin: auto;
+  font-weight: 800;
+  font-size: 60px;
+  padding-left: 40px;
+  padding-top: 70px;
+  display: block;
 }
 
-.rowDistanceGroup {
-	display: inline-block;
-	margin-left: 25px;
-	width: 125px;
+.frontPage .homeDescriptionContainer {
+  max-width: 1400px;
+  padding-left: 40px;
+  margin: auto;
 }
 
-.rowTimeGroupA {
-	display: inline-block;
-}
-
-.rowTimeGroupAA {
-	display: inline-block;
-	width: 60px;
-}
-
-.rowTimeGroupAB {
-	display: inline-block;
-	margin-left: 0px;
-	width: 60px;
-}
-
-.rowTimeGroupB {
-	display: inline-block;
-}
-
-.rowTimeGroupBA {
-	display: inline-block;
-	width: 60px;
-}
-
-.rowTimeGroupBB {
-	display: inline-block;
-	margin-left: 0px;
-	width: 60px;
-}
-
-.rowDateLabel {
-	display: block;
-}
-
-.react-datepicker-wrapper {
-	width: 100px;
-}
-
-.react-datepicker-wrapper input {
-	width: 100px;
-}
-
-form .rowButton {
-	width: 100%;
-	display: block;
-	margin-top: 15px;
-}
-
-.rowSPM {
-	width: 60px;
-	display: inline-block;
-}
-
-.bottomTag {
-	position: fixed;
-	bottom: 0px;
-}
-
-.rowAverageSplit {
-	margin-left: 15px;
-	width: 180px;
-	display: inline-block;
-}
-
-.rowAverageSplit label {
-	display: block;
-}
-
-.rowAverageSplit input {
-	display: inline-block;
-	width: 56px;
-}
-
-.rowLog div {
-	margin-right: 40px;
-	margin-top: 50px;
-	width: 33vw;
-	min-width: 430px;
-	height: 75vh;
-	background-color: white;
-	vertical-align: top;
-	display: inline-block;
-	border-radius: 8px;
-	box-shadow: 5px 5px 4px 2px #eee;
-	padding-left: 20px;
-	padding-top: 20px;
-	overflow: auto;
-	overflow-x: hidden;
-}
-
-hr.versionTag {
-	width: 275px;
-	border: 0;
-	height: 0;
-	border-top: 1px solid rgba(0, 0, 0, 0.1);
-	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.bottomTag p {
-	font-size: 10px;
-	text-align: center;
-	color: #888;
-}
-
-table {
-	table-layout: fixed;
-	width: 30vw;
-	min-width: 400px;
-}
-
-th {
-	font-weight: 500;
-	border-bottom: 2px solid #aaa;
-}
-
-td {
-	border-bottom: 1px solid #ddd;
-	height: 35px;
-}
-
-.react-datepicker-wrapper input {
-	width: 100px;
-	padding-left: 7px;
-}
-
-.errorMessage {
-	margin-bottom: 10px;
-}
-
-.sortingLine {
-  font-size: 2em;
-  text-align: center;
-  margin-top: 20px;
-}
-
-.sortingLine span {
+.frontPage section {
+  width: 400px;
   display: inline-block;
 }
 
-.orderButton {
-  margin-left: 10px;
-  margin-right: 10px;
+.frontPage .homeDescription {
+  font-size: 18px;
+  color: #5a5a5a;
+  line-height: 28px;
+  width: 400px;
+  padding-top: 30px;
+  padding-bottom: 40px;
+  margin-bottom: 0px;
 }
 
-.fullHistory {
+.frontPage .appLink {
+  text-decoration: underline;
+}
+
+.frontPage .appLinkFull {
+  font-size: 14px;
+  color: #8e8d8a;
+}
+.frontPage .appLink:hover {
+  cursor: pointer;
+  color: #6d6b68;
+}
+
+.frontPage button {
+  margin: none;
+  display: block;
+  width: 325px;
+  height: 50px;
+  border: none;
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.frontPage .signupButton {
+  background-color: #e85a4f;
+  color: #fff;
+}
+
+.frontPage .signupButton:hover {
+  background-color: #d6382d;
+}
+
+.frontPage .loginButton {
+  background-color: #d8c3a5;
+  color: #444;
+}
+
+.frontPage .loginButton:hover {
+  background-color: #c7b294;
+}
+
+.frontPage .homeImg {
   margin-top: 30px;
-  text-align: center;
-  width: 90vw;
+  margin-left: 20px;
+  height: auto;
+  box-shadow: 7px 7px 4px #ccc;
+  vertical-align: top;
 }
 
-.fullHistory table {
-  margin-left: 5vw;
-  table-layout: fixed;
-  width: 90vw;
+.frontPage .homeXLImg {
+  max-width: 900px;
 }
 
-.fullHistory td {
-  height: 40px;
+.frontPage .homeLargeImg {
+  max-width: 700px;
 }
 
-.analyticsPage {
-  text-align: center;
-  margin-top: 40vh;
+@media only screen and (max-width: 1400px) {
+  .homeXLImg {
+    display: none;
+  }
 }
 
-.frontPage div {
-	height: calc(100vh - 56px);
+@media only screen and (max-width: 1200px) {
+  .homeLargeImg {
+    display: none;
+  }
+
+  .frontPage .home section {
+	  width: 100%;
+  }
+
+  .frontPage .home .homeDescriptionContainer {
+	  padding: 0;
+  }
+
+  .frontPage .home .homeDescription {
+	  margin: 0 auto;
+	  text-align: center;
+  }
+
+  .frontPage .home button {
+	  margin: 0 auto 20px;
+  }
+
+  .frontPage .home h1 {
+	  text-align: center;
+	  padding-left: 0;
+  }
+
+  .frontPage .appLinkFull {
+	  text-align: center;
+	  font-size: 24px;
+  }
+
+  .frontPage .home {
+	  height: 750px;
+  }
 }
 
-.firstPageFront {
-	/* background-color: #efefef; */
+@media only screen and (min-width: 1401px) {
+  .homeLargeImg {
+    display: none;
+  }
+}
+
+.frontPage .secondary {
+  padding-top: 50px;
+  background-color: #fafafa;
+  width: 100%;
+}
+
+.frontPage .rowerBlock {
+  width: 1050px;
+  margin: 100px auto 0px;
+}
+
+.frontPage .rowerBlock img {
+  display: inline-block;
+}
+
+.frontPage .rowerDescription {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.frontPage .rowerDescription h3 {
+  margin-top: 10px;
+  color: #e85a4f;
+  font-size: 24px;
+}
+
+.frontPage .rowerDescription h2 {
+  font-weight: 700;
+  color: #333;
+}
+
+.frontPage .rowerDescription p {
+  font-size: 20px;
+  color: #3a3a3a;
+}
+
+.frontPage .coachBlock {
+  width: 1050px;
+  margin: 150px auto 0px;
+  padding-bottom: 150px;
+}
+
+.frontPage .coachBlock img {
+  display: inline-block;
+}
+
+.frontPage .coachDescription {
+  display: inline-block;
+  vertical-align: top;
+}
+
+@media only screen and (min-width: 1051px) {
+  .rowerDescription {
+    margin-left: 100px;
+    max-width: 500px;
+  }
+
+  .coachDescription {
+    margin-right: 100px;
+    max-width: 500px;
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  .rowerDescription {
+    max-width: 350px;
+    margin-left: 50px;
+  }
+
+  .frontPage .secondary .rowerBlock {
+	  width: 850px;
+  }
+
+  .coachDescription {
+    max-width: 350px;
+    margin-right: 50px;
+    padding-left: 20px;
+  }
+
+  .frontPage .coachBlock {
+	  width: 850px;
+  }
+}
+
+.frontPage .coachDescription h3 {
+  margin-top: 10px;
+  color: #e85a4f;
+  font-size: 24px;
+}
+
+.frontPage .coachDescription h2 {
+  font-weight: 700;
+  color: #333;
+}
+
+.frontPage .coachDescription p {
+  font-size: 20px;
+  color: #3a3a3a;
+}
+
+.frontPage .footer {
+  background-color: #f1f1f1;
+  height: 200px;
+}
+
+.frontPage .footerContent {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.footerContent h3 {
+	padding-top: 20px;
+	padding-bottom: 10px;
+	font-weight: 700;
+	color: #333;
+}
+
+.footerContent p {
+	color: #444;
+}
+
+.footerContent p:hover {
+	cursor:pointer;
+	text-decoration: underline;
 }

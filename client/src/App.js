@@ -30,7 +30,6 @@ function App() {
 				</Nav.Link>
 			);
 		}
-		return <LoginSmall />;
 	};
 
 	const homeSwitch = () => {
@@ -54,24 +53,32 @@ function App() {
 		return <FrontPage />;
 	};
 
+	const linkSwitches = () => {
+		if (loggedIn()) {
+		  return (
+			<Nav className="mr-auto">
+			  <Nav.Link href="/">
+				<Link to="/">Log</Link>
+			  </Nav.Link>
+			  <Nav.Link href="/records">
+				<Link to="/records">History</Link>
+			  </Nav.Link>
+			  <Nav.Link href="/analytics">
+				<Link to="/analytics">Analytics</Link>
+			  </Nav.Link>
+			</Nav>
+		  );
+		}
+	  };
+
 	return (
 		<Router>
 			<div className="App">
 				<Navbar bg="light" expand="lg" id="rowloggernav">
-					<Navbar.Brand href="/">RowLogger</Navbar.Brand>
+					<Navbar.Brand href="/">Row<span style={{color: "#e85a4f"}}>Logger</span></Navbar.Brand>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav">
-						<Nav className="mr-auto">
-							<Nav.Link href="/">
-								<Link to="/">Log</Link>
-							</Nav.Link>
-							<Nav.Link href="/records">
-								<Link to="/records">History</Link>
-							</Nav.Link>
-							<Nav.Link href="/analytics">
-								<Link to="/analytics">Analytics</Link>
-							</Nav.Link>
-						</Nav>
+						{linkSwitches()}
 						{loginSwitch()}
 					</Navbar.Collapse>
 				</Navbar>
