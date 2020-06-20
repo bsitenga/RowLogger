@@ -11,6 +11,10 @@ function Register(props) {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  const goToLogin = () => {
+    window.location.href = "/login";
+  };
+
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     if (firstName.length === 0) {
@@ -33,19 +37,10 @@ function Register(props) {
         email: email,
         password: password,
       };
-      const userrows = {
-        email: email,
-        rows: [],
-	  };
 	  setFirstName("");
 	  setLastName("");
 	  setPassword("");
 	  setPasswordConfirmation("");
-      await axios
-        .post("https://rowlogger.herokuapp.com/api/userrowsnew", userrows)
-        .then((res) => {
-          console.log("successfully created user rows");
-        });
       await axios
         .post(`https://rowlogger.herokuapp.com/api/users`, user)
         .then((res) => {
@@ -113,7 +108,7 @@ function Register(props) {
         {/* TODO: implement Google Sign Up */}
         <div className="loginPageRedirection">
           <p>
-            Already a member? <span>Login.</span>
+            Already a member? <span onClick={() => goToLogin()}>Login.</span>
           </p>
         </div>
         <div className="ToSLine">

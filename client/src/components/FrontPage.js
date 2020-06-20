@@ -6,6 +6,10 @@ function FrontPage(props) {
     window.location.href = "/register";
   };
 
+  const goToLogin = () => {
+    window.location.href = "/login";
+  };
+
   return (
     <div className="frontPage">
       <div className="home">
@@ -25,7 +29,9 @@ function FrontPage(props) {
             <button className="signupButton" onClick={() => goToRegister()}>
               Sign up
             </button>
-            <button className="loginButton">Login</button>
+            <button className="loginButton" onClick={() => goToLogin()}>
+              Login
+            </button>
             <p className="appLinkFull">
               or <span className="appLink">get the app</span>
             </p>
@@ -59,9 +65,9 @@ function FrontPage(props) {
               ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
               accumsan lacus vel facilisias.
             </p>
-            <p style={{color: "#999"}}>Coming Soon!</p>
+            <p style={{ color: "#999" }}>Coming Soon!</p>
           </div>
-          <img src="RowerBlockImage.png"></img>
+          <img src="MaxWattAnalysis.png"></img>
         </div>
       </div>
       <div className="footer">
@@ -77,5 +83,3 @@ function FrontPage(props) {
 }
 
 export default FrontPage;
-
-

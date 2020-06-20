@@ -417,3 +417,98 @@ html {
 	padding-bottom: 10px;
 	color: #e82110;
 }
+
+.loginPage {
+	font-family: "Raleway", sans-serif;
+	background-color: #f1f1f1;
+	min-height: calc(100vh - 80px);
+}
+
+.loginPage .loginForm {
+	margin: 0 auto;
+	width: 500px;
+}
+
+.loginPage h1 {
+	text-align: center;
+	font-size: 28px;
+	font-weight: 600;
+	padding-top: 50px;
+	margin-bottom: 25px;
+}
+
+.loginPage .orLine {
+	width: 300px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	margin-top: 25px;
+}
+
+.loginPage .orLine::before, .loginPage .orLine::after {
+	content: '';
+	flex: 1;
+	border-bottom: 2px solid #d8c3a5;
+}
+
+.loginPage .orLine::before {
+	margin-right: .25em;
+}
+
+.loginPage .orLine::after {
+	margin-left: .25em;
+}
+
+.loginPage .loginPageButton {
+	background-color: #e85a4f;
+	border-color: #e85a4f;
+	color: #fff;
+	box-shadow: none;
+	outline: none;
+	border: none;
+	width: 100%;
+	height: 40px;
+	padding: 6px 12px;
+	border-radius: 5px;
+}
+
+.loginPage .loginPageButton:hover {
+	background-color: #d6382d;
+}
+
+.loginPage .form-group {
+	margin-bottom: 25px;
+}
+
+.loginPage .forgotPassword {
+  width: 300px;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 15px;
+  color: #333;
+  text-decoration: underline;
+}
+
+.loginPage .forgotPassword:hover {
+  cursor: pointer;
+}
+
+.registerPageRedirection {
+	width: 300px;
+	margin: 0 auto;
+	text-align: center;
+	margin-top: 25px;
+	color: #333;
+	border-bottom: 2px solid #d8c3a5;
+	padding-bottom: 15px;
+}
+
+.registerPageRedirection span {
+	text-decoration: underline;
+	color: #555;
+}
+
+.registerPageRedirection span:hover {
+  cursor: pointer;
+}

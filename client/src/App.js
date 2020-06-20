@@ -7,7 +7,7 @@ import Logout from './components/Logout';
 import FullHistory from './components/FullHistory';
 import Home from './components/Home';
 import Register from './components/Register';
-import LoginSmall from './components/LoginSmall';
+import LoginPage from './components/LoginPage';
 import Analytics from './components/Analytics';
 import FrontPage from './components/FrontPage';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
@@ -86,6 +86,9 @@ function App() {
 				<Switch>
 					<Route path="/register">
 						<Register />
+					</Route>
+					<Route path="/login">
+						<LoginPage />
 					</Route>
 					<Route path="/records">{trendSwitch()}</Route>
 					<Route path="/analytics">{analyticSwitch()}</Route>
