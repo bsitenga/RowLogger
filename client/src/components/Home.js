@@ -20,6 +20,7 @@ function Home(props) {
   const [splitTenths, setSplitTenths] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [rowData, setRowData] = useState([]);
+  const [userFolders, setUserFolders] = useState([]);
   const [singleTimeData, setSingleTimeData] = useState([]);
   const [singleDistanceData, setSingleDistanceData] = useState([]);
   const [distanceIntervalData, setDistanceIntervalData] = useState([]);
@@ -31,9 +32,10 @@ function Home(props) {
 
   //On Mount
   useEffect(() => {
-    axios.get("https://rowlogger.herokuapp.com/api/userrows").then((res) => {
+    axios.get("https://rowlogger.herokuapp.com/api/users").then((res) => {
       //temporary arrays for row data
-      let tempData = [];
+	  let tempData = [];
+	  let tempFolders = [];
       let tempSingleDistanceData = [];
       let tempSingleTimeData = [];
       let tempDistanceIntervalData = [];
@@ -43,10 +45,13 @@ function Home(props) {
       //grabs all row data
       for (let i = 0; i < res.data.length; i++) {
         if (res.data[i].email === props.userEmail) {
-          tempData = res.data[i].rows;
-          setRowData(tempData);
+		  tempData = res.data[i].rows;
+		  tempFolders = res.data[i].folders;
+		  setRowData(tempData);
+		  setUserFolders(tempFolders);
         }
-      }
+	  }
+	  console.log(userFolders);
 
       //separates all row data into arrays by type
       for (let i = 0; i < tempData.length; i++) {
@@ -496,13 +501,21 @@ function Home(props) {
           </div>
           <div className="subFolders">
             <SubFolder name="All Folders" index={0}></SubFolder>
-            <SubFolder name="Test Folder" index={1}></SubFolder>
+			{userFolders.map((item, ind) => {
+				return <p>hello</p>
+			})}
             <p className="addFolder">Add Folder+</p>
           </div>
         </div>
       </div>
       <div className="rightTab">
-        <h2>{activeFolder}</h2>
+        <h1>{activeFolder}</h1>
+		<div className="rows">
+
+		</div>
+		<div className = "rowAnalysis">
+
+		</div>
       </div>
       {/* Rowing Form */}
       <div className="rowForm">

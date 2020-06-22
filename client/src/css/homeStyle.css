@@ -1,63 +1,120 @@
 .logPage {
-    background-color: #f1f1f1;
+  background-image: url("homeBg.png");
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .logPage .leftTab {
-    height: calc(100vh - 80px);
-    width: 350px;
-    display: inline-block;
-    background-color: rgba(255, 255, 255, .7);
+  height: calc(100vh - 80px);
+  width: 350px;
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .logPage .rightTab {
-    display: inline-block;
-    vertical-align: top;
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media only screen and (max-width: 1600px) {
-    .logPage .leftTab {
-        width: 300px;
-    }
+  .logPage .leftTab {
+    width: 300px;
   }
+}
 
 .logPage .folderHeader {
-    background-color: #ecececdd;
+  background-color: #ecececdd;
 }
 
 .logPage .allFolders h3 {
-    margin: 30px 0px 30px 40px;
-    display: inline-block;
-    color: #e85a4f;
+  margin: 30px 0px 30px 40px;
+  display: inline-block;
+  color: #e85a4f;
 }
 
 .logPage .allFolders span {
-    margin-left: 75px;
-    color: #666;
-    text-decoration: underline;
-    font-size: 16px;
+  margin-left: 75px;
+  color: #666;
+  text-decoration: underline;
+  font-size: 16px;
 }
 
 .logPage .allFolders span:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .logPage .subFolders p {
-    margin-left: 60px;
-    font-size: 20px;
-    margin-top: 10px;
-    color: #444;
+  margin-left: 60px;
+  font-size: 20px;
+  margin-top: 10px;
+  color: #444;
 }
 
 .logPage .subFolders .active {
-    color: #e85a4f;
+  color: #e85a4f;
 }
 
 .logPage .subFolders .addFolder {
-    color: #888;
-    text-decoration: underline;
+  color: #888;
+  text-decoration: underline;
 }
 
 .logPage .subFolders p:hover {
-    cursor: pointer;
-    color: #e85a4f;
+  cursor: pointer;
+  color: #e85a4f;
+}
+
+.logPage .rightTab h1 {
+  margin: 20px 0px 25px 50px;
+  color: #333;
+}
+
+.rightTab .rows {
+  margin-left: 48px;
+  height: calc(90vh - 135px);
+  width: 50vw;
+  background-color: #fafafa;
+  display: inline-block;
+}
+
+.rightTab .rowAnalysis {
+  margin-left: 50px;
+  height: calc(90vh - 135px);
+  width: 25vw;
+  background-color: #fafafa;
+  display: inline-block;
+}
+
+@media only screen and (max-width: 2000px) {
+  .rightTab .rows {
+    width: 45vw;
+  }
+
+  .rightTab .rowAnalysis {
+    width: 25vw;
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+    .rightTab .rows {
+      width: 42vw;
+    }
+  
+    .rightTab .rowAnalysis {
+      width: 25vw;
+    }
+  }
+
+@media only screen and (max-width: 1350px) {
+  .rightTab .rows {
+    width: 64vw;
+  }
+
+  .rightTab .rowAnalysis {
+    display: none;
+  }
 }

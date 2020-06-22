@@ -30,17 +30,19 @@ const UserSchema = new Schema({
   pro: {
     type: Number,
     default: 0,
+    required: true,
   },
   rows: {
-    type: [[]],
+    type: Array,
     default: [],
   },
   folders: {
-    type: [String],
+    type: Array,
     default: ["Single Distances", "Single Times", "Intervals: Distance", "Intervals: Time"],
+    required: true,
   },
   organizations: {
-	  type: [String],
+	  type: Array,
 	  default: []
   }
 });
