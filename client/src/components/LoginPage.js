@@ -27,7 +27,7 @@ function LoginPage(props) {
     if (ind !== -1 && allUsers[ind].password === password) {
       let token = jwt.sign(
         allUsers[ind].email,
-        process.env.REACT_APP_SECRET_KEY
+        process.env.REACT_APP_SECRET_KEY || 'SamandDiane'
       );
       localStorage.setItem("sectoken", token);
       window.location.href = "/";

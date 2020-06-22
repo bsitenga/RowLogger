@@ -10,6 +10,10 @@ function FrontPage(props) {
     window.location.href = "/login";
   };
 
+  const goToMobileApp = () => {
+    window.location.href = "/mobileapp"
+  }
+
   return (
     <div className="frontPage">
       <div className="home">
@@ -33,7 +37,7 @@ function FrontPage(props) {
               Login
             </button>
             <p className="appLinkFull">
-              or <span className="appLink">get the app</span>
+              or <span className="appLink" onClick={() => goToMobileApp()}>get the app</span>
             </p>
           </section>
           <img src="RowerLogv2.png" className="homeXLImg homeImg"></img>
