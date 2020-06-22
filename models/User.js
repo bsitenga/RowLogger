@@ -37,7 +37,7 @@ const UserSchema = new Schema({
   },
   folders: {
     type: [String],
-    default: [],
+    default: ["Single Distances", "Single Times", "Intervals: Distance", "Intervals: Time"],
   },
   organizations: {
 	  type: [String],
