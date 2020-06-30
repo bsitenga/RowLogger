@@ -29,60 +29,31 @@ function Home(props) {
   const [rowNotes, setRowNotes] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeFolder, setActiveFolder] = useState("All Folders");
+  const [mounted, setMounted] = useState(false);
 
   //On Mount
   useEffect(() => {
-    axios.get("https://rowlogger.herokuapp.com/api/users").then((res) => {
-      //temporary arrays for row data
-	  let tempData = [];
-	  let tempFolders = [];
-      let tempSingleDistanceData = [];
-      let tempSingleTimeData = [];
-      let tempDistanceIntervalData = [];
-      let tempTimeIntervalData = [];
-      let tempVariableIntervalData = [];
-
-      //grabs all row data
-      for (let i = 0; i < res.data.length; i++) {
-        if (res.data[i].email === props.userEmail) {
-		  tempData = res.data[i].rows;
-		  tempFolders = res.data[i].folders;
-		  setRowData(tempData);
-		  setUserFolders(tempFolders);
-        }
-	  }
-	  console.log(userFolders);
-
-      //separates all row data into arrays by type
-      for (let i = 0; i < tempData.length; i++) {
-        if (tempData[i].rowType === "Single Distance") {
-          tempSingleDistanceData.push(tempData[i]);
-        } else if (tempData[i].rowType === "Single Time") {
-          tempSingleTimeData.push(tempData[i]);
-        } else if (tempData[i].rowType === "Intervals: Distance") {
-          tempDistanceIntervalData.push(tempData[i]);
-        } else if (tempData[i].rowType === "Intervals: Time") {
-          tempTimeIntervalData.push(tempData[i]);
-        } else if (tempData[i].rowType === "Intervals: Variable") {
-          tempVariableIntervalData.push(tempData[i]);
-        }
-      }
-
-      //sorts rows by date in each category
-      sortByDate(tempSingleDistanceData);
-      sortByDate(tempSingleTimeData);
-      sortByDate(tempDistanceIntervalData);
-      sortByDate(tempTimeIntervalData);
-      sortByDate(tempVariableIntervalData);
-
-      //sets state for each row type
-      setSingleDistanceData(tempSingleDistanceData);
-      setSingleTimeData(tempSingleTimeData);
-      setDistanceIntervalData(tempDistanceIntervalData);
-      setTimeIntervalData(tempTimeIntervalData);
-      setVariableIntervalData(tempVariableIntervalData);
-    });
-  }, [rowData]);
+    if (!mounted) {
+      axios.get("https://rowlogger.herokuapp.com/api/users").then((res) => {
+		console.log("grabbing user data...");
+        //temporary arrays for row data
+        let tempData = [];
+        let tempFolders = [];
+        //grabs all row data
+        for (let i = 0; i < res.data.length; i++) {
+          if (res.data[i].email === props.userEmail) {
+			tempData = res.data[i].rows;
+			tempFolders = res.data[i].folders;
+			setRowData(tempData);
+			setUserFolders(tempFolders);
+          }
+		}
+		console.log("grabbed user data");
+	  });
+      setMounted(true);
+	}
+	console.log("state change");
+  }, [rowData, userFolders, activeIndex]);
 
   //sorts by date in reverse chronological order
   const sortByDate = (arry) => {
@@ -477,16 +448,15 @@ function Home(props) {
 
   const SubFolder = (props) => {
     const handleFolderClick = () => {
-      setActiveIndex(props.index);
-      setActiveFolder(props.name);
+	  setActiveIndex(props.index);
+	  setActiveFolder(props.name);
     };
     return (
-      <p
-        className={activeIndex === props.index ? "active" : "inactive"}
-        onClick={() => handleFolderClick()}
-      >
-        {props.name}
-      </p>
+      <div onClick={() => handleFolderClick()} className="subFolderWrapper">
+        <p className={activeIndex === props.index ? "active" : "inactive"}>
+          {props.name}
+        </p>
+      </div>
     );
   };
 
@@ -501,8 +471,8 @@ function Home(props) {
           </div>
           <div className="subFolders">
             <SubFolder name="All Folders" index={0}></SubFolder>
-			{userFolders.map((item, ind) => {
-				return <p>hello</p>
+            {userFolders.map((item, ind) => {
+				return <SubFolder name={item} index={ind + 1}></SubFolder>
 			})}
             <p className="addFolder">Add Folder+</p>
           </div>
@@ -510,12 +480,8 @@ function Home(props) {
       </div>
       <div className="rightTab">
         <h1>{activeFolder}</h1>
-		<div className="rows">
-
-		</div>
-		<div className = "rowAnalysis">
-
-		</div>
+        <div className="rows"></div>
+        <div className="rowAnalysis"></div>
       </div>
       {/* Rowing Form */}
       <div className="rowForm">
