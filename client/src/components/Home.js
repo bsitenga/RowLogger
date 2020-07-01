@@ -35,24 +35,24 @@ function Home(props) {
   useEffect(() => {
     if (!mounted) {
       axios.get("https://rowlogger.herokuapp.com/api/users").then((res) => {
-		console.log("grabbing user data...");
+        console.log("grabbing user data...");
         //temporary arrays for row data
         let tempData = [];
         let tempFolders = [];
         //grabs all row data
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i].email === props.userEmail) {
-			tempData = res.data[i].rows;
-			tempFolders = res.data[i].folders;
-			setRowData(tempData);
-			setUserFolders(tempFolders);
+            tempData = res.data[i].rows;
+            tempFolders = res.data[i].folders;
+            setRowData(tempData);
+            setUserFolders(tempFolders);
           }
-		}
-		console.log("grabbed user data");
-	  });
+        }
+        console.log("grabbed user data");
+      });
       setMounted(true);
-	}
-	console.log("state change");
+    }
+    console.log("state change");
   }, [rowData, userFolders, activeIndex]);
 
   //sorts by date in reverse chronological order
@@ -448,8 +448,8 @@ function Home(props) {
 
   const SubFolder = (props) => {
     const handleFolderClick = () => {
-	  setActiveIndex(props.index);
-	  setActiveFolder(props.name);
+      setActiveIndex(props.index);
+      setActiveFolder(props.name);
     };
     return (
       <div onClick={() => handleFolderClick()} className="subFolderWrapper">
@@ -472,18 +472,51 @@ function Home(props) {
           <div className="subFolders">
             <SubFolder name="All Folders" index={0}></SubFolder>
             {userFolders.map((item, ind) => {
-				return <SubFolder name={item} index={ind + 1}></SubFolder>
-			})}
+              return <SubFolder name={item} index={ind + 1}></SubFolder>;
+            })}
             <p className="addFolder">Add Folder+</p>
           </div>
         </div>
       </div>
       <div className="rightTab">
-        <h1>{activeFolder}</h1>
-        <div className="rows"></div>
+        <h1>{activeFolder} <button>Add Row+</button></h1>
+        <div className="rows">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Distance</th>
+                <th>Time</th>
+                <th>Split</th>
+                <th>SPM</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rowData.map((item) => {
+                if (item.folders.includes(activeFolder)) {
+                  let min = findSplitMins(item.averageSplit);
+                  let sec = findSplitSecs(item.averageSplit);
+                  let tenths = findSplitTenths(item.averageSplit);
+                  return (
+                    <tr>
+                      <td>{item.rowDate}</td>
+                      <td>{item.rowDistance}</td>
+                      <td>{getTime(item.rowTime)}</td>
+                      <td>
+                        {min}:{sec}.{tenths}
+                      </td>
+                      <td>{item.rowSPM}</td>
+                    </tr>
+                  );
+                }
+              })}
+            </tbody>
+		  </table>
+        </div>
         <div className="rowAnalysis"></div>
       </div>
-      {/* Rowing Form */}
+
+      {/* OLD FORMS */}
       <div className="rowForm">
         <Form onSubmit={(e) => submitRow(e)}>
           <Form.Group controlId="rowType" className="rowTypeGroup">

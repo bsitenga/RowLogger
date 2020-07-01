@@ -73,6 +73,22 @@
   color: #333;
 }
 
+.logPage .rightTab h1 button {
+  border: none;
+  border-radius: 10px;
+  background-color: #e85a4f;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  vertical-align: text-bottom;
+  outline: none;
+  margin-left: 10px;
+}
+
+.logPage .rightTab h1 button:hover {
+  background-color: #d7493e;
+}
+
 .rightTab .rows {
   margin-left: 48px;
   height: calc(90vh - 135px);
@@ -89,6 +105,12 @@
   display: inline-block;
 }
 
+.rightTab .rows table {
+  text-align: center;
+  table-layout: fixed;
+  width: 50vw;
+}
+
 @media only screen and (max-width: 2000px) {
   .rightTab .rows {
     width: 45vw;
@@ -97,17 +119,25 @@
   .rightTab .rowAnalysis {
     width: 25vw;
   }
+
+  .rightTab .rows table {
+    width: 45vw;
+  }
 }
 
 @media only screen and (max-width: 1500px) {
-    .rightTab .rows {
-      width: 42vw;
-    }
-  
-    .rightTab .rowAnalysis {
-      width: 25vw;
-    }
+  .rightTab .rows {
+    width: 42vw;
   }
+
+  .rightTab .rowAnalysis {
+    width: 25vw;
+  }
+
+  .rightTab .rows table {
+    width: 42vw;
+  }
+}
 
 @media only screen and (max-width: 1350px) {
   .rightTab .rows {
@@ -116,5 +146,9 @@
 
   .rightTab .rowAnalysis {
     display: none;
+  }
+
+  .rightTab .rows table {
+    width: 64vw;
   }
 }
