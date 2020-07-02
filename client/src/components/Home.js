@@ -479,9 +479,9 @@ function Home(props) {
       {rowPopup ? (
         <RowPopup
           cancelPopup={() => closeRowPopup()}
-		  userEmail={props.userEmail}
-		  rowData={rowData}
-		  setRowData={setRowData}
+          userEmail={props.userEmail}
+          rowData={rowData}
+          setRowData={setRowData}
         ></RowPopup>
       ) : null}
       {folderPopup ? (
@@ -543,71 +543,6 @@ function Home(props) {
           </table>
         </div>
         <div className="rowAnalysis"></div>
-      </div>
-
-      {/* OLD FORMS */}
-      <div className="rowForm">
-        <Form onSubmit={(e) => submitRow(e)}>
-          <Form.Group controlId="rowType" className="rowTypeGroup">
-            <Form.Label>Type</Form.Label>
-            <Form.Control as="select" onChange={(e) => changeType(e)}>
-              <option>Single Distance</option>
-              <option>Single Time</option>
-              <option>Intervals: Distance</option>
-              <option>Intervals: Time</option>
-              <option>Intervals: Variable</option>
-            </Form.Control>
-          </Form.Group>
-          <Form.Group controlId="rowDate" className="rowDateGroup">
-            <Form.Label className="rowDateLabel">Date</Form.Label>
-            <DatePicker selected={rowDate} onChange={changeDate} />
-          </Form.Group>
-          {formSwitch()}
-          <span className="errorMessage">{errorMessage}</span>
-          <Button block bsSize="large" type="submit" className="rowButton">
-            Submit
-          </Button>
-        </Form>
-        <div className="bottomTag">
-          <hr className="versionTag" />
-          <p>RowLogger v1.0.0</p>
-        </div>
-      </div>
-      {/* Full Rowing Log */}
-      <div className="rowLog" id="rowLogger">
-        {/* Single Distance Log */}
-        <div className="singleDistances">
-          <h5>Single Distance Rows</h5>
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Distance</th>
-                <th>Time</th>
-                <th>Split</th>
-                <th>SPM</th>
-              </tr>
-            </thead>
-            <tbody>
-              {singleDistanceData.map((item) => {
-                let min = findSplitMins(item.averageSplit);
-                let sec = findSplitSecs(item.averageSplit);
-                let tenths = findSplitTenths(item.averageSplit);
-                return (
-                  <tr>
-                    <td>{item.rowDate}</td>
-                    <td>{item.rowDistance}</td>
-                    <td>{getTime(item.rowTime)}</td>
-                    <td>
-                      {min}:{sec}.{tenths}
-                    </td>
-                    <td>{item.rowSPM}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
       </div>
     </div>
   ) : (
