@@ -14,11 +14,11 @@ router.post('/userrowsnew', (req, res, next) => {
 });
 
 //Creates a new row for a specific user
-router.post('/userrows', (req, res, next) => {
-	UserRows.update({ email: req.body.email }, { $push: { rows: req.body.row } })
-		.then((data) => res.json(data))
-		.catch(next);
-});
+// router.post('/userrows', (req, res, next) => {
+// 	UserRows.update({ email: req.body.email }, { $push: { rows: req.body.row } })
+// 		.then((data) => res.json(data))
+// 		.catch(next);
+// });
 
 //Gets all uers
 router.get('/users', (req, res, next) => {
@@ -33,6 +33,12 @@ router.get('/users/specific', (req, res, next) => {
 //Creates a new user
 router.post('/users', (req, res, next) => {
 	User.create(req.body).then((data) => res.json(data)).catch(next);
+});
+
+router.post('/userrows', (req, res, next) => {
+	User.findOneAndUpdate({ email: req.body.email }, {$push: {rows: req.body.row}})
+	.then((data) => res.json(data))
+	.catch(next);
 });
 
 module.exports = router;
