@@ -106,6 +106,7 @@ function RowPopup(props) {
         "/" +
         rowDate.getFullYear().toString()[2] +
         rowDate.getFullYear().toString()[3];
+      let tempFolders = ["All Folders"];
       const userRow = {
         email: props.userEmail,
         row: {
@@ -115,6 +116,7 @@ function RowPopup(props) {
           rowSPM: rowSPM,
           averageSplit: tempAverageSplit,
           rowNotes: rowNotes,
+          folders: tempFolders,
         },
       };
       axios
@@ -122,6 +124,11 @@ function RowPopup(props) {
         .then((res) => {});
       clearForm();
       console.log("Submitted Row!", userRow);
+      console.log(props);
+      let tempRows = props.rowData;
+      tempRows.push(userRow.row);
+      props.setRowData(tempRows);
+      props.cancelPopup();
     }
   };
 
@@ -185,9 +192,9 @@ function RowPopup(props) {
             <Form.Label>Notes</Form.Label>
             <Form.Control value={rowNotes} onChange={(e) => changeNotes(e)} />
           </Form.Group>
+          <button type="submit">Submit</button>
         </Form>
         <button onClick={() => props.cancelPopup()}>Cancel</button>
-        <button type="submit">Submit</button>
       </div>
     </div>
   );

@@ -477,7 +477,12 @@ function Home(props) {
   return rowData ? (
     <div className="logPage">
       {rowPopup ? (
-        <RowPopup cancelPopup={() => closeRowPopup()}></RowPopup>
+        <RowPopup
+          cancelPopup={() => closeRowPopup()}
+		  userEmail={props.userEmail}
+		  rowData={rowData}
+		  setRowData={setRowData}
+        ></RowPopup>
       ) : null}
       {folderPopup ? (
         <FolderPopup cancelPopup={() => closeFolderPopup()}></FolderPopup>
