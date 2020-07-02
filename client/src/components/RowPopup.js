@@ -32,19 +32,19 @@ function RowPopup(props) {
   };
 
   const changeMinutes = (e) => {
-    if (!isNaN(e.target.value)) {
+    if (!isNaN(e.target.value) && e.target.value.toString().length < 3) {
       setRowMinutes(e.target.value);
     }
   };
 
   const changeSeconds = (e) => {
-    if (!isNaN(e.target.value)) {
+    if (!isNaN(e.target.value) && e.target.value.toString().length < 3) {
       setRowSeconds(e.target.value);
     }
   };
 
   const changeTenths = (e) => {
-    if (!isNaN(e.target.value)) {
+    if (!isNaN(e.target.value) && e.target.value.toString().length < 2) {
       setRowTenths(e.target.value);
     }
   };
@@ -129,7 +129,7 @@ function RowPopup(props) {
     <div className="rowPopup">
       <div className="rowPopupInner">
         <h3>RowPopup</h3>
-        <Form>
+        <Form onSubmit={(e) => submitRow(e)}>
           <Form.Group controlId="rowDate" className="rowDateGroup">
             <Form.Label className="rowDateLabel">Date</Form.Label>
             <DatePicker selected={rowDate} onChange={changeDate} />
@@ -187,7 +187,7 @@ function RowPopup(props) {
           </Form.Group>
         </Form>
         <button onClick={() => props.cancelPopup()}>Cancel</button>
-        <button>Submit</button>
+        <button type="submit">Submit</button>
       </div>
     </div>
   );
