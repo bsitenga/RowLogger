@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import RowPopup from "./RowPopup";
+import FolderPopup from "./FolderPopup";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import DatePicker from "react-datepicker";
@@ -30,6 +32,8 @@ function Home(props) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeFolder, setActiveFolder] = useState("All Folders");
   const [mounted, setMounted] = useState(false);
+  const [rowPopup, setRowPopup] = useState(false);
+  const [folderPopup, setFolderPopup] = useState(false);
 
   //On Mount
   useEffect(() => {
@@ -446,6 +450,7 @@ function Home(props) {
     return hours + minutes + ":" + seconds + "." + tenths;
   };
 
+  //Creates Subfolder
   const SubFolder = (props) => {
     const handleFolderClick = () => {
       setActiveIndex(props.index);
@@ -460,9 +465,23 @@ function Home(props) {
     );
   };
 
+  const closeRowPopup = () => {
+    setRowPopup(false);
+  };
+
+  const closeFolderPopup = () => {
+    setFolderPopup(false);
+  };
+
   //Full Page
   return rowData ? (
     <div className="logPage">
+      {rowPopup ? (
+        <RowPopup cancelPopup={() => closeRowPopup()}></RowPopup>
+      ) : null}
+      {folderPopup ? (
+        <FolderPopup cancelPopup={() => closeFolderPopup()}></FolderPopup>
+      ) : null}
       <div className="leftTab">
         <div className="allFolders">
           <div className="folderHeader">
@@ -474,12 +493,17 @@ function Home(props) {
             {userFolders.map((item, ind) => {
               return <SubFolder name={item} index={ind + 1}></SubFolder>;
             })}
-            <p className="addFolder">Add Folder+</p>
+            <p className="addFolder" onClick={() => setFolderPopup(true)}>
+              Add Folder+
+            </p>
           </div>
         </div>
       </div>
       <div className="rightTab">
-        <h1>{activeFolder} <button>Add Row+</button></h1>
+        <h1>
+          {activeFolder}{" "}
+          <button onClick={() => setRowPopup(true)}>Add Row+</button>
+        </h1>
         <div className="rows">
           <table>
             <thead>
@@ -511,7 +535,7 @@ function Home(props) {
                 }
               })}
             </tbody>
-		  </table>
+          </table>
         </div>
         <div className="rowAnalysis"></div>
       </div>
