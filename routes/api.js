@@ -13,13 +13,6 @@ router.post('/userrowsnew', (req, res, next) => {
 	UserRows.create(req.body).then((data) => res.json(data)).catch(next);
 });
 
-//Creates a new row for a specific user
-// router.post('/userrows', (req, res, next) => {
-// 	UserRows.update({ email: req.body.email }, { $push: { rows: req.body.row } })
-// 		.then((data) => res.json(data))
-// 		.catch(next);
-// });
-
 //Gets all uers
 router.get('/users', (req, res, next) => {
 	User.find({}).then((data) => res.json(data)).catch(next);
@@ -40,5 +33,11 @@ router.post('/userrows', (req, res, next) => {
 	.then((data) => res.json(data))
 	.catch(next);
 });
+
+router.post('/userfolders', (req, res, next) => {
+	User.findOneAndUpdate({ email: req.body.email }, {$push: {folders: req.body.folderName}})
+	.then((data) => res.json(data))
+	.catch(next);
+})
 
 module.exports = router;
