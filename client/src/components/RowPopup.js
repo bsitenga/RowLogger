@@ -138,11 +138,11 @@ function RowPopup(props) {
         <h3>Add Row+</h3>
         <Form onSubmit={(e) => submitRow(e)}>
           <Form.Group controlId="rowDate" className="rowDateGroup">
-            <span>Date</span>
+            <span className="dateLabel">Date<span style={{color: "red"}}>*</span></span>
             <DatePicker selected={rowDate} onChange={changeDate} />
           </Form.Group>
           <Form.Group className="rowDistanceGroup">
-            <Form.Label>Distance (m)</Form.Label>
+            <Form.Label>Distance (m)<span style={{color: "red"}}>*</span></Form.Label>
             <Form.Control
               placeholder="meters"
               value={rowDistance}
@@ -150,36 +150,33 @@ function RowPopup(props) {
             />
           </Form.Group>
           <Form.Group className="rowTimeHours">
-            <Form.Label>h</Form.Label>
+            <Form.Label>Total Time<span style={{color: "red"}}>*</span></Form.Label>
             <Form.Control
-              placeholder="hour"
+              placeholder="h"
               value={rowHours}
               onChange={(e) => changeHours(e)}
             />
           </Form.Group>
           :
           <Form.Group className="rowTimeMinutes">
-            <Form.Label>mm</Form.Label>
             <Form.Control
-              placeholder="mins"
+              placeholder="mm"
               value={rowMinutes}
               onChange={(e) => changeMinutes(e)}
             />
           </Form.Group>
           :
           <Form.Group className="rowTimeSeconds">
-            <Form.Label>ss</Form.Label>
             <Form.Control
-              placeholder="secs"
+              placeholder="ss"
               value={rowSeconds}
               onChange={(e) => changeSeconds(e)}
             />
           </Form.Group>
           .
           <Form.Group className="rowTimeTenths">
-            <Form.Label>t</Form.Label>
             <Form.Control
-              placeholder="tens"
+              placeholder="t"
               value={rowTenths}
               onChange={(e) => changeTenths(e)}
             />

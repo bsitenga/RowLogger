@@ -24,7 +24,7 @@
   overflow: auto;
 }
 
-.rowPopup .rowDateGroup span {
+.rowPopup .rowDateGroup .dateLabel {
     display: block;
     margin-bottom: 5px;
 }
@@ -37,5 +37,33 @@
 
 .form-group {
     width: 50%;
+
     margin: 0 auto;
+}
+
+.rowTimeHours {
+    display: inline-block;
+    width: 8%;
+    margin-left: 25%; 
+}
+
+.rowTimeMinutes {
+    display: inline-block;
+    width: 8%;
+}
+
+.rowTimeSeconds {
+    display: inline-block;
+    width: 8%;
+}
+
+.rowTimeTenths {
+    display: inline-block;
+    width: 8%;
+}
+
+.rowSPM {
+    display: inline-block;
+    width: 8%;
+    margin-left: 8.5%;
 }
