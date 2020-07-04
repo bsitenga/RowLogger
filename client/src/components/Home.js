@@ -23,6 +23,7 @@ function Home(props) {
   const [errorMessage, setErrorMessage] = useState("");
   const [rowData, setRowData] = useState([]);
   const [userFolders, setUserFolders] = useState([]);
+  const [userPremium, setUserPremium] = useState("");
   const [singleTimeData, setSingleTimeData] = useState([]);
   const [singleDistanceData, setSingleDistanceData] = useState([]);
   const [distanceIntervalData, setDistanceIntervalData] = useState([]);
@@ -43,11 +44,14 @@ function Home(props) {
         //temporary arrays for row data
         let tempData = [];
         let tempFolders = [];
+        let userPremium = 0;
         //grabs all row data
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i].email === props.userEmail) {
             tempData = res.data[i].rows;
             tempFolders = res.data[i].folders;
+            userPremium = res.data[i].pro;
+            setUserPremium
             setRowData(tempData);
             setUserFolders(tempFolders);
           }
@@ -485,7 +489,11 @@ function Home(props) {
         ></RowPopup>
       ) : null}
       {folderPopup ? (
-        <FolderPopup numFolders={userFolders.length()} cancelPopup={() => closeFolderPopup()}></FolderPopup>
+        <FolderPopup
+          numFolders={userFolders.length}
+          userPremium={userPremium}
+          cancelPopup={() => closeFolderPopup()}
+        ></FolderPopup>
       ) : null}
       <div className="leftTab">
         <div className="allFolders">
@@ -526,18 +534,17 @@ function Home(props) {
                   let min = findSplitMins(item.averageSplit);
                   let sec = findSplitSecs(item.averageSplit);
                   let tenths = findSplitTenths(item.averageSplit);
-                  return (<>
-                    <tr>
-                      <td>{item.rowDate}</td>
-                      <td>{item.rowDistance}</td>
-                      <td className="middleCell">{getTime(item.rowTime)}</td>
-                      <td>
-                        {min}:{sec}.{tenths}
-                      </td>
-                      <td>{item.rowSPM}</td>
-                      
-                    </tr>
-                    
+                  return (
+                    <>
+                      <tr>
+                        <td>{item.rowDate}</td>
+                        <td>{item.rowDistance}</td>
+                        <td className="middleCell">{getTime(item.rowTime)}</td>
+                        <td>
+                          {min}:{sec}.{tenths}
+                        </td>
+                        <td>{item.rowSPM}</td>
+                      </tr>
                     </>
                   );
                 }
