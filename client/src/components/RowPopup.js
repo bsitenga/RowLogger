@@ -189,9 +189,9 @@ function RowPopup(props) {
             <Form.Label>Notes</Form.Label>
             <Form.Control value={rowNotes} onChange={(e) => changeNotes(e)} />
           </Form.Group>
-          <button type="submit">Submit</button>
+          <button className="rowSubmit" type="submit">Submit</button>
+          <p className="rowCancel" onClick={() => props.cancelPopup()}>Cancel</p>
         </Form>
-        <button onClick={() => props.cancelPopup()}>Cancel</button>
       </div>
     </div>
   );

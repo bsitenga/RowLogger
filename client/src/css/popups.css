@@ -67,3 +67,31 @@
     width: 8%;
     margin-left: 8.5%;
 }
+
+.rowPopup .rowSubmit {
+    font-size: 20px;
+    background-color: #e85a4f;
+    color: white;
+    border: none;
+    width: 100px;
+    height: 40px;
+    border-radius: 3px;
+    outline: none;
+    margin-left: 25%;
+}
+
+.rowPopup .rowSubmit:hover {
+    background-color: #d7493e;
+}
+
+.rowPopup .rowCancel {
+    color: #777;
+    text-decoration: underline;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.rowPopup .rowCancel:hover {
+    cursor:pointer;
+    color: #999;
+}
