@@ -1,35 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import RowPopup from "./RowPopup";
 import FolderPopup from "./FolderPopup";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
 function Home(props) {
   //State
-  const [rowType, setRowType] = useState("Single Distance");
-  const [rowDate, setRowDate] = useState(new Date());
-  const [rowDistance, setRowDistance] = useState("");
-  const [rowHours, setRowHours] = useState("");
-  const [rowMinutes, setRowMinutes] = useState("");
-  const [rowSeconds, setRowSeconds] = useState("");
-  const [rowTenths, setRowTenths] = useState("");
-  const [rowSPM, setRowSPM] = useState("");
-  const [splitMinutes, setSplitMinutes] = useState("");
-  const [splitSeconds, setSplitSeconds] = useState("");
-  const [splitTenths, setSplitTenths] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const [rowData, setRowData] = useState([]);
   const [userFolders, setUserFolders] = useState([]);
   const [userPremium, setUserPremium] = useState("");
-  const [singleTimeData, setSingleTimeData] = useState([]);
-  const [singleDistanceData, setSingleDistanceData] = useState([]);
-  const [distanceIntervalData, setDistanceIntervalData] = useState([]);
-  const [timeIntervalData, setTimeIntervalData] = useState([]);
-  const [variableIntervalData, setVariableIntervalData] = useState([]);
-  const [rowNotes, setRowNotes] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeFolder, setActiveFolder] = useState("All Folders");
   const [mounted, setMounted] = useState(false);
@@ -44,14 +22,15 @@ function Home(props) {
         //temporary arrays for row data
         let tempData = [];
         let tempFolders = [];
-        let userPremium = 0;
+        let tempUserPremium = 0;
         //grabs all row data
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i].email === props.userEmail) {
             tempData = res.data[i].rows;
             tempFolders = res.data[i].folders;
-            userPremium = res.data[i].pro;
-            setUserPremium
+            tempUserPremium = res.data[i].pro;
+            sortByDate(tempData);
+            setUserPremium(tempUserPremium);
             setRowData(tempData);
             setUserFolders(tempFolders);
           }
@@ -70,329 +49,7 @@ function Home(props) {
     });
   };
 
-  //All form state change functions
-  const changeDate = (date) => {
-    setRowDate(date);
-  };
-
-  const changeType = (e) => {
-    setRowType(e.target.value);
-  };
-
-  const changeDistance = (e) => {
-    if (!isNaN(e.target.value)) {
-      setRowDistance(e.target.value);
-    }
-  };
-
-  const changeHours = (e) => {
-    if (!isNaN(e.target.value)) {
-      setRowHours(e.target.value);
-    }
-  };
-
-  const changeMinutes = (e) => {
-    if (!isNaN(e.target.value)) {
-      setRowMinutes(e.target.value);
-    }
-  };
-
-  const changeSeconds = (e) => {
-    if (!isNaN(e.target.value)) {
-      setRowSeconds(e.target.value);
-    }
-  };
-
-  const changeTenths = (e) => {
-    if (!isNaN(e.target.value)) {
-      setRowTenths(e.target.value);
-    }
-  };
-
-  const changeSPM = (e) => {
-    if (!isNaN(e.target.value)) {
-      setRowSPM(e.target.value);
-    }
-  };
-
-  const changeSplitMinutes = (e) => {
-    if (!isNaN(e.target.value)) {
-      setSplitMinutes(e.target.value);
-    }
-  };
-
-  const changeSplitSeconds = (e) => {
-    if (!isNaN(e.target.value)) {
-      setSplitSeconds(e.target.value);
-    }
-  };
-
-  const changeSplitTenths = (e) => {
-    if (!isNaN(e.target.value)) {
-      setSplitTenths(e.target.value);
-    }
-  };
-
-  const changeNotes = (e) => {
-    setRowNotes(e.target.value);
-  };
-
-  //clears the form
-  const clearForm = () => {
-    setRowHours("");
-    setRowMinutes("");
-    setRowSeconds("");
-    setRowTenths("");
-    setRowDate(new Date());
-    setRowDistance("");
-    setErrorMessage("");
-    setRowSPM("");
-    setSplitMinutes("");
-    setSplitSeconds("");
-    setSplitTenths("");
-    setRowNotes("");
-  };
-
-  //Submits the row form
-  const submitRow = async (e) => {
-    e.preventDefault();
-
-    //gets the row time in number of seconds
-    let rowTime = 0;
-    if (rowHours !== "") {
-      rowTime += rowHours * 60 * 60;
-    }
-    if (rowMinutes !== "") {
-      rowTime += rowMinutes * 60;
-    }
-    if (rowSeconds !== "") {
-      rowTime += rowSeconds * 1;
-    }
-    if (rowTenths !== "") {
-      rowTime += rowTenths * 0.1;
-    }
-
-    //Post req for rows
-    if (rowType === "Single Distance" || rowType === "Single Time") {
-      if (rowDistance === "") {
-        setErrorMessage("Please enter a valid distance");
-      } else if (rowTime === 0) {
-        setErrorMessage("Please enter a valid time");
-      } else {
-        let tempAverageSplit = rowTime / (rowDistance / 500);
-        let tempDate =
-          "" +
-          (rowDate.getMonth() + 1) +
-          "/" +
-          rowDate.getDate() +
-          "/" +
-          rowDate.getFullYear().toString()[2] +
-          rowDate.getFullYear().toString()[3];
-        const userRow = {
-          email: props.userEmail,
-          row: {
-            rowDate: tempDate,
-            rowType: rowType,
-            rowDistance: rowDistance,
-            rowTime: rowTime,
-            rowSPM: rowSPM,
-            averageSplit: tempAverageSplit,
-            rowNotes: rowNotes,
-          },
-        };
-        axios
-          .post("https://rowlogger.herokuapp.com/api/userrows", userRow)
-          .then((res) => {});
-        clearForm();
-        console.log("Submitted Row!", userRow);
-      }
-    } else if (
-      rowType === "Intervals: Distance" ||
-      rowType === "Intervals: Time" ||
-      rowType === "Intervals: Variable"
-    ) {
-      if (rowDistance === "") {
-        setErrorMessage("Please enter a valid distance");
-      } else if (rowTime === 0) {
-        setErrorMessage("Please enter a valid time");
-      } else if (
-        splitMinutes === "" &&
-        splitSeconds === "" &&
-        splitTenths === ""
-      ) {
-        setErrorMessage("Please enter a valid average split");
-      } else {
-        if (splitMinutes === "") {
-          setSplitMinutes(0);
-        }
-        if (splitSeconds === "") {
-          setSplitSeconds(0);
-        }
-        if (splitTenths === "") {
-          setSplitTenths(0);
-        }
-        let tempAverageSplit =
-          Number(splitMinutes) * 60 +
-          Number(splitSeconds) +
-          Number(splitTenths) * 0.1;
-        let tempDate =
-          "" +
-          (rowDate.getMonth() + 1) +
-          "/" +
-          rowDate.getDate() +
-          "/" +
-          rowDate.getFullYear().toString()[2] +
-          rowDate.getFullYear().toString()[3];
-        const userRow = {
-          email: props.userEmail,
-          row: {
-            rowDate: tempDate,
-            rowType: rowType,
-            rowDistance: rowDistance,
-            rowTime: rowTime,
-            rowSPM: rowSPM,
-            averageSplit: tempAverageSplit,
-          },
-        };
-        axios
-          .post("https://rowlogger.herokuapp.com/api/userrows", userRow)
-          .then((res) => {});
-        clearForm();
-        console.log("Submitted Row!", userRow);
-      }
-    }
-  };
-
-  //Creates the form from components
-  const formSwitch = () => {
-    if (rowType === "Single Distance" || rowType === "Single Time") {
-      return (
-        <span>
-          {DistanceForm()}
-          {TimeForm()}
-          {noteForm()}
-        </span>
-      );
-    } else if (
-      rowType === "Intervals: Distance" ||
-      rowType === "Intervals: Time"
-    ) {
-      return (
-        <span>
-          {DistanceForm()}
-          {TimeForm()}
-          {averageSplitForm()}
-          {noteForm()}
-        </span>
-      );
-    } else if (rowType === "Intervals: Variable") {
-      return (
-        <span>
-          {DistanceForm()}
-          {TimeForm()}
-          {averageSplitForm()}
-          {noteForm()}
-        </span>
-      );
-    }
-  };
-
-  //Form components
-  const DistanceForm = () => {
-    return (
-      <Form.Group className="rowDistanceGroup">
-        <Form.Label>Distance (m)</Form.Label>
-        <Form.Control
-          placeholder="meters"
-          value={rowDistance}
-          onChange={(e) => changeDistance(e)}
-        />
-      </Form.Group>
-    );
-  };
-
-  const TimeForm = () => {
-    return (
-      <span>
-        <Form.Group className="rowTimeGroupA">
-          <Form.Group className="rowTimeGroupAA">
-            <Form.Label>h</Form.Label>
-            <Form.Control
-              placeholder="hour"
-              value={rowHours}
-              onChange={(e) => changeHours(e)}
-            />
-          </Form.Group>
-          :
-          <Form.Group className="rowTimeGroupAB">
-            <Form.Label>mm</Form.Label>
-            <Form.Control
-              placeholder="mins"
-              value={rowMinutes}
-              onChange={(e) => changeMinutes(e)}
-            />
-          </Form.Group>
-        </Form.Group>
-        :
-        <Form.Group className="rowTimeGroupB">
-          <Form.Group className="rowTimeGroupBA">
-            <Form.Label>ss</Form.Label>
-            <Form.Control
-              placeholder="secs"
-              value={rowSeconds}
-              onChange={(e) => changeSeconds(e)}
-            />
-          </Form.Group>
-          .
-          <Form.Group className="rowTimeGroupBB">
-            <Form.Label>t</Form.Label>
-            <Form.Control
-              placeholder="tens"
-              value={rowTenths}
-              onChange={(e) => changeTenths(e)}
-            />
-          </Form.Group>
-        </Form.Group>
-        <Form.Group className="rowSPM">
-          <Form.Label>SPM</Form.Label>
-          <Form.Control value={rowSPM} onChange={(e) => changeSPM(e)} />
-        </Form.Group>
-      </span>
-    );
-  };
-
-  const averageSplitForm = () => {
-    return (
-      <Form.Group className="rowAverageSplit">
-        <Form.Label>Average Split (mm:ss.t)</Form.Label>
-        <Form.Control
-          value={splitMinutes}
-          onChange={(e) => changeSplitMinutes(e)}
-        />
-        :
-        <Form.Control
-          value={splitSeconds}
-          onChange={(e) => changeSplitSeconds(e)}
-        />
-        .
-        <Form.Control
-          value={splitTenths}
-          onChange={(e) => changeSplitTenths(e)}
-        />
-      </Form.Group>
-    );
-  };
-
-  const noteForm = () => {
-    return (
-      <Form.Group className="rowNotes">
-        <Form.Label>Notes</Form.Label>
-        <Form.Control value={rowNotes} onChange={(e) => changeNotes(e)} />
-      </Form.Group>
-    );
-  };
-
-  //Average split parsing functions
+  //Split Finding Functions
   const findSplitMins = (fullSplit) => {
     return Math.floor(fullSplit / 60);
   };
@@ -416,14 +73,6 @@ function Home(props) {
       }
     }
     return tenths;
-  };
-
-  //Finds date
-  const getDate = (date) => {
-    let year = date[2] + date[3];
-    let month = date[5] + date[6];
-    let day = date[8] + date[9];
-    return month + "/" + day + "/" + year;
   };
 
   //Finds full time
