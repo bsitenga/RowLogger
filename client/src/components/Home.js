@@ -485,7 +485,7 @@ function Home(props) {
         ></RowPopup>
       ) : null}
       {folderPopup ? (
-        <FolderPopup cancelPopup={() => closeFolderPopup()}></FolderPopup>
+        <FolderPopup numFolders={userFolders.length()} cancelPopup={() => closeFolderPopup()}></FolderPopup>
       ) : null}
       <div className="leftTab">
         <div className="allFolders">
