@@ -1,13 +1,34 @@
 import React, { useState, useEffect } from "react";
+import Form from "react-bootstrap/Form";
+import axios from "axios";
 
 function FolderPopup(props) {
-    return (<div className="rowPopup">
-        <div className = "rowPopupInner">
-            <h1>FolderPopup</h1>
-            <button onClick={() => props.cancelPopup()}>Cancel</button>
-            <button>Submit</button>
-        </div>
-    </div>)
-} 
+  const [folderName, setFolderName] = useState("");
 
-export default FolderPopup
+    const submitFolder = (e) => {
+        e.preventDefault();
+        
+    }
+
+  return (
+    <div className="rowPopup folderPopup">
+      <div className="rowPopupInner">
+        <h3>Add Folder+</h3>
+        <Form onSubmit={(e) => submitFolder(e)}>
+        <Form.Group className="rowDistanceGroup">
+            <Form.Label>Folder Name<span style={{color: "red"}}>*</span></Form.Label>
+            <Form.Control
+              placeholder="Name"
+              value={folderName}
+              onChange={(e) => setFolderName(e.target.value)}
+            />
+          </Form.Group>
+          <button className="rowSubmit" type="submit">Submit</button>
+          <p className="rowCancel" onClick={() => props.cancelPopup()}>Cancel</p>
+        </Form>
+      </div>
+    </div>
+  );
+}
+
+export default FolderPopup;
