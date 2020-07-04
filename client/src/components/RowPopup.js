@@ -135,10 +135,10 @@ function RowPopup(props) {
   return (
     <div className="rowPopup">
       <div className="rowPopupInner">
-        <h3>RowPopup</h3>
+        <h3>Add Row+</h3>
         <Form onSubmit={(e) => submitRow(e)}>
           <Form.Group controlId="rowDate" className="rowDateGroup">
-            <Form.Label className="rowDateLabel">Date</Form.Label>
+            <span>Date</span>
             <DatePicker selected={rowDate} onChange={changeDate} />
           </Form.Group>
           <Form.Group className="rowDistanceGroup">
