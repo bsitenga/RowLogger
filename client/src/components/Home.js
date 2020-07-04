@@ -526,16 +526,19 @@ function Home(props) {
                   let min = findSplitMins(item.averageSplit);
                   let sec = findSplitSecs(item.averageSplit);
                   let tenths = findSplitTenths(item.averageSplit);
-                  return (
+                  return (<>
                     <tr>
                       <td>{item.rowDate}</td>
                       <td>{item.rowDistance}</td>
-                      <td>{getTime(item.rowTime)}</td>
+                      <td className="middleCell">{getTime(item.rowTime)}</td>
                       <td>
                         {min}:{sec}.{tenths}
                       </td>
                       <td>{item.rowSPM}</td>
+                      
                     </tr>
+                    
+                    </>
                   );
                 }
               })}
