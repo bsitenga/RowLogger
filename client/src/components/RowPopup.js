@@ -124,9 +124,9 @@ function RowPopup(props) {
         .then((res) => {});
       clearForm();
       console.log("Submitted Row!", userRow);
-      console.log(props);
       let tempRows = props.rowData;
       tempRows.push(userRow.row);
+      props.sortByDate(tempRows);
       props.setRowData(tempRows);
       props.cancelPopup();
     }

@@ -7,12 +7,18 @@ function FolderPopup(props) {
 
   const submitFolder = (e) => {
     e.preventDefault();
-    if (props.numFolders < 5 && props.userPremium) {
+    if (props.numFolders < 5 || props.userPremium) {
       const tempFolder = {folderName: folderName};
       axios
         .post("https://rowlogger.herokuapp.com/api/userfolders", tempFolder)
         .then((res) => {});
-      props.cancelPopup();
+        console.log("Submitted Folder!", folderName);
+        let tempFolders = props.userFolders;
+        tempFolders.push(folderName);
+        props.setUserFolders(tempFolders);
+        props.cancelPopup();
+    } else {
+
     }
   };
 

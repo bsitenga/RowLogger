@@ -135,6 +135,7 @@ function Home(props) {
           userEmail={props.userEmail}
           rowData={rowData}
           setRowData={setRowData}
+          sortByDate={sortByDate}
         ></RowPopup>
       ) : null}
       {folderPopup ? (
@@ -142,6 +143,8 @@ function Home(props) {
           numFolders={userFolders.length}
           userPremium={userPremium}
           cancelPopup={() => closeFolderPopup()}
+          userFolders={userFolders}
+          setUserFolders={setUserFolders}
         ></FolderPopup>
       ) : null}
       <div className="leftTab">
