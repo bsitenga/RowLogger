@@ -132,6 +132,11 @@
   border-bottom: 1px solid #d8c3a5;
 }
 
+.rowLine:hover {
+  color: #e85a4f;
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 2000px) {
   .rightTab .rows {
     width: 45vw;

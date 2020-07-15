@@ -17,8 +17,6 @@ function FolderPopup(props) {
         tempFolders.push(folderName);
         props.setUserFolders(tempFolders);
         props.cancelPopup();
-    } else {
-
     }
   };
 

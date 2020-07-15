@@ -126,6 +126,10 @@ function Home(props) {
     setFolderPopup(false);
   };
 
+  const selectRow = (item) => {
+    console.log(item);
+  }
+
   //Full Page
   return rowData ? (
     <div className="logPage">
@@ -188,7 +192,7 @@ function Home(props) {
                   let tenths = findSplitTenths(item.averageSplit);
                   return (
                     <>
-                      <tr>
+                      <tr className="rowLine" onClick={() => selectRow(item)}>
                         <td>{item.rowDate}</td>
                         <td>{item.rowDistance}</td>
                         <td className="middleCell">{getTime(item.rowTime)}</td>
